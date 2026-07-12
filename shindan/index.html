@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex"><!-- 正式公開時に外す -->
+<title>AI社員タイプ診断｜最初にAIに任せる仕事がわかる3分診断</title>
+<meta name="description" content="あなたが最初にAIに任せる仕事、3分でわかります。無料・登録なし・全部タップだけ。">
+<meta property="og:title" content="AI社員タイプ診断">
+<meta property="og:description" content="あなたが最初にAIに任せる仕事、3分でわかります。無料・登録なし。">
+<meta property="og:type" content="website">
+<style>
+  /* ==========================================================
+     AI社員タイプ診断 — 「余白の朝」デザイン
+     本サイト(ichi AI)と同じ世界観: 紙白×淡いオーロラ×明朝
+  ========================================================== */
+  :root {
+    --paper: #F7F5EF;
+    --ink: #16140F;
+    --ink70: rgba(22,20,15,.72);
+    --ink50: rgba(22,20,15,.5);
+    --ink30: rgba(22,20,15,.32);
+    --hair: rgba(22,20,15,.13);
+    --card: rgba(255,255,255,.72);
+    --rose: #D4849F;
+    --vio: #8F7DD8;
+    --mint: #4E9E7E;
+    --gold: #D8A25C;
+    --line: #06c755;
+    --grad: linear-gradient(100deg, #C0708F, #7E68C4 45%, #4F8F72);
+    --gradbar: linear-gradient(90deg, #D4849F, #8F7DD8 45%, #D8A25C);
+    --radius: 20px;
+    --f-min: "Hiragino Mincho ProN", "Yu Mincho", serif;
+    --ease: cubic-bezier(.22,1,.36,1);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.8;
+    min-height: 100vh;
+  }
+  /* 朝の光(固定背景) */
+  body::before {
+    content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background:
+      radial-gradient(90vmax 90vmax at 85% -12%, rgba(238,168,200,.4), rgba(190,175,232,.26) 44%, rgba(160,212,190,.14) 66%, transparent 78%),
+      radial-gradient(70vmax 70vmax at -10% 108%, rgba(255,214,150,.22), transparent 60%),
+      linear-gradient(180deg, #FBF9F4, var(--paper));
+  }
+  #app { max-width: 560px; margin: 0 auto; padding: 20px 20px 56px; }
+
+  /* progress */
+  #progress-wrap { padding: 10px 0 22px; }
+  #progress-bar { height: 3px; background: var(--hair); border-radius: 2px; overflow: hidden; }
+  #progress-fill { height: 100%; width: 0%; background: var(--gradbar); border-radius: 2px; transition: width .5s var(--ease); }
+  #progress-label { font-size: 10.5px; letter-spacing: .22em; color: var(--ink50); margin-top: 8px; text-align: right; }
+
+  .screen { animation: fadein .55s var(--ease); }
+  @keyframes fadein { from { opacity: 0; transform: translateY(14px); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
+  @media (prefers-reduced-motion: reduce) { .screen { animation: none; } }
+
+  /* start */
+  .start-glow { position: relative; }
+  .start-glow::before {
+    content: ""; position: absolute; top: -30px; left: 50%; transform: translateX(-50%);
+    width: 260px; height: 260px; border-radius: 50%; pointer-events: none;
+    background: radial-gradient(circle, rgba(255,255,255,.9), rgba(242,186,208,.35) 40%, rgba(201,184,245,.25) 62%, transparent 75%);
+    filter: blur(2px);
+  }
+  .start-ey { position: relative; font-size: 10px; letter-spacing: .38em; color: var(--ink50); margin-bottom: 18px; }
+  .start-badge {
+    position: relative; display: inline-block; background: rgba(255,255,255,.7);
+    border: 1px solid var(--hair); color: var(--ink70);
+    font-size: 12px; font-weight: 600; letter-spacing: .06em;
+    padding: 6px 16px; border-radius: 999px; margin-bottom: 20px; backdrop-filter: blur(6px);
+  }
+  h1 {
+    position: relative; font-family: var(--f-min); font-weight: 600;
+    font-size: 34px; line-height: 1.42; letter-spacing: .01em; margin-bottom: 14px; text-wrap: balance;
+  }
+  h1 .hg { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .start-sub { position: relative; font-size: 15.5px; margin-bottom: 8px; color: var(--ink70); }
+  .start-note { position: relative; font-size: 13px; color: var(--ink50); margin-bottom: 30px; }
+  .byline { font-size: 12px; letter-spacing: .04em; color: var(--ink50); margin-top: 30px; }
+
+  /* question */
+  .q-number { font-size: 11px; font-weight: 600; letter-spacing: .3em; color: var(--vio); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 12px; }
+  .q-number::after { content: ""; width: 44px; height: 1px; background: var(--ink30); }
+  .q-text { font-family: var(--f-min); font-size: 21px; font-weight: 600; line-height: 1.6; margin-bottom: 26px; text-wrap: balance; }
+  .option {
+    display: block; width: 100%; text-align: left;
+    background: var(--card); border: 1px solid var(--hair); border-radius: var(--radius);
+    padding: 17px 20px; margin-bottom: 12px; font-size: 14.5px; line-height: 1.7;
+    cursor: pointer; transition: border-color .25s, background .25s, transform .35s var(--ease), box-shadow .35s;
+    font-family: inherit; color: inherit; backdrop-filter: blur(8px);
+  }
+  .option:hover { transform: translateY(-2px); box-shadow: 0 14px 34px -22px rgba(90,70,140,.4); }
+  .option:active, .option.selected {
+    border-color: rgba(143,125,216,.7); background: rgba(201,184,245,.16);
+    box-shadow: 0 14px 34px -22px rgba(90,70,140,.5);
+  }
+
+  /* checklist */
+  .check-intro { font-size: 14px; color: var(--ink70); margin-bottom: 20px; }
+  .check-item {
+    display: flex; align-items: center; gap: 13px;
+    background: var(--card); border: 1px solid var(--hair); border-radius: 16px;
+    padding: 13px 16px; margin-bottom: 10px; font-size: 14px; line-height: 1.6;
+    cursor: pointer; transition: border-color .25s, background .25s; backdrop-filter: blur(8px);
+  }
+  .check-item.checked { border-color: rgba(143,125,216,.7); background: rgba(201,184,245,.16); }
+  .check-box {
+    flex: 0 0 22px; width: 22px; height: 22px; border: 1.5px solid var(--ink30); border-radius: 7px;
+    display: flex; align-items: center; justify-content: center; background: #fff; transition: background .25s, border-color .25s;
+  }
+  .check-item.checked .check-box { background: var(--vio); border-color: var(--vio); }
+  .check-box svg { display: none; }
+  .check-item.checked .check-box svg { display: block; }
+  #live-total {
+    position: sticky; bottom: 12px; background: rgba(22,20,15,.92); color: #F7F5EF;
+    border-radius: 999px; padding: 14px 22px; margin-top: 20px; backdrop-filter: blur(10px);
+    display: flex; justify-content: space-between; align-items: center; gap: 10px;
+    box-shadow: 0 18px 44px -18px rgba(22,20,15,.5);
+  }
+  #live-total .lt-label { font-size: 12px; letter-spacing: .06em; opacity: .8; }
+  #live-total .lt-value { font-size: 17px; font-weight: 700; white-space: nowrap;
+    background: linear-gradient(90deg,#F0B7CE,#C9B8F5 55%,#FFDF9E);
+    -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  /* buttons */
+  .btn {
+    display: block; width: 100%; text-align: center; position: relative; overflow: hidden;
+    text-decoration: none;
+    background: var(--ink); color: var(--paper); border: none; border-radius: 999px;
+    padding: 17px; font-size: 15.5px; font-weight: 700; letter-spacing: .08em; cursor: pointer;
+    font-family: inherit; margin-top: 22px; transition: transform .35s var(--ease), box-shadow .35s, opacity .15s;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 18px 40px -18px rgba(22,20,15,.5); }
+  .btn:active { opacity: .88; }
+  .btn-line { background: var(--line); color: #fff; }
+  .btn-back {
+    background: none; border: none; color: var(--ink50); font-size: 13px; letter-spacing: .04em;
+    cursor: pointer; font-family: inherit; margin-top: 16px; padding: 8px;
+    display: block; margin-left: auto; margin-right: auto;
+  }
+
+  /* result */
+  .result-eyebrow { font-size: 10.5px; letter-spacing: .32em; color: var(--ink50); margin-bottom: 10px; }
+  .type-card {
+    position: relative; background: var(--card); border-radius: 26px; padding: 32px 24px 28px;
+    text-align: center; margin-bottom: 18px; border: 1px solid rgba(255,255,255,.8);
+    backdrop-filter: blur(14px); box-shadow: 0 30px 70px -40px rgba(90,70,140,.45); overflow: hidden;
+  }
+  .type-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gradbar); }
+  .type-icon {
+    width: 68px; height: 68px; margin: 0 auto 16px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .ti-research { color: #6C55BE; background: rgba(143,125,216,.14); }
+  .ti-content  { color: #B95F84; background: rgba(212,132,159,.15); }
+  .ti-admin    { color: #3E8266; background: rgba(94,158,130,.15); }
+  .type-name { font-family: var(--f-min); font-size: 27px; font-weight: 600; line-height: 1.4;
+    background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .type-desc { font-size: 14.5px; text-align: left; margin-top: 18px; color: var(--ink70); }
+
+  .num-card {
+    background: #16140F; color: #F7F5EF; border-radius: 26px;
+    padding: 26px 24px; margin-bottom: 18px; position: relative; overflow: hidden;
+  }
+  .num-card::after { content: ""; position: absolute; right: -46px; top: -46px; width: 150px; height: 150px;
+    border-radius: 50%; background: radial-gradient(circle, rgba(255,214,150,.28), transparent 70%); }
+  .num-card .nc-title { font-size: 12px; letter-spacing: .1em; opacity: .75; margin-bottom: 12px; }
+  .num-row { display: flex; gap: 16px; margin-bottom: 14px; }
+  .num-box { flex: 1; text-align: center; }
+  .num-big { font-family: var(--f-min); font-size: 38px; font-weight: 600; line-height: 1.2;
+    background: linear-gradient(90deg,#F0B7CE,#C9B8F5 55%,#FFDF9E);
+    -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .num-unit { font-size: 12px; opacity: .75; letter-spacing: .06em; }
+  .num-note { font-size: 13px; opacity: .9; line-height: 1.9; position: relative; }
+
+  .section-card {
+    background: var(--card); border: 1px solid rgba(255,255,255,.8); border-radius: 26px;
+    padding: 24px 22px; margin-bottom: 18px; backdrop-filter: blur(10px);
+  }
+  .sc-label { font-size: 10.5px; font-weight: 700; letter-spacing: .26em; color: var(--vio); margin-bottom: 10px; }
+  .sc-title { font-family: var(--f-min); font-size: 20px; font-weight: 600; margin-bottom: 10px; }
+  .sc-body { font-size: 14px; color: var(--ink70); }
+  .prompt-box {
+    background: rgba(247,245,239,.9); border: 1px dashed var(--ink30); border-radius: 14px;
+    padding: 16px; margin-top: 14px; font-size: 13.5px; line-height: 1.8;
+  }
+  .prompt-copy {
+    background: none; border: 1px solid var(--ink); color: var(--ink);
+    border-radius: 999px; padding: 8px 20px; font-size: 12.5px; font-weight: 600; letter-spacing: .04em;
+    cursor: pointer; font-family: inherit; margin-top: 14px; transition: background .25s, color .25s;
+  }
+  .prompt-copy:active { background: var(--ink); color: var(--paper); }
+  .yohaku {
+    font-size: 14px; color: var(--ink); border-radius: 16px; padding: 16px 20px; margin-bottom: 24px;
+    background: linear-gradient(100deg, rgba(240,183,206,.22), rgba(201,184,245,.22) 50%, rgba(255,223,158,.24));
+    border: 1px solid rgba(255,255,255,.8);
+  }
+
+  .cta-card {
+    position: relative; background: rgba(255,255,255,.8); border-radius: 26px;
+    padding: 30px 24px; text-align: center; margin-bottom: 12px; overflow: hidden;
+    backdrop-filter: blur(12px); box-shadow: 0 30px 70px -40px rgba(90,70,140,.45);
+  }
+  .cta-card::before { content: ""; position: absolute; inset: 0; border-radius: 26px; padding: 1.5px;
+    background: var(--gradbar);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
+  .cta-title { font-family: var(--f-min); font-size: 19px; font-weight: 600; margin-bottom: 12px; line-height: 1.6; text-wrap: balance; }
+  .cta-body { font-size: 14px; text-align: left; color: var(--ink70); }
+  .cta-note { font-size: 12px; color: var(--ink50); margin-top: 12px; }
+
+  .retry { text-align: center; margin-top: 22px; }
+  .retry button { background: none; border: none; color: var(--ink50); font-size: 13px;
+    text-decoration: underline; text-underline-offset: 4px; cursor: pointer; font-family: inherit; padding: 8px; }
+  .privacy { font-size: 11px; color: var(--ink50); text-align: center; margin-top: 26px; line-height: 1.9; }
+
+  /* ===== 結果画面 v2: キャラ×レーダー×見やすいCTA ===== */
+  .nick {
+    display: inline-block; font-size: 12.5px; font-weight: 700; letter-spacing: .05em;
+    background: linear-gradient(100deg, rgba(240,183,206,.35), rgba(201,184,245,.35));
+    border: 1px solid rgba(255,255,255,.9); border-radius: 999px;
+    padding: 6px 16px; margin: 12px 0 6px; color: var(--ink);
+  }
+  .char { width: 128px; height: 128px; margin: 2px auto 4px; display: block;
+    filter: drop-shadow(0 10px 18px rgba(90,70,140,.18)); }
+  .type-desc { font-size: 14px; }
+  .share-btn {
+    display: inline-flex; align-items: center; gap: 8px; margin-top: 16px;
+    background: none; border: 1px solid var(--ink30); color: var(--ink70);
+    border-radius: 999px; padding: 9px 20px; font-size: 12.5px; font-weight: 600;
+    cursor: pointer; font-family: inherit; transition: border-color .25s, color .25s;
+  }
+  .share-btn:active { border-color: var(--vio); color: var(--vio); }
+  /* 統計カード(旧・黒カードの置き換え) */
+  .stat-card {
+    background: var(--card); border: 1px solid rgba(255,255,255,.85); border-radius: 26px;
+    padding: 22px 20px 20px; margin-bottom: 18px; backdrop-filter: blur(12px);
+    box-shadow: 0 26px 60px -38px rgba(90,70,140,.4);
+  }
+  .stat-card .nc-title { font-size: 11px; letter-spacing: .2em; color: var(--ink50); margin-bottom: 4px; text-align: center; }
+  .radar-wrap { display: flex; justify-content: center; }
+  .radar-wrap svg { width: 100%; max-width: 330px; height: auto; }
+  .num-row2 { display: flex; gap: 12px; margin: 6px 0 10px; }
+  .num-box2 { flex: 1; text-align: center; background: rgba(247,245,239,.75);
+    border: 1px solid var(--hair); border-radius: 16px; padding: 12px 8px; }
+  .num-big2 { font-family: var(--f-min); font-size: 30px; font-weight: 600; line-height: 1.25;
+    background: linear-gradient(95deg, #B95F84, #6C55BE 55%, #3E8266);
+    -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .num-unit2 { font-size: 11px; letter-spacing: .08em; color: var(--ink50); }
+  .num-note2 { font-size: 12.5px; line-height: 1.9; color: var(--ink70); }
+  .num-note2 b { color: var(--ink); }
+  /* CTA 3ステップ */
+  .steps3 { display: flex; align-items: stretch; gap: 6px; margin: 16px 0 6px; }
+  .step3 { flex: 1; background: rgba(247,245,239,.8); border: 1px solid var(--hair);
+    border-radius: 14px; padding: 12px 6px 10px; text-align: center; position: relative; }
+  .step3 .sn2 { width: 22px; height: 22px; border-radius: 50%; margin: 0 auto 7px;
+    background: var(--ink); color: var(--paper); font-size: 11.5px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; }
+  .step3 p { font-size: 11px; line-height: 1.55; color: var(--ink70); }
+  .step3 p b { display: block; font-size: 12px; color: var(--ink); margin-bottom: 2px; }
+  .step3:not(:last-child)::after { content: "→"; position: absolute; right: -9px; top: 50%;
+    transform: translateY(-50%); color: var(--ink30); font-size: 12px; z-index: 2; }
+  /* 固定LINEバー(結果画面のみ) */
+  .sticky-cta {
+    position: fixed; left: 50%; transform: translateX(-50%); bottom: 14px; z-index: 50;
+    width: min(520px, calc(100% - 32px));
+    display: block; text-align: center; text-decoration: none;
+    background: var(--line); color: #fff; font-weight: 700; font-size: 15px; letter-spacing: .05em;
+    border-radius: 999px; padding: 16px;
+    box-shadow: 0 18px 44px -14px rgba(6,199,85,.55);
+    animation: ctain .6s var(--ease) .4s both;
+  }
+  @keyframes ctain { from { opacity: 0; transform: translate(-50%, 20px); } to { opacity: 1; transform: translate(-50%, 0); } }
+  .result-pad { padding-bottom: 84px; }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="progress-wrap" hidden>
+    <div id="progress-bar"><div id="progress-fill"></div></div>
+    <div id="progress-label"></div>
+  </div>
+  <main id="screen"></main>
+</div>
+
+<script>
+/* ============================================================
+   データ（正本: design.md — 文言を変えるときは design.md を先に）
+   ============================================================ */
+const DATA = {
+  questions: [
+    { text: "朝、仕事を始めるとき。最初にやりがちなのは？",
+      options: [
+        { label: "とりあえずインスタや競合アカウントをチェック", cat: "research" },
+        { label: "昨日書きかけの投稿の続き…のはずが、なかなか進まない", cat: "content" },
+        { label: "たまった返信と連絡をまず片付ける", cat: "admin" } ] },
+    { text: "1日の終わりに「今日も終わらなかった…」と思うのは？",
+      options: [
+        { label: "ネタ探しと情報集め", cat: "research" },
+        { label: "投稿や案内文などの文章づくり", cat: "content" },
+        { label: "予定調整・請求・資料づくりみたいな細かい仕事", cat: "admin" } ] },
+    { text: "スマホの中身、どれが一番近い？",
+      options: [
+        { label: "参考になりそうな投稿のスクショだらけ", cat: "research" },
+        { label: "書きかけのメモだらけ", cat: "content" },
+        { label: "予定と支払いの控えだらけ", cat: "admin" } ] },
+    { text: "SNSの投稿で、一番時間がかかっているのは？",
+      options: [
+        { label: "「何を投稿するか」を決めるまで", cat: "research" },
+        { label: "文章を書いて、直して、また直すところ", cat: "content" },
+        { label: "そもそも投稿する時間がとれない（他の仕事に追われて）", cat: "admin" } ] },
+    { text: "「ちょっと調べもの」を始めると？",
+      options: [
+        { label: "気づいたら1時間たってる", cat: "research" },
+        { label: "調べるのは早いけど、そこから書くのに悩む", cat: "content" },
+        { label: "調べる時間すらとれなくて、あとまわしに", cat: "admin" } ] },
+    { text: "お客様や生徒さんからの質問。どう返してる？",
+      options: [
+        { label: "毎回ちゃんと調べてから返す（だから時間がかかる）", cat: "research" },
+        { label: "文面を何度も書き直してから送る", cat: "content" },
+        { label: "同じ質問に、毎回ゼロから答えてる気がする", cat: "admin" } ] }
+  ],
+  q7: { text: "もし明日、3時間の余白ができたら何に使いたいですか？",
+    options: [
+      { label: "新しい企画やサービスをじっくり考えたい", key: "D1" },
+      { label: "家族との時間、自分の休憩にあてたい", key: "D2" },
+      { label: "たまっている仕事をぜんぶ片付けたい", key: "D3" } ] },
+  checklist: [
+    { label: "投稿のネタを探して、SNSをぐるぐる見て回った", cat: "research", hours: 2 },
+    { label: "競合や気になる人のアカウントをチェックした", cat: "research", hours: 1.5 },
+    { label: "AIやツールの使い方を調べた（けど、まだ使えてない）", cat: "research", hours: 1 },
+    { label: "「あとで見る」に保存した動画や記事がたまっていった", cat: "research", hours: 0.5 },
+    { label: "キャプションや投稿文を書いた", cat: "content", hours: 2 },
+    { label: "案内文・募集文・LINEやメルマガの文章を書いた", cat: "content", hours: 1.5 },
+    { label: "リールや画像を作った・直した", cat: "content", hours: 3 },
+    { label: "ブログやnoteなど長い文章を書いた", cat: "content", hours: 2 },
+    { label: "お客様・生徒さんへの返信を書いた", cat: "admin", hours: 2 },
+    { label: "予定調整のやりとりをした", cat: "admin", hours: 1 },
+    { label: "請求書・見積もり・お金まわりの作業をした", cat: "admin", hours: 1 },
+    { label: "資料やスライドを作った", cat: "admin", hours: 2 }
+  ],
+  types: {
+    research: {
+      name: "ネタ探し迷子タイプ",
+      icon: "search",
+      desc: "調べはじめると止まらない。スクショは増えていくのに、投稿は進まない。真面目に情報を集める人ほどこうなります。悪いのはあなたじゃなくて、順番です。",
+      aiName: "ネタ集め担当",
+      aiDesc: "毎朝、あなたのジャンルの話題を3つに絞って持ってきてもらう。1時間かかっていたネタ探しが、選ぶだけの15分になります。",
+      prompt: "私は◯◯（例:料理教室）の発信をしています。今日の投稿ネタ候補を3つ、それぞれ1行の理由つきで出してください",
+      hitokoto: "材料集めをしてから料理する。この順番をAIと分担するタイプです。"
+    },
+    content: {
+      name: "真っ白カーソルタイプ",
+      icon: "pen",
+      desc: "書くことは決まってるのに、最初の一文が出ない。やっと書けても、直して、また直して。丁寧に書く人ほど時間がかかります。",
+      aiName: "下書き担当",
+      aiDesc: "AIに下書きを作ってもらって、最後は自分の言葉で3か所だけ直す。ゼロから書くのをやめるだけで、投稿づくりは半分くらいになります。",
+      prompt: "この内容でインスタのキャプションの下書きを作ってください。私の普段の話し方に直すので、きれいにしすぎないでください →（伝えたいことを箇条書きで貼る）",
+      hitokoto: "AIっぽい文章になる問題は、下書きを自分で仕上げれば消えます。全部書かせないのがコツです。"
+    },
+    admin: {
+      name: "ぜんぶ自分でタイプ",
+      icon: "check",
+      desc: "返信、予定調整、請求書、資料。ひとつひとつは小さいのに、集まると1日が消えます。人に頼めない仕事だと思い込みやすいのがこのタイプです。",
+      aiName: "裏方担当",
+      aiDesc: "よくある質問への返信文と案内文の型を、AIに用意してもらう。毎回ゼロから書いていた返信が、貼って少し直すだけになります。",
+      prompt: "私のお客様からよく来る質問はこの3つです。それぞれに、感じがよくて短い返信の型を作ってください →（質問を3つ貼る）",
+      hitokoto: "細かい仕事こそ、型にすると効果が出ます。まず返信1種類からで大丈夫です。"
+    }
+  },
+  q7lines: {
+    D1: "空いた時間で企画を考えたい、と答えたあなたへ。その時間は、仕組みで作れます。",
+    D2: "空いた時間は家族と自分に、と答えたあなたへ。そのための時短です。仕事を増やすためじゃなくて。",
+    D3: "まず溜まった仕事を片付けたい、と答えたあなたへ。だからこそ、片付ける作業そのものをAIと分けるところからです。"
+  },
+  lineUrl: "https://lin.ee/NC90E0Z"
+};
+
+/* ============================================================
+   判定ロジック（design.md §7）— 純関数・テスト対象
+   ============================================================ */
+function computeResult(answerCats, q7Key, checkedIdx) {
+  const scores = { research: 0, content: 0, admin: 0 };
+  answerCats.forEach(c => { scores[c] += 1; });
+
+  const catHours = { research: 0, content: 0, admin: 0 };
+  let weekly = 0;
+  checkedIdx.forEach(i => {
+    const item = DATA.checklist[i];
+    catHours[item.cat] += item.hours;
+    weekly += item.hours;
+  });
+
+  const priority = ["content", "research", "admin"]; // 同点最終タイブレーク
+  const cats = ["research", "content", "admin"];
+  const maxScore = Math.max(...cats.map(c => scores[c]));
+  let tied = cats.filter(c => scores[c] === maxScore);
+  if (tied.length > 1) {
+    const maxHours = Math.max(...tied.map(c => catHours[c]));
+    tied = tied.filter(c => catHours[c] === maxHours);
+  }
+  const type = tied.length === 1 ? tied[0]
+    : priority.find(c => tied.includes(c));
+
+  // 「あなたの数字」で名指しする項目 = 時間合計最大カテゴリの中で、チェック済みかつ時間最大の項目
+  let topItem = null;
+  if (checkedIdx.length > 0) {
+    const hourCats = [...cats].sort((a, b) => catHours[b] - catHours[a]);
+    for (const hc of hourCats) {
+      const inCat = checkedIdx
+        .map(i => DATA.checklist[i])
+        .filter(it => it.cat === hc)
+        .sort((a, b) => b.hours - a.hours);
+      if (inCat.length > 0) { topItem = inCat[0].label; break; }
+    }
+  }
+
+  return {
+    type,
+    weekly: Math.round(weekly * 10) / 10,
+    yearly: Math.round(weekly * 50),
+    topItem,
+    q7Key: q7Key || "D2",
+    scores, catHours
+  };
+}
+
+/* ============================================================
+   画面制御
+   ============================================================ */
+const TOTAL_STEPS = 9; // start(0) q1-6(1-6) q7(7) checklist(8) result(9)
+const state = { step: 0, answerCats: [], q7Key: null, checked: new Set() };
+
+const screenEl = document.getElementById("screen");
+const progWrap = document.getElementById("progress-wrap");
+const progFill = document.getElementById("progress-fill");
+const progLabel = document.getElementById("progress-label");
+
+const ICONS = {
+  search: '<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><line x1="15.5" y1="15.5" x2="21" y2="21"/></svg>',
+  pen: '<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3l4 4L8 20l-5 1 1-5L17 3z"/></svg>',
+  check: '<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l4 4L13 9"/><path d="M11 13l4 4L23 7"/></svg>'
+};
+const CHECK_SVG = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg>';
+
+function esc(s) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+function updateProgress() {
+  if (state.step === 0) { progWrap.hidden = true; return; }
+  progWrap.hidden = false;
+  const pct = Math.min(100, Math.round(state.step / TOTAL_STEPS * 100));
+  progFill.style.width = pct + "%";
+  progLabel.textContent =
+    state.step <= 7 ? "質問 " + Math.min(state.step, 7) + " / 7"
+    : state.step === 8 ? "最後のステップです"
+    : "診断結果";
+}
+
+function render() {
+  updateProgress();
+  if (state.step === 0) renderStart();
+  else if (state.step >= 1 && state.step <= 6) renderQuestion(state.step - 1);
+  else if (state.step === 7) renderQ7();
+  else if (state.step === 8) renderChecklist();
+  else renderResult();
+  window.scrollTo({ top: 0 });
+}
+
+function renderStart() {
+  screenEl.innerHTML =
+    '<div class="screen start-glow" style="padding-top:44px">' +
+      '<div class="start-ey">PERSONAL AI TEAM — DIAGNOSIS</div>' +
+      '<span class="start-badge">3分・全部タップだけ</span>' +
+      '<h1><span class="hg">AI社員</span>タイプ診断</h1>' +
+      '<p class="start-sub">あなたが最初にAIに任せる仕事、3分でわかります。</p>' +
+      '<p class="start-note">無料・登録なしで、最後まで診断できます。</p>' +
+      '<button class="btn" id="start-btn">診断をはじめる</button>' +
+      '<p class="byline">いチ（@ichi_ai_lab）｜AI活用で自分時間を1日+3時間</p>' +
+    '</div>';
+  document.getElementById("start-btn").onclick = () => { state.step = 1; render(); };
+}
+
+function optionButtons(options, onPick) {
+  return options.map((o, i) =>
+    '<button class="option" data-i="' + i + '">' + esc(o.label) + '</button>'
+  ).join("");
+}
+
+function bindOptions(onPick) {
+  screenEl.querySelectorAll(".option").forEach(btn => {
+    btn.onclick = () => {
+      btn.classList.add("selected");
+      setTimeout(() => onPick(Number(btn.dataset.i)), 220);
+    };
+  });
+  const back = screenEl.querySelector(".btn-back");
+  if (back) back.onclick = () => { goBack(); };
+}
+
+function goBack() {
+  if (state.step >= 2 && state.step <= 7) state.answerCats.pop();
+  if (state.step === 8) state.q7Key = null;
+  state.step -= 1;
+  if (state.step < 1) state.step = 1;
+  // 戻った質問の回答も取り消す（answerCats は step-1 個であるべき）
+  while (state.answerCats.length > state.step - 1) state.answerCats.pop();
+  render();
+}
+
+function renderQuestion(qi) {
+  const q = DATA.questions[qi];
+  screenEl.innerHTML =
+    '<div class="screen">' +
+      '<div class="q-number">Q' + (qi + 1) + '</div>' +
+      '<div class="q-text">' + esc(q.text) + '</div>' +
+      optionButtons(q.options) +
+      (qi > 0 ? '<button class="btn-back">ひとつ前に戻る</button>' : '') +
+    '</div>';
+  bindOptions(i => {
+    state.answerCats.push(q.options[i].cat);
+    state.step += 1;
+    render();
+  });
+}
+
+function renderQ7() {
+  screenEl.innerHTML =
+    '<div class="screen">' +
+      '<div class="q-number">Q7</div>' +
+      '<div class="q-text">' + esc(DATA.q7.text) + '</div>' +
+      optionButtons(DATA.q7.options) +
+      '<button class="btn-back">ひとつ前に戻る</button>' +
+    '</div>';
+  bindOptions(i => {
+    state.q7Key = DATA.q7.options[i].key;
+    state.step = 8;
+    render();
+  });
+}
+
+function renderChecklist() {
+  const items = DATA.checklist.map((c, i) =>
+    '<div class="check-item' + (state.checked.has(i) ? " checked" : "") + '" data-i="' + i + '">' +
+      '<span class="check-box">' + CHECK_SVG + '</span>' +
+      '<span>' + esc(c.label) + '</span>' +
+    '</div>'
+  ).join("");
+  screenEl.innerHTML =
+    '<div class="screen">' +
+      '<div class="q-number">最後のステップ</div>' +
+      '<div class="q-text">今週やった仕事、ぜんぶチェックしてください</div>' +
+      '<p class="check-intro">あなたの時間がどこに使われているか、その場で計算します。当てはまるものが無ければ、そのまま結果へどうぞ。</p>' +
+      items +
+      '<div id="live-total"><span class="lt-label">いまのチェックだと</span><span class="lt-value" id="lt-value">週 0時間</span></div>' +
+      '<button class="btn" id="to-result">結果を見る</button>' +
+      '<button class="btn-back">ひとつ前に戻る</button>' +
+    '</div>';
+
+  function refreshTotal() {
+    let t = 0;
+    state.checked.forEach(i => { t += DATA.checklist[i].hours; });
+    document.getElementById("lt-value").textContent = "週 " + (Math.round(t * 10) / 10) + "時間";
+  }
+  refreshTotal();
+
+  screenEl.querySelectorAll(".check-item").forEach(el => {
+    el.onclick = () => {
+      const i = Number(el.dataset.i);
+      if (state.checked.has(i)) { state.checked.delete(i); el.classList.remove("checked"); }
+      else { state.checked.add(i); el.classList.add("checked"); }
+      refreshTotal();
+    };
+  });
+  document.getElementById("to-result").onclick = () => { state.step = 9; render(); };
+  screenEl.querySelector(".btn-back").onclick = () => { state.step = 7; render(); };
+}
+
+
+/* ===== 結果画面v2: キャラクター・レーダーチャート ===== */
+const NICKS = { research: "あつめリスさん", content: "よふかしフクロウさん", admin: "はたらきバチさん" };
+const CHARS = {
+research: '<svg class="char" viewBox="0 0 120 120">'
+ +'<path d="M76 80 C106 76 112 40 92 24 C102 46 94 68 70 72 Z" fill="#E8A06B"/>'
+ +'<path d="M80 76 C100 70 102 48 90 38 C96 52 90 64 74 68 Z" fill="#F2BE8C" opacity=".8"/>'
+ +'<ellipse cx="56" cy="82" rx="25" ry="20" fill="#F2B98A"/>'
+ +'<circle cx="54" cy="48" r="23" fill="#F2B98A"/>'
+ +'<path d="M38 32 L34 18 L48 26 Z" fill="#E8A06B"/><path d="M70 32 L74 18 L60 26 Z" fill="#E8A06B"/>'
+ +'<ellipse cx="56" cy="88" rx="14" ry="10" fill="#FBEFDF"/>'
+ +'<circle cx="46" cy="47" r="2.6" fill="#42301F"/><circle cx="63" cy="47" r="2.6" fill="#42301F"/>'
+ +'<circle cx="41" cy="54" r="4" fill="#F2A0B0" opacity=".55"/><circle cx="68" cy="54" r="4" fill="#F2A0B0" opacity=".55"/>'
+ +'<path d="M52 55 Q54.5 58 57 55" stroke="#42301F" stroke-width="1.6" fill="none" stroke-linecap="round"/>'
+ +'<ellipse cx="55" cy="72" rx="6.5" ry="8" fill="#C98F5E"/><path d="M48.5 68 Q55 63 61.5 68 L60 71 Q55 67.5 50 71 Z" fill="#8F6239"/>'
+ +'</svg>',
+content: '<svg class="char" viewBox="0 0 120 120">'
+ +'<ellipse cx="60" cy="74" rx="27" ry="28" fill="#C9B8E8"/>'
+ +'<ellipse cx="60" cy="82" rx="17" ry="18" fill="#EFE9FA"/>'
+ +'<circle cx="60" cy="44" r="25" fill="#C9B8E8"/>'
+ +'<path d="M40 26 L36 12 L50 20 Z" fill="#B3A0DC"/><path d="M80 26 L84 12 L70 20 Z" fill="#B3A0DC"/>'
+ +'<circle cx="50" cy="44" r="9" fill="#fff"/><circle cx="70" cy="44" r="9" fill="#fff"/>'
+ +'<path d="M41 40 A9 9 0 0 1 59 40 L59 44 L41 44 Z" fill="#C9B8E8"/>'
+ +'<path d="M61 40 A9 9 0 0 1 79 40 L79 44 L61 44 Z" fill="#C9B8E8"/>'
+ +'<circle cx="50" cy="46.5" r="3" fill="#3A3050"/><circle cx="70" cy="46.5" r="3" fill="#3A3050"/>'
+ +'<path d="M57 53 L60 57 L63 53 Z" fill="#E8B77A"/>'
+ +'<rect x="79" y="62" width="5" height="26" rx="2.5" transform="rotate(24 81.5 75)" fill="#8F7DD8"/>'
+ +'<path d="M89.5 90 L93 96 L87.5 94.5 Z" fill="#4E4368"/>'
+ +'<circle cx="44" cy="54" r="4" fill="#F2A0B0" opacity=".5"/><circle cx="76" cy="54" r="4" fill="#F2A0B0" opacity=".5"/>'
+ +'</svg>',
+admin: '<svg class="char" viewBox="0 0 120 120">'
+ +'<ellipse cx="38" cy="42" rx="15" ry="9" fill="#EAF4F8" opacity=".9" transform="rotate(-24 38 42)"/>'
+ +'<ellipse cx="82" cy="42" rx="15" ry="9" fill="#EAF4F8" opacity=".9" transform="rotate(24 82 42)"/>'
+ +'<ellipse cx="60" cy="72" rx="26" ry="23" fill="#F2CE6B"/>'
+ +'<path d="M36 66 Q60 58 84 66 L84 74 Q60 66 36 74 Z" fill="#6B5A3A"/>'
+ +'<path d="M38 82 Q60 74 82 82 L82 88 Q60 81 38 88 Z" fill="#6B5A3A"/>'
+ +'<circle cx="60" cy="42" r="21" fill="#F2CE6B"/>'
+ +'<path d="M50 24 Q46 14 40 12" stroke="#6B5A3A" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="40" cy="11" r="3" fill="#6B5A3A"/>'
+ +'<path d="M70 24 Q74 14 80 12" stroke="#6B5A3A" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="80" cy="11" r="3" fill="#6B5A3A"/>'
+ +'<circle cx="52" cy="42" r="2.6" fill="#42301F"/><circle cx="68" cy="42" r="2.6" fill="#42301F"/>'
+ +'<circle cx="46" cy="49" r="4" fill="#F2A0B0" opacity=".55"/><circle cx="74" cy="49" r="4" fill="#F2A0B0" opacity=".55"/>'
+ +'<path d="M56 50 Q60 54 64 50" stroke="#42301F" stroke-width="1.6" fill="none" stroke-linecap="round"/>'
+ +'<rect x="47" y="66" width="19" height="24" rx="3" fill="#FDFBF6" stroke="#D8CFBB" transform="rotate(-6 56 78)"/>'
+ +'<path d="M51 72 L61 71 M51.5 77 L61.5 76 M52 82 L58 81.4" stroke="#B9AE95" stroke-width="1.6" stroke-linecap="round" transform="rotate(-6 56 78)"/>'
+ +'<path d="M52 71.6 L54 73.6 L57.5 69.6" stroke="#4E9E7E" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="rotate(-6 56 78)"/>'
+ +'</svg>'
+};
+/* 6軸レーダー: 質問スコア+チェックリスト時間から算出(見える化用) */
+function computeAxes(scores, checkedIdx) {
+  const h = i => (checkedIdx.includes(i) ? DATA.checklist[i].hours : 0);
+  const raw = [
+    h(0) + h(1) + scores.research * 1.1,        /* ネタ探し */
+    h(4) + h(5) + h(7) + scores.content * 1.1,  /* 文章 */
+    h(6) * 1.4 + scores.content * .5,           /* 画像・動画 */
+    h(8) * 1.6 + scores.admin * .7,             /* 返信・対応 */
+    h(9) + h(10) + h(11) + scores.admin * .8,   /* 事務・お金 */
+    h(2) + h(3) + scores.research * .7          /* 学び・情報 */
+  ];
+  const mx = Math.max(...raw, 1);
+  return raw.map(v => Math.max(14, Math.round(v / (mx * 1.12) * 100)));
+}
+function radarSVG(vals) {
+  const cx = 165, cy = 128, r = 86, n = 6;
+  const LBL = ["ネタ探し", "文章", "画像・動画", "返信・対応", "事務・お金", "学び・情報"];
+  const pt = (i, rr) => {
+    const a = -Math.PI / 2 + i * Math.PI * 2 / n;
+    return [cx + Math.cos(a) * rr, cy + Math.sin(a) * rr];
+  };
+  let grid = "";
+  [0.33, 0.66, 1].forEach(k => {
+    const ps = Array.from({ length: n }, (_, i) => pt(i, r * k).map(v => v.toFixed(1)).join(",")).join(" ");
+    grid += '<polygon points="' + ps + '" fill="none" stroke="rgba(22,20,15,.1)" stroke-width="1"/>';
+  });
+  let axes = "";
+  for (let i = 0; i < n; i++) {
+    const [x, y] = pt(i, r);
+    axes += '<line x1="' + cx + '" y1="' + cy + '" x2="' + x.toFixed(1) + '" y2="' + y.toFixed(1) + '" stroke="rgba(22,20,15,.08)"/>';
+  }
+  const poly = vals.map((v, i) => pt(i, r * v / 100).map(x => x.toFixed(1)).join(",")).join(" ");
+  let dots = "", labels = "";
+  const LC = ["#B95F84", "#6C55BE", "#8F7DD8", "#3E8266", "#4E9E7E", "#C08A3E"];
+  vals.forEach((v, i) => {
+    const [x, y] = pt(i, r * v / 100);
+    dots += '<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="3.2" fill="' + LC[i] + '"/>';
+    const [lx, ly] = pt(i, r + 20);
+    labels += '<text x="' + lx.toFixed(1) + '" y="' + (ly + 4).toFixed(1) + '" text-anchor="middle" font-size="11" fill="rgba(22,20,15,.62)" font-weight="600">' + LBL[i] + '</text>';
+  });
+  return '<svg viewBox="0 0 330 262">'
+    + '<defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1">'
+    + '<stop offset="0" stop-color="#D4849F"/><stop offset=".5" stop-color="#8F7DD8"/><stop offset="1" stop-color="#4E9E7E"/>'
+    + '</linearGradient></defs>'
+    + grid + axes
+    + '<polygon points="' + poly + '" fill="url(#rg)" fill-opacity=".3" stroke="url(#rg)" stroke-width="2.2" stroke-linejoin="round"/>'
+    + dots + labels + '</svg>';
+}
+
+function renderResult() {
+  const r = computeResult(state.answerCats, state.q7Key, [...state.checked]);
+  const t = DATA.types[r.type];
+  const axes = computeAxes(r.scores, [...state.checked]);
+
+  const numBlock = r.weekly > 0
+    ? '<div class="num-row2">' +
+        '<div class="num-box2"><div class="num-big2">' + r.weekly + '</div><div class="num-unit2">時間 / 週</div></div>' +
+        '<div class="num-box2"><div class="num-big2">約' + r.yearly + '</div><div class="num-unit2">時間 / 年</div></div>' +
+      '</div>' +
+      '<p class="num-note2">いちばん重い「<b>' + esc(r.topItem) + '</b>」は、AIに下書きと準備を任せて、仕上げだけ自分でやる形にできます。</p>'
+    : '<p class="num-note2">今週は落ち着いた週だったのかも。忙しい週を思い出して、もう一度チェックしてみるのもおすすめです。</p>';
+
+  screenEl.innerHTML =
+    '<div class="screen result-pad">' +
+      '<p class="result-eyebrow">YOUR RESULT — あなたの診断結果</p>' +
+      '<div class="type-card">' +
+        CHARS[r.type] +
+        '<div class="nick">' + esc(NICKS[r.type]) + '</div>' +
+        '<div class="type-name">' + esc(t.name) + '</div>' +
+        '<p class="type-desc">' + esc(t.desc) + '</p>' +
+        '<button class="share-btn" id="share-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="M16 6l-4-4-4 4"/><line x1="12" y1="2" x2="12" y2="15"/></svg>この結果をシェアする</button>' +
+      '</div>' +
+      '<div class="stat-card">' +
+        '<div class="nc-title">あなたの時間の使いかたマップ</div>' +
+        '<div class="radar-wrap">' + radarSVG(axes) + '</div>' +
+        numBlock +
+      '</div>' +
+      '<div class="section-card">' +
+        '<div class="sc-label">あなたの最初のAI社員</div>' +
+        '<div class="sc-title">' + esc(t.aiName) + '</div>' +
+        '<p class="sc-body">' + esc(t.aiDesc) + '</p>' +
+        '<div class="prompt-box" id="prompt-text">' + esc(t.prompt) + '</div>' +
+        '<button class="prompt-copy" id="copy-btn">この文をコピーする</button>' +
+      '</div>' +
+      '<div class="yohaku">' + esc(DATA.q7lines[r.q7Key]) + '</div>' +
+      '<div class="cta-card">' +
+        '<div class="cta-title">' + esc(NICKS[r.type]) + 'のあなた専用、<br>プロンプト集をプレゼント</div>' +
+        '<p class="cta-body">コピペで使える「' + esc(t.aiName) + '」のお願い文をまとめた1枚を、LINEでお渡ししています。</p>' +
+        '<div class="steps3">' +
+          '<div class="step3"><div class="sn2">1</div><p><b>LINEを追加</b>下のボタンから</p></div>' +
+          '<div class="step3"><div class="sn2">2</div><p><b>「診断」と送る</b>ひとことでOK</p></div>' +
+          '<div class="step3"><div class="sn2">3</div><p><b>受け取る</b>プロンプト集が届く</p></div>' +
+        '</div>' +
+        '<a class="btn btn-line" href="' + DATA.lineUrl + '" target="_blank" rel="noopener">LINEでプロンプト集を受け取る</a>' +
+        '<p class="cta-note">結果画面はスクショで保存できます</p>' +
+      '</div>' +
+      '<div class="retry"><button id="retry-btn">もう一度診断する</button></div>' +
+      '<p class="privacy">この診断は、回答をどこにも送信していません。結果はこの画面の中だけで計算しています。</p>' +
+      '<a class="sticky-cta" href="' + DATA.lineUrl + '" target="_blank" rel="noopener">LINEでプロンプト集を受け取る</a>' +
+    '</div>';
+
+  document.getElementById("share-btn").onclick = function () {
+    const text = '私のAI社員タイプ診断は「' + t.name + '」（' + NICKS[r.type] + '）でした！\nあなたが最初にAIに任せる仕事がわかる、3分の無料診断はこちら';
+    const url = location.href;
+    if (navigator.share) {
+      navigator.share({ title: "AI社員タイプ診断", text: text, url: url }).catch(() => {});
+    } else {
+      const done = () => { this.textContent = "コピーしました！SNSに貼ってシェアできます"; };
+      if (navigator.clipboard) navigator.clipboard.writeText(text + "\n" + url).then(done.bind(this));
+    }
+  };
+  document.getElementById("copy-btn").onclick = function () {
+    const txt = t.prompt;
+    const done = () => { this.textContent = "コピーしました"; setTimeout(() => { this.textContent = "この文をコピーする"; }, 1600); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).then(done.bind(this));
+    } else {
+      const ta = document.createElement("textarea");
+      ta.value = txt; document.body.appendChild(ta); ta.select();
+      document.execCommand("copy"); document.body.removeChild(ta);
+      done.call(this);
+    }
+  };
+  document.getElementById("retry-btn").onclick = () => {
+    state.step = 0; state.answerCats = []; state.q7Key = null; state.checked = new Set();
+    render();
+  };
+}
+
+render();
+
+/* node からのロジックテスト用 */
+if (typeof module !== "undefined") { module.exports = { computeResult, DATA }; }
+</script>
+</body>
+</html>
