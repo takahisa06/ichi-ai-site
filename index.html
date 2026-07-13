@@ -458,6 +458,29 @@ h2{letter-spacing:.02em}
   -webkit-text-stroke:1px var(--ac);margin-bottom:14px;opacity:.75}
 .pcard b{display:block;font-family:var(--f-min);font-weight:600;font-size:16.5px;line-height:1.6;margin-bottom:12px}
 .pcard p{font-size:13px;line-height:2;color:rgba(22,20,15,.72)}
+/* VOICEスライダー */
+const vsl=document.getElementById('vslider');
+if(vsl){
+  const cards=[...vsl.children];
+  const dots=document.getElementById('vdots');
+  cards.forEach((_,i)=>{const d=document.createElement('i');if(i===0)d.className='on';dots.appendChild(d)});
+  const dEls=[...dots.children];
+  vsl.addEventListener('scroll',()=>{
+    const i=Math.round(vsl.scrollLeft/vsl.clientWidth);
+    dEls.forEach((d,j)=>d.classList.toggle('on',j===i));
+  },{passive:true});
+  const step=dir=>vsl.scrollBy({left:dir*vsl.clientWidth,behavior:'smooth'});
+  const pv=document.getElementById('vprev'),nx=document.getElementById('vnext');
+  if(pv)pv.addEventListener('click',()=>step(-1));
+  if(nx)nx.addEventListener('click',()=>step(1));
+}
+/* 診断カード全体をクリック可能に */
+const sbig=document.getElementById('shindan');
+if(sbig)sbig.addEventListener('click',e=>{
+  if(e.target.closest('a'))return;
+  location.href='./shindan/';
+});
+
 /* メンバー詳細モーダル */
 #mdl{position:fixed;inset:0;z-index:120;display:none;align-items:center;justify-content:center;padding:20px}
 body.mdl-open #mdl{display:flex}
@@ -503,6 +526,62 @@ body.mdl-open #mdl{display:flex}
 .bsl{font-size:12px;letter-spacing:.06em;color:var(--lt70);margin-top:6px}
 .bsl small{color:var(--lt40)}
 @media (max-width:640px){.prof{flex-direction:column;align-items:flex-start}}
+
+/* ============ v15: 裏方コピー/実写アバター/VOICEスライダー/診断ポップカード ============ */
+.pf-ava{overflow:hidden;padding:0}
+.pf-ava img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.bsl2{font-size:12px;letter-spacing:.14em;color:var(--lt40);margin-bottom:8px}
+.bsv small{font-size:.34em;letter-spacing:.06em;margin-left:8px}
+/* FV主ボタンはグラデ強調 */
+#fv .btn{background:linear-gradient(100deg,#F0B7CE,#C9B8F5 55%,#FFDF9E);color:var(--ink)}
+#fv .btn i{background:var(--paper)}
+#fv .btn:hover{color:var(--ink)}
+/* VOICEスライダー */
+.vwrap{display:flex;align-items:center;gap:14px;max-width:980px;position:relative;z-index:2}
+.vslider{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;flex:1;border-radius:26px}
+.vslider::-webkit-scrollbar{display:none}
+.vslider .vcard{flex:0 0 100%;scroll-snap-align:center;padding:clamp(34px,5vw,56px) clamp(30px,5vw,64px) clamp(30px,4vw,44px)}
+.vslider .vcard p{font-size:clamp(16px,1.9vw,20px);line-height:2.3;padding-left:34px;margin:14px 0 22px}
+.vslider .vcard::before{font-size:84px;top:56px;left:30px}
+.vslider .vcard .who{font-size:12.5px;padding-left:34px}
+.varrow{width:46px;height:46px;flex:0 0 46px;border-radius:50%;border:1px solid var(--ink30);background:rgba(255,255,255,.6);
+  cursor:pointer;color:var(--ink);font-size:16px;transition:background .3s,color .3s,transform .3s var(--ease)}
+.varrow:hover{background:var(--ink);color:var(--paper);transform:scale(1.08)}
+.vdots{display:flex;gap:8px;margin-top:18px;position:relative;z-index:2;padding-left:60px}
+.vdots i{width:7px;height:7px;border-radius:50%;background:var(--ink30);transition:width .35s var(--ease),background .35s;display:block}
+.vdots i.on{width:22px;border-radius:4px;background:linear-gradient(90deg,#D4849F,#8F7DD8)}
+@media (max-width:640px){.varrow{display:none}.vdots{padding-left:4px}}
+/* 診断ポップカード */
+.shinbig{display:flex;align-items:center;gap:clamp(18px,3vw,34px);flex-wrap:wrap;
+  max-width:940px;margin-top:52px;padding:clamp(26px,4vw,42px) clamp(24px,4vw,44px);
+  border-radius:30px;position:relative;z-index:2;cursor:pointer;
+  background:rgba(255,255,255,.78);backdrop-filter:blur(16px);
+  box-shadow:0 40px 90px -40px rgba(90,70,140,.5);
+  transition:transform .45s var(--ease),box-shadow .45s}
+.shinbig::before{content:"";position:absolute;inset:0;border-radius:30px;padding:2px;
+  background:var(--gradbar,linear-gradient(90deg,#D4849F,#8F7DD8 45%,#D8A25C));
+  background:linear-gradient(120deg,#D4849F,#8F7DD8 45%,#D8A25C);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.shinbig:hover{transform:translateY(-8px);box-shadow:0 54px 110px -44px rgba(90,70,140,.6)}
+.sb-chars{display:flex;flex:0 0 auto}
+.sb-chars svg{width:clamp(52px,6vw,72px);height:auto;margin-left:-16px;
+  filter:drop-shadow(0 8px 14px rgba(90,70,140,.25));animation:sbfloat 4.5s ease-in-out infinite}
+.sb-chars svg:first-child{margin-left:0}
+.sb-chars svg:nth-child(2){animation-delay:.6s}
+.sb-chars svg:nth-child(3){animation-delay:1.2s}
+@keyframes sbfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.sb-body{flex:1;min-width:240px}
+.sb-ey{font-family:var(--f-en);font-size:9.5px;letter-spacing:.32em;color:#8F7DD8;margin-bottom:10px}
+.sb-body b{display:block;font-family:var(--f-min);font-weight:600;font-size:clamp(19px,2.4vw,26px);line-height:1.6;margin-bottom:10px}
+.sb-body p{font-size:13px;line-height:2;color:rgba(22,20,15,.72);max-width:34em}
+.sb-btn{margin-top:0;flex:0 0 auto;background:linear-gradient(100deg,#6C55BE,#B95F84);padding:18px 38px}
+.sb-btn i{background:var(--ink)}
+/* 下からポヨンと登場 */
+.rv-pop{opacity:0;transform:translateY(90px) scale(.94)}
+.rv-pop.in{animation:popin .9s cubic-bezier(.34,1.56,.64,1) forwards}
+@keyframes popin{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.rv-pop{opacity:1;transform:none}.rv-pop.in{animation:none}.sb-chars svg{animation:none}}
 </style>
 
 <div id="fallback"></div>
@@ -570,7 +649,7 @@ body.mdl-open #mdl{display:flex}
   <h1 class="chars" id="headline">AIにまかせて、<br>1日3時間の<em class="grad" style="font-style:normal">余白</em>を。</h1>
   <p class="lead sub rv d2">発信も、販売も、事務も、ぜんぶ自分。<br>その毎日を、あなた専用のAIチームに引き継ぐ。<br>現役の運用代行の裏方が、3ヶ月伴走します。</p>
   <div class="fv-cta rv d3">
-    <a class="btn" href="https://lin.ee/NC90E0Z" target="_blank" rel="noopener" data-mag><i></i><em>LINEで無料相談</em></a>
+    <a class="btn" href="./shindan/" data-mag><i></i><em>無料3分診断 — 最初のAI社員がわかる</em></a>
     <a class="ghostb" href="#team" data-mag><i></i><em>サービスを見る</em></a>
   </div>
   </div>
@@ -651,7 +730,7 @@ body.mdl-open #mdl{display:flex}
   <blockquote class="rv-mask">机上のAI講師ではなく、<br>YouTube・Instagram運用代行を<br>実事業で行う<span class="hl">「現役の裏方」</span>。</blockquote>
   <p class="lead why rv d2">発信の業務フローを、毎日まわしている側の人間です。<br>だから「どの作業をAIに任せると本当に楽になるか」を、実務の解像度で設計できます。<br>講座で終わらせず、仕組みの定着まで。</p>
   <div class="prof rv d3">
-    <div class="pf-ava"><span>いチ</span></div>
+    <div class="pf-ava"><img src="data:image/jpeg;base64,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" alt="いチ"></div>
     <div class="pf-body">
       <div class="pf-name">いチ <small>@ichi_ai_lab</small></div>
       <div class="pf-tag">AI活用 × 裏方のプロ。1日1個のAI活用で、発信者の時間をつくる。</div>
@@ -663,8 +742,9 @@ body.mdl-open #mdl{display:flex}
     </div>
   </div>
   <div class="bigstat rv d4">
-    <div class="bsv" id="totalfw">約215万</div>
-    <div class="bsl">サポート実績アカウント 合計フォロワー<small>（2026年7月時点・Instagram/YouTube/TikTok）</small></div>
+    <div class="bsl2">サポートしてきた発信者の合計フォロワー</div>
+    <div class="bsv" id="totalfw">約215万<small>フォロワー</small></div>
+    <div class="bsl">— その全員の「裏方」が、私の仕事です。<small>（2026年7月時点・Instagram / YouTube / TikTok）</small></div>
   </div>
   <div class="facts rv d4">
     <span>YouTube・IG運用代行の実事業</span><span>法人運営（株式会社ワドナスタジオ）</span><span>完全マンツーマン</span>
@@ -676,10 +756,15 @@ body.mdl-open #mdl{display:flex}
   <div class="wm fill" data-sp="-0.07" style="left:-2vw;top:8vh">VOICE</div>
   <div class="ch-no rv">CH.05 — VOICE　受講生の声</div>
   <h2 class="rv-mask">「自分専用」だから、<br>続けられる。</h2>
-  <div class="vgrid">
-    <div class="vcard rv-sc d1"><div class="vtag">SAMPLE</div><p>投稿づくりが半日仕事から1時間に。空いた時間で、ずっと後回しだった新しい講座づくりを始められました。</p><div class="who">30代・講座業（サンプル表示）</div></div>
-    <div class="vcard rv-sc d2"><div class="vtag">SAMPLE</div><p>DM対応をAIに任せたら、夜に家族と過ごす時間が戻ってきました。返信の質はむしろ上がっています。</p><div class="who">40代・サロン運営（サンプル表示）</div></div>
+  <div class="vwrap rv-sc d1">
+    <button class="varrow" id="vprev" aria-label="前の声へ">←</button>
+    <div class="vslider" id="vslider">
+      <div class="vcard"><div class="vtag">SAMPLE</div><p>投稿づくりが半日仕事から1時間に。空いた時間で、ずっと後回しだった新しい講座づくりを始められました。</p><div class="who">30代・講座業（サンプル表示）</div></div>
+      <div class="vcard"><div class="vtag">SAMPLE</div><p>DM対応をAIに任せたら、夜に家族と過ごす時間が戻ってきました。返信の質はむしろ上がっています。</p><div class="who">40代・サロン運営（サンプル表示）</div></div>
+    </div>
+    <button class="varrow" id="vnext" aria-label="次の声へ">→</button>
   </div>
+  <div class="vdots" id="vdots"></div>
   <div class="vnote rv d3">実際のお客様の声は、掲載許諾をいただいたものから順次掲載します。</div>
 </section>
 
@@ -702,9 +787,18 @@ body.mdl-open #mdl{display:flex}
   <h2 class="rv-mask">夕方5時。<br>今日の仕事は、もう終わっている。</h2>
   <p class="lead rv d2">その余白で、家族と過ごすか。次の挑戦を始めるか。<br>決めるのは、あなたです。<br>まずは現状の棚卸しから。無料で相談できます。</p>
   <div class="rv d3" style="margin-top:40px;position:relative;z-index:2"><a class="btn" href="https://lin.ee/NC90E0Z" target="_blank" rel="noopener" data-mag><i></i><em>LINEで無料相談</em></a></div>
-  <div id="shindan" class="shin rv d4">
-    <div style="flex:1;min-width:220px"><b>AI社員タイプ診断（無料・3分）</b><span>「相談はまだ早いかな」という方へ。あなたの仕事に最初に必要なAI社員のタイプがわかる診断です。</span></div>
-    <a class="ghostb" href="./shindan/" data-mag><i></i><em>診断してみる</em></a>
+  <div id="shindan" class="shinbig rv-pop">
+    <div class="sb-chars">
+      <svg viewBox="0 0 120 120"><path d="M76 80 C106 76 112 40 92 24 C102 46 94 68 70 72 Z" fill="#E8A06B"/><ellipse cx="56" cy="82" rx="25" ry="20" fill="#F2B98A"/><circle cx="54" cy="48" r="23" fill="#F2B98A"/><path d="M38 32 L34 18 L48 26 Z" fill="#E8A06B"/><path d="M70 32 L74 18 L60 26 Z" fill="#E8A06B"/><circle cx="46" cy="47" r="2.6" fill="#42301F"/><circle cx="63" cy="47" r="2.6" fill="#42301F"/><circle cx="41" cy="54" r="4" fill="#F2A0B0" opacity=".55"/><circle cx="68" cy="54" r="4" fill="#F2A0B0" opacity=".55"/><ellipse cx="55" cy="72" rx="6.5" ry="8" fill="#C98F5E"/></svg>
+      <svg viewBox="0 0 120 120"><ellipse cx="60" cy="74" rx="27" ry="28" fill="#C9B8E8"/><ellipse cx="60" cy="82" rx="17" ry="18" fill="#EFE9FA"/><circle cx="60" cy="44" r="25" fill="#C9B8E8"/><path d="M40 26 L36 12 L50 20 Z" fill="#B3A0DC"/><path d="M80 26 L84 12 L70 20 Z" fill="#B3A0DC"/><circle cx="50" cy="44" r="9" fill="#fff"/><circle cx="70" cy="44" r="9" fill="#fff"/><circle cx="50" cy="46.5" r="3" fill="#3A3050"/><circle cx="70" cy="46.5" r="3" fill="#3A3050"/><path d="M57 53 L60 57 L63 53 Z" fill="#E8B77A"/></svg>
+      <svg viewBox="0 0 120 120"><ellipse cx="38" cy="42" rx="15" ry="9" fill="#EAF4F8" opacity=".9" transform="rotate(-24 38 42)"/><ellipse cx="82" cy="42" rx="15" ry="9" fill="#EAF4F8" opacity=".9" transform="rotate(24 82 42)"/><ellipse cx="60" cy="72" rx="26" ry="23" fill="#F2CE6B"/><path d="M36 66 Q60 58 84 66 L84 74 Q60 66 36 74 Z" fill="#6B5A3A"/><path d="M38 82 Q60 74 82 82 L82 88 Q60 81 38 88 Z" fill="#6B5A3A"/><circle cx="60" cy="42" r="21" fill="#F2CE6B"/><circle cx="52" cy="42" r="2.6" fill="#42301F"/><circle cx="68" cy="42" r="2.6" fill="#42301F"/><path d="M56 50 Q60 54 64 50" stroke="#42301F" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+    </div>
+    <div class="sb-body">
+      <div class="sb-ey">FREE — 3MIN DIAGNOSIS</div>
+      <b>あなたの最初のAI社員は、<br>どの部署から？</b>
+      <p>7つの質問で、いま一番あなたの時間を奪っている仕事と、最初に任せるべきAI社員がわかります。無料・3分・登録なし。</p>
+    </div>
+    <a class="btn sb-btn" href="./shindan/" data-mag><i></i><em>診断をはじめる</em></a>
   </div>
   <div class="note rv d4" style="margin-top:26px">想像の果てまで行っても、最初の一歩はいつも、今日の日常から。</div>
   <div class="note rv d4" style="margin-top:10px">運営：株式会社ワドナスタジオ</div>
@@ -838,7 +932,7 @@ requestAnimationFrame(()=>requestAnimationFrame(()=>hl.classList.add('go')));
 
 /* ========== リビール ========== */
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.16});
-document.querySelectorAll('.rv,.rv-l,.rv-r,.rv-sc,.rv-mask,.pain,.steps').forEach(el=>io.observe(el));
+document.querySelectorAll('.rv,.rv-l,.rv-r,.rv-sc,.rv-mask,.rv-pop,.pain,.steps').forEach(el=>io.observe(el));
 
 /* ========== 章ナビ現在地 + 黒章検知 ========== */
 const secs=[...document.querySelectorAll('section')];
