@@ -381,7 +381,8 @@ const DATA = {
     D2: "空いた時間は家族と自分に、と答えたあなたへ。そのための時短です。仕事を増やすためじゃなくて。",
     D3: "まず溜まった仕事を片付けたい、と答えたあなたへ。だからこそ、片付ける作業そのものをAIと分けるところからです。"
   },
-  lineUrl: "https://lin.ee/NC90E0Z"
+  lineUrl: "https://lin.ee/NC90E0Z",
+  lineKeyword: "プロンプト"
 };
 
 /* ============================================================
@@ -722,7 +723,7 @@ function renderResult() {
         '<p class="cta-body">コピペで使える「' + esc(t.aiName) + '」のお願い文をまとめた1枚を、LINEでお渡ししています。</p>' +
         '<div class="steps3">' +
           '<div class="step3"><div class="sn2">1</div><p><b>LINEを追加</b>下のボタンから</p></div>' +
-          '<div class="step3"><div class="sn2">2</div><p><b>「診断」と送る</b>ひとことでOK</p></div>' +
+          '<div class="step3"><div class="sn2">2</div><p><b>「' + esc(DATA.lineKeyword) + '」と送る</b>ひとことでOK</p></div>' +
           '<div class="step3"><div class="sn2">3</div><p><b>受け取る</b>プロンプト集が届く</p></div>' +
         '</div>' +
         '<a class="btn btn-line" href="' + DATA.lineUrl + '" target="_blank" rel="noopener">LINEでプロンプト集を受け取る</a>' +
