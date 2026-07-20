@@ -683,6 +683,13 @@ body.show-case-notes .case-devnote{display:block}
   .case-metric{gap:8px}.case-metric b{font-size:18px}
 }
 @media (prefers-reduced-motion: reduce){.case-panel{transition:none}}
+
+/* ============ v19: 漫画パネル品質補正(表示幅適正化・白フチ切り・色調統一) ============ */
+.case-grid{grid-template-columns:repeat(auto-fit,minmax(300px,470px));justify-content:center}
+.case-visual img{transform:scale(1.055);filter:saturate(.82) contrast(1.06) brightness(1.02)}
+.case-visual::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(125deg,rgba(240,183,206,.16),rgba(201,184,245,.14) 50%,rgba(255,223,158,.13));
+  mix-blend-mode:soft-light}
 </style>
 </head>
 <body>
