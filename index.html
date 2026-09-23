@@ -690,6 +690,41 @@ body.show-case-notes .case-devnote{display:block}
 .case-visual::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
   background:linear-gradient(125deg,rgba(240,183,206,.16),rgba(201,184,245,.14) 50%,rgba(255,223,158,.13));
   mix-blend-mode:soft-light}
+
+/* ==========================================================
+   2026-09-23 スマホ表示の修復（幅900px以下にだけ効く／901px以上は不変）
+   (1) スクロール連動の出現演出を「必ず読める」側へ倒す。
+       中身は最初から不透明で、動きは .in が付いたときの上乗せだけ。
+       慣性スクロールで IntersectionObserver を取りこぼしても本文は残る。
+   (2) FVの見出しと本文が語の途中で切れないようにする。
+   (3) CH.02 のピン留め横流しを解除し、指で送る横カルーセルへ戻す。
+       （はみ出しを body で隠すのではなく、幅の指定そのものを直す）
+   ========================================================== */
+@keyframes mrise{from{transform:translateY(14px)}to{transform:none}}
+@media (max-width:900px){
+  /* (1) 出現演出は上乗せのみ。既定は読める状態 */
+  .rv,.rv-l,.rv-r,.rv-sc,.rv-pop{opacity:1;transform:none;transition:none}
+  .rv-mask{opacity:1;animation:none}
+  .rv.in,.rv-l.in,.rv-r.in,.rv-sc.in,.rv-pop.in,.rv-mask.in{animation:mrise .6s var(--ease) both}
+  /* (2) FV: 見出しは1行に収め、本文は文節で折り返す */
+  #fv h1{font-size:clamp(25px,7vw,32px)}
+  .nw{display:inline-block}
+  /* (3) CH.02: 横流しをやめ、横スワイプのカルーセルに戻す */
+  #pinouter{height:auto!important}
+  #team .pin-inner{position:static;height:auto;overflow:visible;padding:72px var(--pad)}
+  #team .hwrap{overflow-x:auto;overflow-y:hidden;width:auto;max-width:100%;
+    scroll-snap-type:x proximity;transform:none!important;will-change:auto;padding:22px 2px 26px}
+  #team .hcard{scroll-snap-align:start;opacity:1}
+  /* 中央強調(.act)が付いても hintro は黒背景のまま＝白文字を読めるようにする */
+  .hintro.act{background:#15131A}
+  /* 黒カードの中の文字を読める色に戻す（.tcard span が後勝ちして黒文字になっていた）
+     実測コントラスト: 本文 1.00→8.7 / ラベル 3.61→6.8（DESIGN.md §14 の4.5:1以上） */
+  .hintro span{color:var(--lt70)}
+  .hintro .no{color:rgba(247,245,239,.62)}
+}
+@media (max-width:900px) and (prefers-reduced-motion: reduce){
+  .rv.in,.rv-l.in,.rv-r.in,.rv-sc.in,.rv-pop.in,.rv-mask.in{animation:none}
+}
 </style>
 </head>
 <body>
@@ -762,7 +797,7 @@ body.show-case-notes .case-devnote{display:block}
   <div class="fv-copy">
   <div class="en-eyebrow rv">FROM THE EDGE OF IMAGINATION — TO YOUR EVERYDAY</div>
   <h1 class="chars" id="headline">AIにまかせて、<br>1日3時間の<em class="grad" style="font-style:normal">余白</em>を。</h1>
-  <p class="lead sub rv d2">発信も、販売も、事務も、ぜんぶ自分。<br>その毎日を、あなた専用のAIチームに引き継ぐ。<br>現役の運用代行の裏方が、3ヶ月伴走します。</p>
+  <p class="lead sub rv d2"><span class="nw">発信も、</span><span class="nw">販売も、</span><span class="nw">事務も、</span><span class="nw">ぜんぶ自分。</span><br><span class="nw">その毎日を、</span><span class="nw">あなた専用の</span><span class="nw">AIチームに</span><span class="nw">引き継ぐ。</span><br><span class="nw">現役の運用代行の</span><span class="nw">裏方が、</span><span class="nw">3ヶ月伴走します。</span></p>
   <div class="fv-cta rv d3">
     <a class="btn" href="./shindan/" data-mag><i></i><em>無料3分診断 — 最初のAI社員がわかる</em></a>
     <a class="ghostb" href="#team" data-mag><i></i><em>サービスを見る</em></a>
@@ -1404,14 +1439,17 @@ let cx2=innerWidth/2,cy2=innerHeight/2,rx=cx2,ry=cy2;
 addEventListener('pointermove',e=>{cx2=e.clientX;cy2=e.clientY;
   cur.style.transform=`translate(${cx2-3}px,${cy2-3}px)`});
 const pinSec=document.getElementById('pinouter'),pinRow=document.getElementById('hrow');
+/* 2026-09-23: 幅900px以下は横流しを使わない（CSS側で横スワイプに戻している） */
+const pinOff=()=>matchMedia('(max-width:900px)').matches;
 function sizePin(){
   if(!pinSec||!pinRow)return;
+  if(pinOff()){pinSec.style.height='';pinRow.style.transform='';return;}
   const dist=pinRow.scrollWidth-pinRow.clientWidth+80;
   pinSec.style.height=(innerHeight+Math.max(0,dist))+'px';
 }
 addEventListener('resize',sizePin);sizePin();setTimeout(sizePin,500);
 (function master(){
-  if(pinSec&&pinRow){
+  if(pinSec&&pinRow&&!pinOff()){
     const total=pinSec.offsetHeight-innerHeight;
     const r0=pinSec.getBoundingClientRect();
     const p3=Math.min(1,Math.max(0,-r0.top/Math.max(1,total)));
@@ -1491,6 +1529,9 @@ addEventListener('keydown',e=>{if(e.key==='Escape')mdlClose()});
 /* 中央にいるカードを強調(ピン走行中の「選択」表現) */
 const hcards=[...document.querySelectorAll('#hrow .hcard')];
 function focusCards(){
+  /* 2026-09-23: 横流しをしない幅では中央強調も使わない
+     （.act の白背景が .hintro の黒背景を上書きして白文字が読めなくなるため） */
+  if(pinOff()){hcards.forEach(c=>{c.style.opacity='';c.classList.remove('act')});return;}
   const cxm=innerWidth/2;
   let best=null,bd=1e9;
   hcards.forEach(c=>{const r=c.getBoundingClientRect();const d=Math.abs(r.left+r.width/2-cxm);
