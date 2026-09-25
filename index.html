@@ -564,132 +564,53 @@ body.mdl-open #mdl{display:flex}
 @keyframes popin{to{opacity:1;transform:none}}
 @media (prefers-reduced-motion: reduce){.rv-pop{opacity:1;transform:none}.rv-pop.in{animation:none}.sb-chars svg{animation:none}}
 
-/* ============ v16: AI導入モデルケース漫画 ============ */
+/* ============ 共通: スキップリンク・フォーカス・読み上げ専用 ============ */
 .skip-link{position:fixed;left:16px;top:12px;z-index:200;padding:12px 18px;border-radius:999px;
   background:var(--ink);color:var(--paper);text-decoration:none;transform:translateY(-160%);transition:transform .2s var(--ease)}
 .skip-link:focus{transform:none}
 a:focus-visible,button:focus-visible,summary:focus-visible,[tabindex]:focus-visible{
   outline:3px solid #6C55BE;outline-offset:4px}
-#case-study{min-height:auto;padding-top:14vh;padding-bottom:16vh;background:
-  radial-gradient(80vmax 60vmax at 100% 0,rgba(201,184,245,.27),transparent 65%),
-  linear-gradient(180deg,#F7F5EF,#F1EDF4 52%,#F7F5EF);overflow:clip}
-#case-study::before{content:"CASE";position:absolute;right:-2vw;top:4vh;z-index:0;
-  font:700 clamp(88px,16vw,230px)/1 var(--f-en);letter-spacing:.03em;color:rgba(22,20,15,.025);pointer-events:none}
-.case-shell{position:relative;z-index:2;width:min(1120px,100%);margin:0 auto}
-.case-intro{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(300px,.95fr);gap:clamp(30px,5vw,76px);align-items:start}
-.case-kicker{font-family:var(--f-en);font-size:10.5px;letter-spacing:.3em;color:var(--ink70);margin-bottom:20px}
-.case-intro h2{margin-bottom:22px}
-.case-copy{font-size:clamp(15px,1.5vw,17px);line-height:2.15;color:rgba(22,20,15,.82);max-width:39em}
-.case-copy + .case-copy{margin-top:15px}
-.auto-flow{list-style:none;counter-reset:auto-step;display:grid;gap:10px;margin-top:4px}
-.auto-flow li{counter-increment:auto-step;display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:center;
-  min-height:68px;padding:12px 18px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.64)}
-.auto-flow li::before{content:counter(auto-step,decimal-leading-zero);display:grid;place-items:center;width:40px;height:40px;border-radius:50%;
-  font:500 11px/1 var(--f-en);letter-spacing:.08em;color:#5F4DA8;background:rgba(201,184,245,.32)}
-.auto-flow b{font-family:var(--f-min);font-size:15px;font-weight:600;line-height:1.55}
-.case-principle{margin-top:24px;padding:18px 22px;border-left:3px solid var(--vio);background:rgba(255,255,255,.66);
-  font-family:var(--f-min);font-size:clamp(15px,1.6vw,18px);line-height:1.9}
-.case-episode + .case-episode{margin-top:clamp(86px,12vw,140px)}
-.episode-head{display:flex;justify-content:space-between;gap:24px;align-items:end;margin:clamp(72px,10vw,120px) 0 28px}
-.episode-no{font:500 10px/1 var(--f-en);letter-spacing:.28em;color:#6C55BE;margin-bottom:12px}
-.episode-head h3{font-family:var(--f-min);font-size:clamp(24px,3.2vw,40px);font-weight:600;line-height:1.45}
-.episode-meta{font-size:13px;line-height:1.9;color:var(--ink70);max-width:35em;text-align:right}
-.case-disclaimer{font-size:12px;line-height:1.8;color:rgba(22,20,15,.72)}
-.case-grid{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(18px,2.6vw,30px);counter-reset:case-panel}
-.case-panel{counter-increment:case-panel;display:flex;flex-direction:column;overflow:hidden;border:2px solid #17151A;
-  border-radius:16px;background:rgba(255,255,255,.92);box-shadow:7px 7px 0 rgba(23,21,26,.13)}
-.case-visual{position:relative;isolation:isolate;aspect-ratio:1;overflow:hidden;border-bottom:2px solid #17151A;
-  background:linear-gradient(135deg,#E9E3EF,#F6E8E2)}
-.case-visual img{display:block;width:100%;height:100%;object-fit:cover}
-.case-placeholder{display:none;position:absolute;inset:0;padding:26px;place-items:center;text-align:center;
-  background:linear-gradient(135deg,#E9E3EF,#F7F1EA);color:var(--ink70);font-size:14px;line-height:1.9}
-.case-visual.is-placeholder .case-placeholder{display:grid}
-.case-visual.is-placeholder img{display:none}
-.case-devnote{display:none;position:absolute;left:12px;right:12px;bottom:12px;z-index:5;padding:10px 12px;border-radius:12px;
-  background:rgba(18,16,20,.82);color:var(--paper);font-size:10.5px;line-height:1.6;backdrop-filter:blur(8px)}
-body.show-case-notes .case-devnote{display:block}
-.case-bubbles{position:absolute;inset:0;z-index:3;pointer-events:none}
-.case-bubble{position:absolute;max-width:min(72%,300px);padding:10px 14px 11px;border:2px solid #17151A;border-radius:50%;
-  background:rgba(255,255,255,.97);box-shadow:2px 3px 0 rgba(23,21,26,.16);color:#17151A;
-  font-family:var(--f-min);font-size:clamp(12px,1.25vw,14px);font-weight:600;line-height:1.55;letter-spacing:.01em;
-  text-align:center;text-wrap:balance;overflow-wrap:anywhere}
-.case-bubble::before{content:"";position:absolute;bottom:-17px;left:25px;border-style:solid;border-width:17px 15px 0 0;
-  border-color:#17151A transparent transparent transparent;transform:rotate(5deg)}
-.case-bubble::after{content:"";position:absolute;bottom:-12px;left:27px;border-style:solid;border-width:14px 11px 0 0;
-  border-color:#FFF transparent transparent transparent;transform:rotate(5deg)}
-.case-bubble[data-speaker="いチ"]{background:#F2EEFF}
-.case-bubble[data-speaker="いチ"]::after{border-top-color:#F2EEFF}
-.case-bubble-speaker{display:block;margin-bottom:2px;color:#66529F;font-family:var(--f-en);font-size:10px;font-weight:700;
-  line-height:1.3;letter-spacing:.12em}
-.bubble-pos-top-left{left:4%;top:4%}.bubble-pos-top-right{right:4%;top:4%}
-.bubble-pos-top-center{left:50%;top:4%;transform:translateX(-50%)}
-.bubble-pos-bottom-left{left:4%;bottom:8%}.bubble-pos-bottom-right{right:4%;bottom:8%}
-.bubble-pos-top-right::before,.bubble-pos-bottom-right::before{right:25px;left:auto;border-width:17px 0 0 15px}
-.bubble-pos-top-right::after,.bubble-pos-bottom-right::after{right:27px;left:auto;border-width:14px 0 0 11px}
 .sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;
   clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
-.case-panel-body{display:flex;flex:1;flex-direction:column;padding:clamp(22px,3vw,32px)}
-.case-panel-top{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:16px}
-.case-phase{display:inline-flex;align-items:center;min-height:30px;padding:6px 13px;border:1px solid color-mix(in srgb,var(--phase) 36%,transparent);
-  border-radius:999px;color:#43345F;background:color-mix(in srgb,var(--phase) 9%,white);font-size:11px;font-weight:700;letter-spacing:.12em}
-.case-panel-num{font:500 11px/1 var(--f-en);letter-spacing:.18em;color:var(--ink50)}
-.case-panel-num::before{content:"PANEL " counter(case-panel,decimal-leading-zero)}
-.case-panel h4{font-family:var(--f-min);font-size:clamp(19px,2vw,24px);font-weight:600;line-height:1.6;margin-bottom:12px}
-.case-narration{font-size:15px;line-height:1.95;color:var(--ink70);margin-bottom:18px}
-.case-dialogue{display:grid;gap:10px;margin-top:auto}
-.case-line{position:relative;padding:13px 15px 13px 18px;border-radius:8px 16px 16px 16px;background:#F4F1EB;
-  font-family:var(--f-min);font-size:15px;line-height:1.8;color:rgba(22,20,15,.88)}
-.case-line[data-speaker="いチ"]{background:#EEEAF8}
-.case-speaker{display:block;margin-bottom:4px;font-family:var(--f-en);font-size:10px;font-weight:700;letter-spacing:.16em;color:var(--vio)}
-.case-workflow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:16px;padding:14px;border:1px dashed var(--ink30);border-radius:14px}
-.case-workflow span{font-size:11.5px;line-height:1.5;color:var(--ink70)}
-.case-workflow i{font-style:normal;color:var(--vio)}
-.case-metric{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:14px;margin-top:16px;padding:16px;
-  border-radius:16px;background:#15131A;color:var(--lt);text-align:center}
-.case-metric div{display:grid;gap:4px}.case-metric small{font-size:10px;letter-spacing:.12em;color:var(--lt40)}
-.case-metric b{font-family:var(--f-min);font-size:20px}.case-metric i{font-style:normal;color:#C9B8F5}
-.model-note{margin-top:16px;font-size:11.5px;line-height:1.8;color:rgba(22,20,15,.72)}
-.case-summary{margin-top:clamp(72px,9vw,110px);padding:clamp(30px,5vw,60px);border-radius:30px;background:#15131A;color:var(--lt)}
-.case-summary h3{font-family:var(--f-min);font-size:clamp(23px,3.1vw,38px);font-weight:600;line-height:1.55;margin-bottom:20px}
-.case-summary p{font-size:15.5px;line-height:2.1;color:var(--lt70);max-width:54em}
-.outcome-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
-.outcome-card{padding:24px;border:1px solid var(--lt-line);border-radius:20px;background:rgba(247,245,239,.055)}
-.outcome-card .ono{font:400 10px/1 var(--f-en);letter-spacing:.24em;color:#C9B8F5;margin-bottom:12px}
-.outcome-card h4{font-family:var(--f-min);font-size:18px;font-weight:600;margin-bottom:12px}
-.outcome-card ul{padding-left:1.1em;color:var(--lt70)}
-.outcome-card li{font-size:13px;line-height:1.85;margin-top:5px}
-.outcome-message{margin-top:28px;font-family:var(--f-min);font-size:clamp(18px,2vw,24px);color:#FFDF9E}
-.case-cta{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:clamp(28px,5vw,70px);align-items:center;
-  margin-top:32px;padding:clamp(30px,5vw,58px);border:1px solid rgba(143,125,216,.28);border-radius:30px;background:rgba(255,255,255,.76)}
-.case-cta h3{font-family:var(--f-min);font-size:clamp(22px,3vw,36px);font-weight:600;line-height:1.55;margin-bottom:16px}
-.case-cta p{font-size:15px;line-height:2;color:var(--ink70)}
-.case-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
-.case-actions .ghostb{align-items:center}
-.case-notes{list-style:none;display:grid;gap:12px}
-.case-notes li{display:flex;gap:12px;font-size:13px;line-height:1.7;color:var(--ink70)}
-.case-notes li::before{content:"✓";display:grid;place-items:center;flex:0 0 24px;width:24px;height:24px;border-radius:50%;
-  color:#4A6F5A;background:rgba(154,219,188,.28);font-weight:700}
-@media (max-width:860px){
-  .case-intro,.case-cta{grid-template-columns:1fr}.episode-head{align-items:start;flex-direction:column}.episode-meta{text-align:left}
-  .outcome-grid{grid-template-columns:1fr}.case-cta{gap:30px}
-}
-@media (max-width:680px){
-  #case-study{padding-left:20px;padding-right:20px}.case-grid{grid-template-columns:1fr;gap:22px}
-  .case-panel{border-radius:12px;box-shadow:5px 5px 0 rgba(23,21,26,.13)}.case-panel-body{padding:22px 20px 24px}
-  .case-bubble{max-width:76%;padding:9px 12px 10px;font-size:clamp(12px,3.4vw,14px);line-height:1.5}
-  .case-bubble-speaker{font-size:9.5px}.bubble-pos-bottom-left,.bubble-pos-bottom-right{bottom:9%}
-  .case-narration,.case-line,.case-summary p,.case-cta p{font-size:16px}.case-actions{flex-direction:column;align-items:stretch}
-  .case-actions .btn,.case-actions .ghostb{justify-content:center;min-height:52px;padding-left:24px;padding-right:24px}
-  .case-metric{gap:8px}.case-metric b{font-size:18px}
-}
-@media (prefers-reduced-motion: reduce){.case-panel{transition:none}}
 
-/* ============ v19: 漫画パネル品質補正(表示幅適正化・白フチ切り・色調統一) ============ */
-.case-grid{grid-template-columns:repeat(auto-fit,minmax(300px,470px));justify-content:center}
-.case-visual img{transform:scale(1.055);filter:saturate(.82) contrast(1.06) brightness(1.02)}
-.case-visual::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:linear-gradient(125deg,rgba(240,183,206,.16),rgba(201,184,245,.14) 50%,rgba(255,223,158,.13));
-  mix-blend-mode:soft-light}
+/* ============ CH.03 事例漫画の入口（2026-09-25: 本編は ./case/ の別ページへ） ============
+   トップの主読者（発信者）と漫画の主人公（企業の事務担当）は客層が違うため、トップには入口だけ置く。
+   3場面（課題→設計→未来）を絵と見出しで見せて本編へつなぐ。吹き出し・太い黒枠・ずらした影は使わない */
+#case-study{min-height:auto;padding-top:15vh;padding-bottom:15vh;background:var(--paper)}
+.case-shell{position:relative;z-index:2;width:min(1120px,100%);margin:0 auto}
+#case-study .ch-no{flex-wrap:wrap;row-gap:6px}
+#case-study .ch-no .nw{white-space:nowrap}
+.case-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,80px);align-items:end}
+.case-head h2{margin-bottom:0}
+.case-copy{font-size:clamp(14.5px,1.45vw,16px);line-height:2.15;color:var(--ink70);max-width:32em}
+.case-strip{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2.2vw,28px);
+  max-width:960px;margin-top:clamp(40px,6vw,72px)}
+.case-strip a{display:block;text-decoration:none;color:inherit}
+.case-strip .cs-cap{display:block}
+.case-strip figure{aspect-ratio:1;overflow:hidden;border-radius:12px;background:#ECE8E0;box-shadow:0 30px 60px -44px rgba(22,20,15,.5)}
+.case-strip img{display:block;width:100%;height:100%;object-fit:cover;transform:scale(1.035);filter:saturate(.9) contrast(1.03);
+  transition:transform 1.2s var(--ease)}
+.case-strip a:hover img{transform:scale(1.07)}
+.case-strip .cs-no{display:flex;align-items:center;gap:12px;margin-top:16px;font-family:var(--f-en);font-size:12px;letter-spacing:.18em;
+  color:rgba(22,20,15,.72)}
+.case-strip .cs-no i{flex:1;height:1px;background:var(--ink30)}
+.case-strip b{display:block;margin-top:8px;font-family:var(--f-min);font-weight:600;font-size:clamp(15px,1.3vw,17px);line-height:1.6;
+  transition:color .3s}
+.case-strip a:hover b{color:#4E3F9E}
+.case-go{display:flex;flex-wrap:wrap;align-items:center;gap:14px 24px;margin-top:clamp(36px,5vw,56px)}
+.case-note{font-size:12.5px;line-height:1.8;color:rgba(22,20,15,.72)}
+@media (max-width:900px){
+  #case-study{padding-top:88px;padding-bottom:88px}
+  .case-head{grid-template-columns:1fr;gap:0}
+  .case-head h2{margin-bottom:22px}
+  .case-strip{grid-template-columns:1fr;gap:14px;margin-top:32px}
+  .case-strip a{display:grid;grid-template-columns:92px minmax(0,1fr);gap:16px;align-items:center}
+  .case-strip figure{border-radius:10px}
+  .case-strip .cs-no{margin-top:0}
+  .case-strip b{margin-top:4px;font-size:15px}
+  .case-go .btn{width:100%;justify-content:center}
+}
+@media (prefers-reduced-motion: reduce){.case-strip img{transition:none}}
 
 /* ==========================================================
    2026-09-25 上質化（今のデザインを土台に、背景と演出を入れ替え）
@@ -954,66 +875,22 @@ body.darkzone #bar{background:rgba(247,245,239,.7)}
   </div>
 </section>
 
-<!-- CH.03 CASE STUDY: AI導入モデルケース漫画 -->
+<!-- CH.03 CASE STUDY: 事例漫画の入口（本編は ./case/ の別ページ・2026-09-25） -->
 <section id="case-study" aria-labelledby="case-title">
   <div class="case-shell">
-    <div class="ch-no rv">CH.03 — CASE STUDY　AI導入のモデルケース</div>
-    <div class="case-intro">
-      <div>
-        <div class="case-kicker rv">BEFORE — PROCESS — AFTER</div>
-        <h2 class="rv-mask" id="case-title">AI導入で、<br>仕事はどう変わる？</h2>
-        <p class="case-copy rv d1">実際の業務をモデルに、相談前から導入後までを短編ストーリーで紹介します。中小企業のAI導入支援やバックオフィスのAI業務効率化を、自分の仕事に置き換えてご覧ください。</p>
-        <p class="case-copy rv d2"><strong>AI自動化とは、すべてをAIに丸投げすることではありません。</strong><br>情報整理や文章の下書きなどをAIが支援し、人が確認・修正・最終判断する流れに組み直すことです。いチのAI伴走支援では、生成AIの活用方法だけでなく、参照資料、判断基準、セキュリティ、運用ルールまで一緒に設計します。</p>
-      </div>
-      <div class="rv-sc d2">
-        <ol class="auto-flow" aria-label="AI自動化を業務に組み込む4段階">
-          <li><b>現在の業務を整理する</b></li>
-          <li><b>AIに任せられる作業を選ぶ</b></li>
-          <li><b>人が確認するポイントを決める</b></li>
-          <li><b>実際の業務に組み込み、改善する</b></li>
-        </ol>
-        <p class="case-principle">AIに仕事を奪われるのではなく、AIに作業を任せ、人は判断と価値提供に集中するための仕組みです。</p>
-      </div>
+    <div class="ch-no rv">CH.03 — CASE STUDY　<span class="nw">AI導入のモデルケース</span></div>
+    <div class="case-head">
+      <h2 class="rv-mask" id="case-title">AI導入で、<br>仕事はどう変わる？</h2>
+      <p class="case-copy rv d1">実際の業務をモデルに、相談前から導入後までを短編ストーリーで紹介します。中小企業のAI導入支援やバックオフィスのAI業務効率化を、自分の仕事に置き換えてご覧ください。</p>
     </div>
-
-    <div id="caseEpisodes"></div>
-    <noscript><p class="case-copy">この物語は、業務に追われる佐藤さんが、いチとの業務整理、人とAIの役割設計、テスト運用を経て、確認しながら安心して使える自社専用AIの仕組みをつくり、生まれた時間を新規企画と顧客対応へ使えるようになる8場面のモデルケースです。</p></noscript>
-
-    <div class="case-summary rv">
-      <h3>変わったのは、AIツールではなく仕事の流れでした。</h3>
-      <p>佐藤さんが最初に困っていたのは、AIを持っていなかったことではありません。どの業務にAIを使うのか、何を任せるのか、どこを人が確認するのかが整理されていなかったことが問題でした。いチのAIコンサルティングでは、現在の業務整理、自社専用AIの設計、根拠を確認する仕組み、実務への導入、改善までを一緒に行います。</p>
-      <div class="outcome-grid" aria-label="AI業務改善による3つの変化">
-        <article class="outcome-card">
-          <div class="ono">CHANGE 01</div><h4>作業が減る</h4>
-          <ul><li>文章や資料をゼロから作る時間を減らす</li><li>情報整理や下書きをAIが支援する</li><li>繰り返し作業を仕組み化する</li></ul>
-        </article>
-        <article class="outcome-card">
-          <div class="ono">CHANGE 02</div><h4>安心して使える</h4>
-          <ul><li>参照する資料やルールを設定する</li><li>根拠や確認事項を表示する</li><li>人が最終判断する場所を明確にする</li></ul>
-        </article>
-        <article class="outcome-card">
-          <div class="ono">CHANGE 03</div><h4>未来の仕事に時間を使える</h4>
-          <ul><li>新しい企画と商品開発</li><li>顧客対応と価値提供</li><li>営業と売上につながるプロジェクト</li></ul>
-        </article>
-      </div>
-      <div class="outcome-message">AIで削減した時間を、売上と価値を生む時間へ。</div>
-    </div>
-
-    <div class="case-cta rv" aria-labelledby="case-cta-title">
-      <div>
-        <h3 id="case-cta-title">あなたの業務では、<br>何をAIに任せられるでしょうか？</h3>
-        <p>現在の業務を整理し、AIに任せる部分、人が確認する部分、今後も人が担当すべき部分を一緒に整理します。「何から始めればよいか分からない」という段階でも問題ありません。</p>
-        <div class="case-actions">
-          <a class="btn" data-case-cta="consult" href="https://lin.ee/NC90E0Z" target="_blank" rel="noopener" data-mag><i></i><em>自社のAI活用について相談する</em></a>
-          <a class="ghostb" href="#team" data-mag><i></i><em>サービスの詳しい内容を見る</em></a>
-        </div>
-      </div>
-      <ul class="case-notes">
-        <li>オンライン相談に対応</li>
-        <li>AIツールが決まっていなくても相談可能</li>
-        <li>現在の業務内容に合わせて提案</li>
-        <li>無理な自動化や不要なツール導入は行いません</li>
-      </ul>
+    <ol class="case-strip" aria-label="漫画の流れ（全8場面から3場面）">
+      <li class="rv d1"><a href="./case/#panel-1"><figure><img src="./images/case-study/backoffice/episode-01-panel-01.jpg" alt="大量の請求書とメール対応に追われ、夜のオフィスで困っているバックオフィス担当者" width="414" height="414" loading="lazy" decoding="async"></figure><span class="cs-cap"><span class="cs-no">01<i></i>課題</span><b>業務に追われる毎日</b></span></a></li>
+      <li class="rv d2"><a href="./case/#panel-5"><figure><img src="./images/case-study/backoffice/episode-01-panel-05.jpg" alt="いチと佐藤さんが、AIの下書きから人の最終承認までの業務フローを設計している様子" width="414" height="414" loading="lazy" decoding="async"></figure><span class="cs-cap"><span class="cs-no">05<i></i>設計</span><b>AIと人の役割を明確にする</b></span></a></li>
+      <li class="rv d3"><a href="./case/#panel-8"><figure><img src="./images/case-study/backoffice/episode-01-panel-08.jpg" alt="顧客と新しいサービスの企画を話し合い、いチとともに次の仕事を進める佐藤さん" width="414" height="414" loading="lazy" decoding="async"></figure><span class="cs-cap"><span class="cs-no">08<i></i>未来</span><b>人にしかできない仕事へ集中</b></span></a></li>
+    </ol>
+    <div class="case-go rv">
+      <a class="btn" href="./case/"><i></i><em>漫画で読む（全8場面）</em></a>
+      <p class="case-note">※登場する企業・人物は架空のモデルケースです。</p>
     </div>
   </div>
 </section>
@@ -1123,233 +1000,13 @@ body.darkzone #bar{background:rgba(247,245,239,.7)}
 <footer><span>© 2026 株式会社ワドナスタジオ</span><a href="./privacy/">プライバシーポリシー</a></footer>
 
 <script>
-/* ========== 活用事例データ：エピソード追加はこの配列へ ========== */
-const CASE_STUDY_CTA_URL='https://lin.ee/NC90E0Z';
-const CASE_STUDY_IMAGE_ROOT=location.pathname.includes('/mocks/')
-  ?'../public/images/case-study'
-  :'./images/case-study';
-const CASE_STUDY_EPISODES=[{
-  episodeNumber:1,
-  title:'バックオフィス業務のAI化',
-  category:'バックオフィス AI',
-  imageDirectory:'backoffice',
-  character:'事務担当・佐藤さん',
-  company:'株式会社みらいワークス',
-  disclaimer:'※企業名・人物名・数値は、活用イメージを伝えるための架空のモデルケースです。',
-  panels:[
-    {
-      panelNumber:1,phase:'課題',phaseColor:'#9B526C',title:'業務に追われる毎日',
-      narration:'バックオフィス業務を一人で担当する佐藤さん。請求書、議事録、メール、報告資料に追われています。',
-      dialogue:[
-        {speaker:'佐藤さん',text:'今日も請求書の確認、議事録、メール返信、報告資料……。'},
-        {speaker:'佐藤さん',text:'本来やりたい業務に、全然時間を使えない……。'}
-      ],
-      bubbles:[
-        {speaker:'佐藤さん',text:'今日も請求書、議事録、メール返信……',position:'top-left'},
-        {speaker:'佐藤さん',text:'やりたい仕事に、全然時間を使えない……',position:'bottom-right'}
-      ],
-      visualDescription:'複数の画面と大量の請求書、メール対応に追われ、夜のオフィスで疲れている佐藤さん。',
-      image:'episode-01-panel-01.jpg',
-      imageAlt:'大量の請求書とメール対応に追われ、夜のオフィスで困っているバックオフィス担当者'
-    },
-    {
-      panelNumber:2,phase:'問題',phaseColor:'#8A5AAE',title:'AIを使っても判断できない',
-      narration:'「AIを使えば早くなる」と聞いて試しましたが、出てきた文章をそのまま使ってよいか判断できません。',
-      dialogue:[
-        {speaker:'佐藤さん',text:'文章はできたけれど、本当にこの内容で正しいのかな？'},
-        {speaker:'佐藤さん',text:'会社のルールに合っているか分からない……。'},
-        {speaker:'佐藤さん',text:'結局、全部確認するから余計に時間がかかる。'}
-      ],
-      bubbles:[
-        {speaker:'佐藤さん',text:'本当に、この内容で正しいの？',position:'top-right'},
-        {speaker:'佐藤さん',text:'会社のルールに合っているか分からない……',position:'bottom-left'}
-      ],
-      visualDescription:'AIチャットの長い回答を見ながら、根拠や社内ルールとの整合性に悩む佐藤さん。',
-      image:'episode-01-panel-02.jpg',
-      imageAlt:'AIチャットの回答が正しいか判断できず、パソコン画面の前で考え込む佐藤さん'
-    },
-    {
-      panelNumber:3,phase:'問題',phaseColor:'#7A649F',title:'業務への組み込み方が分からない',
-      narration:'使い方を調べても情報が多すぎて、自社では何から始めればよいのか分かりません。',
-      dialogue:[
-        {speaker:'佐藤さん',text:'プロンプトを変える？ 別のAIを使う？'},
-        {speaker:'佐藤さん',text:'自動化って、結局どうやって作るの？'},
-        {speaker:'佐藤さん',text:'自分の会社に何が合うのか分からない……。'}
-      ],
-      bubbles:[
-        {speaker:'佐藤さん',text:'結局、何から始めればいいの……？',position:'top-right'},
-        {speaker:'佐藤さん',text:'自分の会社に合う方法が分からない',position:'bottom-left'}
-      ],
-      visualDescription:'大量のAIツール画面と複雑なフロー図に囲まれ、何を選ぶべきか混乱する佐藤さん。',
-      image:'episode-01-panel-03.jpg',
-      imageAlt:'多くのAIツール画面と複雑な業務フローに囲まれ、混乱している佐藤さん'
-    },
-    {
-      panelNumber:4,phase:'整理',phaseColor:'#3F7560',title:'いチに相談して、仕事を棚卸し',
-      narration:'佐藤さんは、いチの完全オーダーメイドAI伴走サービスに相談しました。',
-      dialogue:[
-        {speaker:'佐藤さん',text:'AIで業務を減らしたいのですが、どこから手をつければよいか分かりません。'},
-        {speaker:'いチ',text:'最初にツールを選ぶのではなく、現在の業務を一緒に整理しましょう。'},
-        {speaker:'いチ',text:'AIに任せる作業、人が確認する作業、人が判断する作業に分けます。'}
-      ],
-      bubbles:[
-        {speaker:'佐藤さん',text:'どこから手をつければいいですか？',position:'top-left'},
-        {speaker:'いチ',text:'まずは、今の業務を一緒に整理しましょう',position:'bottom-right'}
-      ],
-      visualDescription:'オンライン相談で、いチが佐藤さんの業務を聞きながら整理シートへまとめる場面。',
-      image:'episode-01-panel-04.jpg',
-      imageAlt:'オンライン相談でいチに業務の悩みを話し、整理の方針を聞く佐藤さん'
-    },
-    {
-      panelNumber:5,phase:'設計',phaseColor:'#5D55A6',title:'AIと人の役割を明確にする',
-      narration:'ヒアリングをもとに、社内ルールと参照資料を組み込んだ自社専用AIの活用フローを設計しました。',
-      dialogue:[
-        {speaker:'いチ',text:'AIが勝手に判断するのではなく、確認が必要な部分を分かるようにします。'},
-        {speaker:'いチ',text:'回答の元になった社内資料も確認できる設計にしましょう。'},
-        {speaker:'佐藤さん',text:'これなら、どこを確認すればよいか分かります。'}
-      ],
-      bubbles:[
-        {speaker:'いチ',text:'AIに任せる作業と、人が確認する場所を分けます',position:'top-center'},
-        {speaker:'佐藤さん',text:'これなら、見る場所が分かる！',position:'bottom-left'}
-      ],
-      workflow:['情報入力','AIが整理・下書き','根拠・確認事項','人が確認・修正','送信・承認'],
-      visualDescription:'いチと佐藤さんが、AIの下書き、根拠表示、人の確認、最終承認までの流れを設計する場面。',
-      image:'episode-01-panel-05.jpg',
-      imageAlt:'いチと佐藤さんが、AIの下書きから人の最終承認までの業務フローを設計している様子'
-    },
-    {
-      panelNumber:6,phase:'導入',phaseColor:'#376B72',title:'実務で使いながら精度を改善',
-      narration:'設計した仕組みを実際の業務へ組み込み、確認箇所や判断基準を使いながら調整します。',
-      dialogue:[
-        {speaker:'佐藤さん',text:'会議が終わった時点で、議事録の下書きができている。'},
-        {speaker:'佐藤さん',text:'確認が必要な箇所も表示されるから、最初から作るよりずっと早い。'},
-        {speaker:'いチ',text:'違和感がある部分は、判断基準や指示内容を修正しましょう。'}
-      ],
-      bubbles:[
-        {speaker:'佐藤さん',text:'もう議事録の下書きができてる！',position:'top-left'},
-        {speaker:'いチ',text:'違和感がある部分は、基準を直していきましょう',position:'bottom-right'}
-      ],
-      visualDescription:'AIが作った議事録下書きの確認箇所を佐藤さんがチェックし、いチと改善する場面。',
-      image:'episode-01-panel-06.jpg',
-      imageAlt:'AIが作成した議事録の下書きと確認箇所を、佐藤さんといチが一緒に点検している様子'
-    },
-    {
-      panelNumber:7,phase:'成果',phaseColor:'#4A7154',title:'確認を含めても短時間で終わる',
-      narration:'毎週繰り返していた作業の一部をAIが支援し、人が見るべき場所も明確になりました。',
-      dialogue:[
-        {speaker:'佐藤さん',text:'今まで半日かかっていた作業が、確認を含めても短時間で終わるようになった。'},
-        {speaker:'佐藤さん',text:'確認すべき場所が分かるから、安心して使える。'}
-      ],
-      bubbles:[
-        {speaker:'佐藤さん',text:'半日仕事が、短時間で終わった！',position:'top-left'},
-        {speaker:'佐藤さん',text:'見る場所が分かるから安心！',position:'bottom-right'}
-      ],
-      metric:{before:'週10時間',after:'週4時間',saved:'週6時間を創出'},
-      visualDescription:'整理された明るいオフィスで、AIの支援を受けながら短時間で定型作業を終える佐藤さん。',
-      image:'episode-01-panel-07.jpg',
-      imageAlt:'整理された明るいデスクで、定型作業を短時間で終えて穏やかに働く佐藤さん'
-    },
-    {
-      panelNumber:8,phase:'未来',phaseColor:'#9A7132',title:'人にしかできない仕事へ集中',
-      narration:'生まれた時間で、後回しになっていた新サービスの準備と顧客への価値提供を進められるようになりました。',
-      dialogue:[
-        {speaker:'佐藤さん',text:'業務改善の企画や、新しいサービスの準備に時間を使えるようになった。'},
-        {speaker:'佐藤さん',text:'会社の次の売上につながる仕事を進められている。'},
-        {speaker:'いチ',text:'AI導入の目的はAIを使うことではなく、価値を生む仕事へ時間を戻すことです。'}
-      ],
-      bubbles:[
-        {speaker:'佐藤さん',text:'新しいサービスの準備に時間を使える！',position:'top-left'},
-        {speaker:'いチ',text:'生まれた時間を、価値を生む仕事へ',position:'bottom-right'}
-      ],
-      visualDescription:'佐藤さんが顧客と新サービスの企画を話し、いチが見守る明るいプロジェクト会議。',
-      image:'episode-01-panel-08.jpg',
-      imageAlt:'顧客と新しいサービスの企画を話し合い、いチとともに次の仕事を進める佐藤さん'
-    }
-  ],
-  beforeMetrics:{recurringWork:'週10時間'},
-  afterMetrics:{recurringWork:'週4時間',savedTime:'週6時間'},
-  resultSummary:'作業時間を削減し、確認箇所を明確にして、価値を生む仕事へ時間を戻す。',
-  cta:{label:'自社のAI活用について相談する',url:CASE_STUDY_CTA_URL}
-}];
-
-function renderCaseStudies(){
-  const root=document.getElementById('caseEpisodes');
-  if(!root)return;
-  const showNotes=new URLSearchParams(location.search).get('case-notes')==='1';
-  if(showNotes)document.body.classList.add('show-case-notes');
-  CASE_STUDY_EPISODES.forEach(episode=>{
-    const episodeNode=document.createElement('article');episodeNode.className='case-episode';
-    const head=document.createElement('header');head.className='episode-head rv';
-    const headingGroup=document.createElement('div');
-    const numberLabel=document.createElement('div');numberLabel.className='episode-no';
-    numberLabel.textContent=`EPISODE ${String(episode.episodeNumber).padStart(2,'0')} — ${episode.category.toUpperCase()}`;
-    const heading=document.createElement('h3');heading.id=`case-episode-${episode.episodeNumber}`;heading.textContent=episode.title;
-    headingGroup.append(numberLabel,heading);
-    const meta=document.createElement('div');meta.className='episode-meta';
-    const character=document.createElement('p');character.textContent=`${episode.company}・${episode.character}`;
-    const disclaimer=document.createElement('p');disclaimer.className='case-disclaimer';disclaimer.textContent=episode.disclaimer;
-    meta.append(character,disclaimer);head.append(headingGroup,meta);
-    const list=document.createElement('ol');list.className='case-grid';
-    list.setAttribute('aria-label',`${episode.title} 全${episode.panels.length}コマ`);
-    episodeNode.setAttribute('aria-labelledby',heading.id);
-    episode.panels.forEach(panel=>{
-    const item=document.createElement('li');
-    item.className='case-panel rv';
-    item.style.setProperty('--phase',panel.phaseColor);
-
-    const visual=document.createElement('figure');visual.className='case-visual';
-    const img=document.createElement('img');
-    img.src=`${CASE_STUDY_IMAGE_ROOT}/${episode.imageDirectory}/${panel.image}`;img.alt=panel.imageAlt;
-    img.width=414;img.height=414;img.loading='lazy';img.decoding='async';
-    img.addEventListener('error',()=>visual.classList.add('is-placeholder'),{once:true});
-    const fallback=document.createElement('figcaption');fallback.className='case-placeholder';
-    fallback.textContent=`画像制作指示：${panel.visualDescription}`;
-    const devnote=document.createElement('div');devnote.className='case-devnote';devnote.textContent=`画像制作指示：${panel.visualDescription}`;
-    const bubbles=document.createElement('div');bubbles.className='case-bubbles';bubbles.setAttribute('aria-hidden','true');
-    panel.bubbles.forEach(balloon=>{
-      const bubble=document.createElement('div');bubble.className=`case-bubble bubble-pos-${balloon.position}`;
-      bubble.dataset.speaker=balloon.speaker;
-      const bubbleSpeaker=document.createElement('span');bubbleSpeaker.className='case-bubble-speaker';bubbleSpeaker.textContent=balloon.speaker;
-      bubble.append(bubbleSpeaker,document.createTextNode(balloon.text));bubbles.appendChild(bubble);
-    });
-    visual.append(img,fallback,bubbles,devnote);
-
-    const body=document.createElement('article');body.className='case-panel-body';
-    const top=document.createElement('div');top.className='case-panel-top';
-    const phase=document.createElement('span');phase.className='case-phase';phase.textContent=panel.phase;
-    const number=document.createElement('span');number.className='case-panel-num';number.setAttribute('aria-label',`${panel.panelNumber}コマ目`);
-    top.append(phase,number);
-    const title=document.createElement('h4');title.textContent=panel.title;
-    const narration=document.createElement('p');narration.className='case-narration';narration.textContent=panel.narration;
-    const dialogue=document.createElement('div');dialogue.className='case-dialogue sr-only';
-    panel.dialogue.forEach(line=>{
-      const quote=document.createElement('blockquote');quote.className='case-line';quote.dataset.speaker=line.speaker;
-      const speaker=document.createElement('span');speaker.className='case-speaker';speaker.textContent=line.speaker;
-      quote.append(speaker,document.createTextNode(`「${line.text}」`));dialogue.appendChild(quote);
-    });
-    body.append(top,title,narration,dialogue);
-    if(panel.workflow){
-      const flow=document.createElement('div');flow.className='case-workflow';flow.setAttribute('aria-label','AIと人の役割分担フロー');
-      panel.workflow.forEach((step,index)=>{const span=document.createElement('span');span.textContent=step;flow.appendChild(span);
-        if(index<panel.workflow.length-1){const arrow=document.createElement('i');arrow.textContent='→';arrow.setAttribute('aria-hidden','true');flow.appendChild(arrow)}});
-      body.appendChild(flow);
-    }
-    if(panel.metric){
-      const metric=document.createElement('div');metric.className='case-metric';
-      const before=document.createElement('div');before.innerHTML=`<small>導入前</small><b>${panel.metric.before}</b>`;
-      const arrow=document.createElement('i');arrow.textContent='→';arrow.setAttribute('aria-hidden','true');
-      const after=document.createElement('div');after.innerHTML=`<small>導入後</small><b>${panel.metric.after}</b>`;
-      metric.append(before,arrow,after);body.appendChild(metric);
-      const note=document.createElement('p');note.className='model-note';note.textContent=`生まれた時間：${panel.metric.saved}　※数値は活用イメージを示すモデルケースです。業務内容や運用状況によって結果は異なります。`;
-      body.appendChild(note);
-    }
-      item.append(visual,body);list.appendChild(item);
-    });
-    episodeNode.append(head,list);root.appendChild(episodeNode);
-  });
-  document.querySelectorAll('[data-case-cta="consult"]').forEach(link=>link.href=CASE_STUDY_CTA_URL);
+/* ========== CH.03 事例漫画は別ページ（./case/）。トップには入口だけ（2026-09-25） ==========
+   mocks/ から開いたときだけ、画像と本編へのリンクを public/ に向け直す */
+if(location.pathname.includes('/mocks/')){
+  document.querySelectorAll('#case-study img').forEach(i=>{i.src=i.getAttribute('src').replace('./images/','../public/images/')});
+  document.querySelectorAll('#case-study a[href^="./case/"]').forEach(a=>{a.href=a.getAttribute('href').replace('./case/','../public/case/')});
 }
-renderCaseStudies();
+
 
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 let prog=0;
