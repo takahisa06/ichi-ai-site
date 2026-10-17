@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex"><!-- 正式公開時に外す -->
-<title>AI社員タイプ診断｜最初にAIに任せる仕事がわかる3分診断</title>
-<meta name="description" content="あなたが最初にAIに任せる仕事、3分でわかります。無料・登録なし・全部タップだけ。">
+<title>AI社員タイプ診断｜あなたの1週間、どこに時間が消えてる？ 3分の棚卸し</title>
+<meta name="description" content="先週の仕事をタップで棚卸し。時間がどこに消えているかと、最初にAIに任せる仕事の候補が3分でわかります。無料・登録なし。">
 <meta property="og:title" content="AI社員タイプ診断">
-<meta property="og:description" content="あなたが最初にAIに任せる仕事、3分でわかります。無料・登録なし。">
+<meta property="og:description" content="あなたの1週間、どこに時間が消えてる？ 3分の棚卸し。無料・登録なし。">
 <meta property="og:type" content="website">
 <style>
   /* ==========================================================
@@ -270,7 +270,7 @@
     transform: translateY(-50%); color: var(--ink30); font-size: 12px; z-index: 2; }
   /* 固定LINEバー(結果画面のみ) */
   .sticky-cta {
-    position: fixed; left: 50%; transform: translateX(-50%); bottom: 14px; z-index: 50;
+    position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(14px + env(safe-area-inset-bottom, 0px)); z-index: 50;
     width: min(520px, calc(100% - 32px));
     display: block; text-align: center; text-decoration: none;
     background: var(--line); color: #fff; font-weight: 700; font-size: 15px; letter-spacing: .05em;
@@ -280,6 +280,31 @@
   }
   @keyframes ctain { from { opacity: 0; transform: translate(-50%, 20px); } to { opacity: 1; transform: translate(-50%, 0); } }
   .result-pad { padding-bottom: 84px; }
+
+  /* ===== v2 (2026-10-17): 棚卸し②（時間）・候補カード・設計セッションCTA ===== */
+  .hours-row { background: var(--card); border: 1px solid var(--hair); border-radius: 16px; padding: 12px 14px; margin-bottom: 10px; backdrop-filter: blur(8px); }
+  .hours-label { font-size: 13.5px; line-height: 1.6; margin-bottom: 8px; }
+  .seg { display: flex; gap: 6px; }
+  .seg button { flex: 1; background: #fff; border: 1px solid var(--hair); border-radius: 999px; padding: 9px 4px; font-size: 12px; font-weight: 600; color: var(--ink70); cursor: pointer; font-family: inherit; transition: background .2s, border-color .2s, color .2s; }
+  .seg button.on { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  .btn[disabled] { opacity: .35; cursor: default; transform: none; box-shadow: none; }
+  .top3 { list-style: none; margin: 4px 0 0; }
+  .top3 li { display: flex; justify-content: space-between; gap: 10px; font-size: 13px; padding: 7px 0; border-top: 1px solid var(--hair); line-height: 1.6; }
+  .top3 li span:last-child { white-space: nowrap; font-weight: 700; }
+  .ease-note { font-size: 13px; color: var(--ink70); line-height: 1.9; margin-top: 12px; }
+  .ease-big { font-family: var(--f-min); font-size: 24px; font-weight: 600; color: var(--ink); margin: 0 2px; }
+  .cand { background: rgba(247,245,239,.8); border: 1px solid var(--hair); border-radius: 16px; padding: 14px 16px; margin-top: 12px; }
+  .cand-no { font-size: 10.5px; letter-spacing: .24em; color: var(--vio); font-weight: 700; margin-bottom: 4px; }
+  .cand-name { font-family: var(--f-min); font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+  .cand-change { font-size: 13.5px; color: var(--ink70); }
+  .cand-close { font-size: 13px; color: var(--ink); margin-top: 14px; }
+  .promise-title { font-size: 11px; letter-spacing: .2em; color: var(--ink50); margin-top: 18px; text-align: left; }
+  .promise { list-style: none; text-align: left; margin: 10px 0 0; }
+  .promise li { position: relative; padding-left: 28px; font-size: 13.5px; color: var(--ink); margin-bottom: 8px; line-height: 1.7; }
+  .promise li::before { content: attr(data-n); position: absolute; left: 0; top: 3px; width: 19px; height: 19px; border-radius: 50%; background: var(--ink); color: var(--paper); font-size: 10.5px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .cta-line { font-size: 12.5px; color: var(--ink70); text-align: left; margin-top: 14px; line-height: 1.8; }
+  .btn-cta { background: var(--ink); color: var(--paper); }
+  .sticky-cta { background: var(--ink); color: var(--paper); box-shadow: 0 18px 44px -14px rgba(22,20,15,.55); }
 </style>
 </head>
 <body>
@@ -293,167 +318,231 @@
 
 <script>
 /* ============================================================
-   データ（正本: design.md — 文言を変えるときは design.md を先に）
+   データ（正本: design.md v2 — 文言を変えるときは design.md を先に）
    ============================================================ */
 const DATA = {
-  questions: [
-    { text: "朝、仕事を始めるとき。最初にやりがちなのは？",
-      options: [
-        { label: "とりあえずインスタや競合アカウントをチェック", cat: "research" },
-        { label: "昨日書きかけの投稿の続き…のはずが、なかなか進まない", cat: "content" },
-        { label: "たまった返信と連絡をまず片付ける", cat: "admin" } ] },
-    { text: "1日の終わりに「今日も終わらなかった…」と思うのは？",
-      options: [
-        { label: "ネタ探しと情報集め", cat: "research" },
-        { label: "投稿や案内文などの文章づくり", cat: "content" },
-        { label: "予定調整・請求・資料づくりみたいな細かい仕事", cat: "admin" } ] },
-    { text: "スマホの中身、どれが一番近い？",
-      options: [
-        { label: "参考になりそうな投稿のスクショだらけ", cat: "research" },
-        { label: "書きかけのメモだらけ", cat: "content" },
-        { label: "予定と支払いの控えだらけ", cat: "admin" } ] },
-    { text: "SNSの投稿で、一番時間がかかっているのは？",
-      options: [
-        { label: "「何を投稿するか」を決めるまで", cat: "research" },
-        { label: "文章を書いて、直して、また直すところ", cat: "content" },
-        { label: "そもそも投稿する時間がとれない（他の仕事に追われて）", cat: "admin" } ] },
-    { text: "「ちょっと調べもの」を始めると？",
-      options: [
-        { label: "気づいたら1時間たってる", cat: "research" },
-        { label: "調べるのは早いけど、そこから書くのに悩む", cat: "content" },
-        { label: "調べる時間すらとれなくて、あとまわしに", cat: "admin" } ] },
-    { text: "お客様や生徒さんからの質問。どう返してる？",
-      options: [
-        { label: "毎回ちゃんと調べてから返す（だから時間がかかる）", cat: "research" },
-        { label: "文面を何度も書き直してから送る", cat: "content" },
-        { label: "同じ質問に、毎回ゼロから答えてる気がする", cat: "admin" } ] }
-  ],
-  q7: { text: "もし明日、3時間の余白ができたら何に使いたいですか？",
-    options: [
-      { label: "新しい企画やサービスをじっくり考えたい", key: "D1" },
-      { label: "家族との時間、自分の休憩にあてたい", key: "D2" },
-      { label: "たまっている仕事をぜんぶ片付けたい", key: "D3" } ] },
   checklist: [
-    { label: "投稿のネタを探して、SNSをぐるぐる見て回った", cat: "research", hours: 2 },
-    { label: "競合や気になる人のアカウントをチェックした", cat: "research", hours: 1.5 },
-    { label: "AIやツールの使い方を調べた（けど、まだ使えてない）", cat: "research", hours: 1 },
-    { label: "「あとで見る」に保存した動画や記事がたまっていった", cat: "research", hours: 0.5 },
-    { label: "キャプションや投稿文を書いた", cat: "content", hours: 2 },
-    { label: "案内文・募集文・LINEやメルマガの文章を書いた", cat: "content", hours: 1.5 },
-    { label: "リールや画像を作った・直した", cat: "content", hours: 3 },
-    { label: "ブログやnoteなど長い文章を書いた", cat: "content", hours: 2 },
-    { label: "お客様・生徒さんへの返信を書いた", cat: "admin", hours: 2 },
-    { label: "予定調整のやりとりをした", cat: "admin", hours: 1 },
-    { label: "請求書・見積もり・お金まわりの作業をした", cat: "admin", hours: 1 },
-    { label: "資料やスライドを作った", cat: "admin", hours: 2 }
+    { label: "投稿のネタを探して、SNSをぐるぐる見て回った", cat: "research", ai: "投稿企画", ease: 0.5, work: "リサーチ" },
+    { label: "競合や気になる人のアカウントをチェックした", cat: "research", ai: "投稿企画", ease: 0.5, work: "リサーチ" },
+    { label: "台本を書いた・構成を考えた", cat: "content", ai: "リール台本", ease: 0.5, work: "台本制作" },
+    { label: "キャプションや投稿文を書いた", cat: "content", ai: "キャプション・CTA", ease: 0.7, work: "台本制作" },
+    { label: "リールや画像を作った・直した", cat: "content", ai: "制作", ease: 0.3, work: "台本制作" },
+    { label: "DMやコメントに返信した", cat: "admin", ai: "DM返信", ease: 0.7, work: "メール対応" },
+    { label: "お客様・生徒さんからの質問に答えた", cat: "admin", ai: "商品説明・FAQ", ease: 0.7, work: "メール対応" },
+    { label: "案内文・募集文・LINEやメルマガの文章を書いた", cat: "content", ai: "キャプション・CTA", ease: 0.7, work: "台本制作" },
+    { label: "外注さんやスタッフに指示を出した・確認した", cat: "admin", ai: "外注指示", ease: 0.5, work: "タスク/プロジェクト管理" },
+    { label: "予定調整のやりとりをした", cat: "admin", ai: "事務", ease: 0.7, work: "タスク/プロジェクト管理" },
+    { label: "請求書・見積もり・お金まわりの作業をした", cat: "admin", ai: "事務", ease: 0.5, work: "請求書作成などのバックオフィス業務" },
+    { label: "AIやツールの使い方を調べた（けど、まだ使えてない）", cat: "research", ai: "学び", ease: 0.3, work: "リサーチ" }
   ],
+  hoursOptions: [
+    { label: "30分くらい", h: 0.5 },
+    { label: "1〜2時間", h: 1.5 },
+    { label: "3時間以上", h: 3.5 }
+  ],
+  release: {
+    text: "いちばん時間がかかっている「{item}」。やめられない理由に近いのは？",
+    textNoItem: "いちばん時間がかかっている作業。やめられない理由に近いのは？",
+    options: [
+      { label: "やり方が自分の頭の中にしかない（人に説明したことがない）", key: "A", cat: "research" },
+      { label: "人に頼むと、質が落ちる気がする", key: "B", cat: "content" },
+      { label: "頼む手間のほうが大きくて、結局自分でやっている", key: "C", cat: "admin" }
+    ]
+  },
+  q7: {
+    text: "もし明日、3時間の余白ができたら何に使いたいですか？",
+    options: [
+      { label: "新しい企画やサービスをじっくり考えたい", key: "D1", phrase: "新しい企画を考える時間" },
+      { label: "家族との時間、自分の休憩にあてたい", key: "D2", phrase: "家族と自分の時間" },
+      { label: "たまっている仕事をぜんぶ片付けたい", key: "D3", phrase: "たまっている仕事を片付ける時間" }
+    ]
+  },
+  aiExp: {
+    text: "いま、AIはどのくらい使っていますか？",
+    options: [
+      { label: "ほぼ使ったことがない", key: "E0" },
+      { label: "ChatGPTなどの無料版をときどき", key: "E1" },
+      { label: "有料版を仕事で使っている", key: "E2" },
+      { label: "毎日いろいろ使っている", key: "E3" }
+    ]
+  },
+  staff: {
+    "投稿企画": { name: "ネタ集め担当",
+      change: "毎朝、ジャンルの話題を3つに絞って持ってきてもらう。1時間かかってたネタ探しが、選ぶだけの15分になります。",
+      prompt: "私は◯◯（例:料理教室）の発信をしています。今日の投稿ネタ候補を3つ、それぞれ1行の理由つきで出してください" },
+    "リール台本": { name: "台本の下書き担当",
+      change: "伝えたいことを箇条書きで渡すと、30秒の台本の下書きが返ってくる。ゼロから考える時間がなくなる。",
+      prompt: "この内容で30秒のリール台本の下書きを作ってください。最初の1文は見る人の悩みから始めて、私の普段の話し方に直すので、きれいにしすぎないでください →（伝えたいことを箇条書きで貼る）" },
+    "キャプション・CTA": { name: "下書き担当",
+      change: "下書きはAI、最後の3か所だけ自分の言葉で直す。ゼロから書くのをやめるだけで、投稿づくりは半分くらいで済みます。",
+      prompt: "この内容でインスタのキャプションの下書きを作ってください。私の普段の話し方に直すので、きれいにしすぎないでください →（伝えたいことを箇条書きで貼る）" },
+    "制作": { name: "テロップ出し担当",
+      change: "作る作業そのものは残る。代わりにテロップの文字出しと構成案を先に用意してもらうと、手が止まる時間が減ります。",
+      prompt: "この台本から、テロップにする短い文を場面ごとに出してください。1場面1行、12文字以内でお願いします →（台本を貼る）" },
+    "DM返信": { name: "返信の型担当",
+      change: "よく来るDMの返信の型を用意してもらう。毎回ゼロから書いてた返信が、貼って少し直すだけになる。",
+      prompt: "私のところによく来るDMはこの3つです。それぞれに、感じがよくて短い返信の型を作ってください →（DMを3つ貼る）" },
+    "商品説明・FAQ": { name: "お客様対応の裏方",
+      change: "商品や講座への質問の答えを一度まとめておく。同じ質問に毎回ゼロから答えなくて済む。",
+      prompt: "私の商品についてよく聞かれる質問はこの3つです。それぞれに、やさしい言葉で短く答える文を作ってください →（質問を3つ貼る）" },
+    "外注指示": { name: "指示書担当",
+      change: "頭の中にある手順を、一度AIに書き出してもらう。指示と確認のやりとりが短くなります。",
+      prompt: "外注さんに頼む作業を、これから話す内容から指示書の形にまとめてください。完成の条件と締切の欄を入れてください →（手順を話し言葉で貼る）" },
+    "事務": { name: "予定とお金の裏方",
+      change: "予定調整の返信文と請求の案内文の型を用意してもらう。細かい仕事がまとめて片付く。",
+      prompt: "予定調整の返信文を3パターン作ってください。候補日を3つ出す形、相手の候補に合わせる形、日程変更をお願いする形です。短く、感じよくお願いします" },
+    "学び": { name: "情報整理担当",
+      change: "調べたことを、明日使えることだけ3つにまとめてもらう。「調べたけど使えてない」が減る。",
+      prompt: "この記事の内容を、私の仕事で明日使えることだけ3つに絞ってまとめてください →（内容を貼る）" }
+  },
   types: {
-    research: {
-      name: "ネタ探し迷子タイプ",
-      icon: "search",
-      desc: "調べはじめると止まらない。スクショは増えていくのに、投稿は進まない。真面目に情報を集める人ほどこうなります。悪いのはあなたじゃなくて、順番です。",
-      aiName: "ネタ集め担当",
-      aiDesc: "毎朝、あなたのジャンルの話題を3つに絞って持ってきてもらう。1時間かかっていたネタ探しが、選ぶだけの15分になります。",
-      prompt: "私は◯◯（例:料理教室）の発信をしています。今日の投稿ネタ候補を3つ、それぞれ1行の理由つきで出してください",
-      hitokoto: "材料集めをしてから料理する。この順番をAIと分担するタイプです。"
-    },
-    content: {
-      name: "真っ白カーソルタイプ",
-      icon: "pen",
-      desc: "書くことは決まってるのに、最初の一文が出ない。やっと書けても、直して、また直して。丁寧に書く人ほど時間がかかります。",
-      aiName: "下書き担当",
-      aiDesc: "AIに下書きを作ってもらって、最後は自分の言葉で3か所だけ直す。ゼロから書くのをやめるだけで、投稿づくりは半分くらいになります。",
-      prompt: "この内容でインスタのキャプションの下書きを作ってください。私の普段の話し方に直すので、きれいにしすぎないでください →（伝えたいことを箇条書きで貼る）",
-      hitokoto: "AIっぽい文章になる問題は、下書きを自分で仕上げれば消えます。全部書かせないのがコツです。"
-    },
-    admin: {
-      name: "ぜんぶ自分でタイプ",
-      icon: "check",
-      desc: "返信、予定調整、請求書、資料。ひとつひとつは小さいのに、集まると1日が消えます。人に頼めない仕事だと思い込みやすいのがこのタイプです。",
-      aiName: "裏方担当",
-      aiDesc: "よくある質問への返信文と案内文の型を、AIに用意してもらう。毎回ゼロから書いていた返信が、貼って少し直すだけになります。",
-      prompt: "私のお客様からよく来る質問はこの3つです。それぞれに、感じがよくて短い返信の型を作ってください →（質問を3つ貼る）",
-      hitokoto: "細かい仕事こそ、型にすると効果が出ます。まず返信1種類からで大丈夫です。"
-    }
+    research: { name: "ネタ探し迷子タイプ", icon: "search", defaults: ["投稿企画", "学び"],
+      desc: "調べはじめると止まらない。スクショは増えていくのに、投稿は進まない。真面目に情報を集める人ほどこうなります。悪いのはあなたじゃなくて、順番です。" },
+    content: { name: "真っ白カーソルタイプ", icon: "pen", defaults: ["キャプション・CTA", "リール台本"],
+      desc: "書くことは決まってるのに、最初の一文が出ない。やっと書けても、直して、また直して。丁寧に書く人ほど時間がかかります。" },
+    admin: { name: "ぜんぶ自分でタイプ", icon: "check", defaults: ["DM返信", "事務"],
+      desc: "返信、予定調整、請求書、資料。ひとつひとつは小さいのに、集まると1日が消えます。人に頼めない仕事だと思い込みやすいのがこのタイプです。" }
   },
-  q7lines: {
-    D1: "空いた時間で企画を考えたい、と答えたあなたへ。その時間は、仕組みで作れます。",
-    D2: "空いた時間は家族と自分に、と答えたあなたへ。そのための時短です。仕事を増やすためじゃなくて。",
-    D3: "まず溜まった仕事を片付けたい、と答えたあなたへ。だからこそ、片付ける作業そのものをAIと分けるところからです。"
+  quietWeek: "今週は落ち着いた週だったのかもしれません。忙しい週を思い出して、もう一度チェックしてみるのもおすすめです。",
+  easeLead: "このうち、やり方を一度AIに覚えさせたら、下書きと準備を任せられそうなのが",
+  easeTail: "。全部は消えません。仕上げは自分でやる前提の数字です。",
+  candClose: "どっちから始めるかは、商品と発信の形で変わります。",
+  cta: {
+    title: "どれから手放すかは、60分でお伝えします",
+    body: "先にジャンルと普段の言葉、判断の基準を聞きます。ここが分かると、AIに任せても的外れにならない。そのうえで、最初に手放す1つを決めるところまでやります。",
+    promiseTitle: "60分が終わったとき、手元にあるもの",
+    promise: [
+      "最初に手放す作業、1つ",
+      "そのAI社員への最初のお願い文（その場で一緒に作って渡します）"
+    ],
+    line: "合わなければ「今は自分でやります」で終わって大丈夫です。Zoomで60分、無料。",
+    button: "設計セッションを申し込む",
+    sticky: "設計セッションを申し込む",
+    note: "この結果は申込フォームに自動で入ります。結果画面はスクショでも残せます"
   },
-  lineUrl: "https://lin.ee/NC90E0Z",
-  lineKeyword: "プロンプト"
+  privacy: "回答はどこにも送信していません。申込ボタンを押したときだけ、結果が申込フォームに一緒に入ります。",
+  form: {
+    base: "https://docs.google.com/forms/d/e/1FAIpQLSf2noJru-CdPxBMTLiEqhi9a481kfRY91rNlBbPVKRo-uBujw/viewform",
+    entryNote: "entry.1698647381",
+    entryWork: "entry.445419139"
+  }
 };
 
 /* ============================================================
-   判定ロジック（design.md §7）— 純関数・テスト対象
+   判定ロジック（design.md §8）— 純関数・テスト対象
+   hours: { 項目index: 時間 } ／ releaseKey: A|B|C ／ q7Key: D1-3 ／ aiKey: E0-3
    ============================================================ */
-function computeResult(answerCats, q7Key, checkedIdx) {
-  const scores = { research: 0, content: 0, admin: 0 };
-  answerCats.forEach(c => { scores[c] += 1; });
-
-  const catHours = { research: 0, content: 0, admin: 0 };
-  let weekly = 0;
-  checkedIdx.forEach(i => {
-    const item = DATA.checklist[i];
-    catHours[item.cat] += item.hours;
-    weekly += item.hours;
-  });
-
-  const priority = ["content", "research", "admin"]; // 同点最終タイブレーク
+function computeResult(hours, releaseKey, q7Key, aiKey) {
   const cats = ["research", "content", "admin"];
-  const maxScore = Math.max(...cats.map(c => scores[c]));
-  let tied = cats.filter(c => scores[c] === maxScore);
-  if (tied.length > 1) {
-    const maxHours = Math.max(...tied.map(c => catHours[c]));
-    tied = tied.filter(c => catHours[c] === maxHours);
-  }
-  const type = tied.length === 1 ? tied[0]
-    : priority.find(c => tied.includes(c));
+  const priority = ["content", "research", "admin"];
+  const catHours = { research: 0, content: 0, admin: 0 };
+  let weekly = 0, easeRaw = 0;
+  const rows = [];
+  Object.keys(hours || {}).forEach(k => {
+    const i = Number(k); const h = Number(hours[k]);
+    const item = DATA.checklist[i];
+    if (!item || !(h > 0)) return;
+    catHours[item.cat] += h; weekly += h; easeRaw += h * item.ease;
+    rows.push({ i, label: item.label, hours: h, ai: item.ai, work: item.work });
+  });
+  rows.sort((a, b) => b.hours - a.hours || a.i - b.i);
 
-  // 「あなたの数字」で名指しする項目 = 時間合計最大カテゴリの中で、チェック済みかつ時間最大の項目
-  let topItem = null;
-  if (checkedIdx.length > 0) {
-    const hourCats = [...cats].sort((a, b) => catHours[b] - catHours[a]);
-    for (const hc of hourCats) {
-      const inCat = checkedIdx
-        .map(i => DATA.checklist[i])
-        .filter(it => it.cat === hc)
-        .sort((a, b) => b.hours - a.hours);
-      if (inCat.length > 0) { topItem = inCat[0].label; break; }
-    }
-  }
+  const maxH = Math.max(...cats.map(c => catHours[c]));
+  let tied = cats.filter(c => catHours[c] === maxH);
+  const rel = DATA.release.options.find(o => o.key === releaseKey);
+  let type;
+  if (tied.length === 1) type = tied[0];
+  else if (rel && tied.includes(rel.cat)) type = rel.cat;
+  else type = priority.find(c => tied.includes(c));
+
+  const candidates = [];
+  rows.forEach(r => { if (candidates.length < 2 && !candidates.includes(r.ai)) candidates.push(r.ai); });
+  DATA.types[type].defaults.forEach(a => { if (candidates.length < 2 && !candidates.includes(a)) candidates.push(a); });
+
+  const q7 = DATA.q7.options.find(o => o.key === q7Key) || DATA.q7.options[1];
+  const weeklyR = Math.round(weekly * 10) / 10;
+  const topItem = rows.length ? rows[0].label : null;
+  const idealLine = rows.length
+    ? "週" + weeklyR + "時間を「" + topItem + "」に取られてて、それが半分になれば、" + q7.phrase + "に回せる。"
+    : DATA.quietWeek;
 
   return {
-    type,
-    weekly: Math.round(weekly * 10) / 10,
-    yearly: Math.round(weekly * 50),
-    topItem,
-    q7Key: q7Key || "D2",
-    scores, catHours
+    type, weekly: weeklyR, yearly: Math.round(weekly * 50),
+    easeHours: Math.round(easeRaw * 2) / 2,
+    catHours, topItem, topWork: rows.length ? rows[0].work : null,
+    top3: rows.slice(0, 3).map(r => ({ label: r.label, hours: r.hours })),
+    candidates, idealLine,
+    releaseKey: rel ? rel.key : null, q7Key: q7.key, aiKey: aiKey || null
   };
+}
+
+/* 6軸レーダー（見える化用）: 申告時間だけで作る */
+function computeAxes(hours) {
+  const h = i => Number((hours || {})[i]) || 0;
+  const raw = [
+    h(0) + h(1),          /* ネタ探し */
+    h(2) + h(3) + h(7),   /* 文章 */
+    h(4),                 /* 画像・動画 */
+    h(5) + h(6),          /* 返信・対応 */
+    h(8) + h(9) + h(10),  /* 事務・お金 */
+    h(11)                 /* 学び・情報 */
+  ];
+  const mx = Math.max(...raw, 1);
+  return raw.map(v => Math.max(14, Math.round(v / (mx * 1.12) * 100)));
+}
+
+function easeLabel(r) { return r.easeHours < 0.5 ? "週30分" : "週" + r.easeHours + "時間"; }
+
+/* 申込フォームの事前入力URL（design.md §10）。ボタンを押したときだけ開く */
+function buildFormUrl(r) {
+  const t = DATA.types[r.type];
+  const rel = DATA.release.options.find(o => o.key === r.releaseKey);
+  const q7 = DATA.q7.options.find(o => o.key === r.q7Key);
+  const ai = DATA.aiExp.options.find(o => o.key === r.aiKey);
+  const lines = ["【AI社員タイプ診断の結果】", "タイプ: " + t.name];
+  if (r.weekly > 0) {
+    lines.push("先週の時間: 週" + r.weekly + "時間（年 約" + r.yearly + "時間）");
+    lines.push("上位: " + r.top3.map(x => x.label + " " + x.hours + "h").join(" ／ "));
+  } else {
+    lines.push("先週の時間: チェックなし");
+  }
+  if (rel) lines.push("やめられない理由: " + rel.label);
+  if (ai) lines.push("AI経験: " + ai.label);
+  if (q7) lines.push("余白: " + q7.label);
+  let url = DATA.form.base + "?usp=pp_url&" + DATA.form.entryNote + "=" + encodeURIComponent(lines.join("\n"));
+  if (r.topWork) url += "&" + DATA.form.entryWork + "=" + encodeURIComponent(r.topWork);
+  return url;
 }
 
 /* ============================================================
    画面制御
+   steps: 0 start / 1 棚卸し① / 2 棚卸し②(時間) / 3 手放せなさ / 4 余白 / 5 AI経験 / 6 結果
    ============================================================ */
-const TOTAL_STEPS = 9; // start(0) q1-6(1-6) q7(7) checklist(8) result(9)
-const state = { step: 0, answerCats: [], q7Key: null, checked: new Set() };
+const TOTAL_STEPS = 6;
+const state = { step: 0, checked: new Set(), hours: {}, releaseKey: null, q7Key: null, aiKey: null };
 
 const screenEl = document.getElementById("screen");
 const progWrap = document.getElementById("progress-wrap");
 const progFill = document.getElementById("progress-fill");
 const progLabel = document.getElementById("progress-label");
 
-const ICONS = {
-  search: '<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><line x1="15.5" y1="15.5" x2="21" y2="21"/></svg>',
-  pen: '<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3l4 4L8 20l-5 1 1-5L17 3z"/></svg>',
-  check: '<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l4 4L13 9"/><path d="M11 13l4 4L23 7"/></svg>'
-};
 const CHECK_SVG = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg>';
 
 function esc(s) {
-  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+function checkedHours() {
+  const h = {};
+  state.checked.forEach(i => { if (state.hours[i]) h[i] = state.hours[i]; });
+  return h;
+}
+
+function topItemLabel() {
+  const h = checkedHours();
+  let best = null;
+  Object.keys(h).map(Number).sort((a, b) => a - b).forEach(i => { if (best === null || h[i] > h[best]) best = i; });
+  return best === null ? null : DATA.checklist[best].label;
 }
 
 function updateProgress() {
@@ -461,18 +550,17 @@ function updateProgress() {
   progWrap.hidden = false;
   const pct = Math.min(100, Math.round(state.step / TOTAL_STEPS * 100));
   progFill.style.width = pct + "%";
-  progLabel.textContent =
-    state.step <= 7 ? "質問 " + Math.min(state.step, 7) + " / 7"
-    : state.step === 8 ? "最後のステップです"
-    : "診断結果";
+  progLabel.textContent = state.step <= 5 ? "ステップ " + state.step + " / 5" : "診断結果";
 }
 
 function render() {
   updateProgress();
   if (state.step === 0) renderStart();
-  else if (state.step >= 1 && state.step <= 6) renderQuestion(state.step - 1);
-  else if (state.step === 7) renderQ7();
-  else if (state.step === 8) renderChecklist();
+  else if (state.step === 1) renderChecklist();
+  else if (state.step === 2) renderHours();
+  else if (state.step === 3) renderRelease();
+  else if (state.step === 4) renderQ7();
+  else if (state.step === 5) renderAiExp();
   else renderResult();
   window.scrollTo({ top: 0 });
 }
@@ -483,21 +571,21 @@ function renderStart() {
       '<div class="start-ey">PERSONAL AI TEAM — DIAGNOSIS</div>' +
       '<span class="start-badge">3分・全部タップだけ</span>' +
       '<h1><span class="hg">AI社員</span>タイプ診断</h1>' +
-      '<p class="start-sub">あなたが最初にAIに任せる仕事、3分でわかります。</p>' +
+      '<p class="start-sub">1週間の仕事をタップで棚卸し。時間がどこに消えてるかと、最初にAIに任せる仕事の候補が3分で出ます。</p>' +
       '<p class="start-note">無料・登録なしで、最後まで診断できます。</p>' +
-      '<button class="btn" id="start-btn">診断をはじめる</button>' +
+      '<button class="btn" id="start-btn">棚卸しをはじめる</button>' +
       '<p class="byline">いチ（@ichi_ai_lab）｜AI活用で自分時間を1日+3時間</p>' +
     '</div>';
   document.getElementById("start-btn").onclick = () => { state.step = 1; render(); };
 }
 
-function optionButtons(options, onPick) {
+function optionButtons(options) {
   return options.map((o, i) =>
     '<button class="option" data-i="' + i + '">' + esc(o.label) + '</button>'
   ).join("");
 }
 
-function bindOptions(onPick) {
+function bindOptions(onPick, onBack) {
   screenEl.querySelectorAll(".option").forEach(btn => {
     btn.onclick = () => {
       btn.classList.add("selected");
@@ -505,48 +593,7 @@ function bindOptions(onPick) {
     };
   });
   const back = screenEl.querySelector(".btn-back");
-  if (back) back.onclick = () => { goBack(); };
-}
-
-function goBack() {
-  if (state.step >= 2 && state.step <= 7) state.answerCats.pop();
-  if (state.step === 8) state.q7Key = null;
-  state.step -= 1;
-  if (state.step < 1) state.step = 1;
-  // 戻った質問の回答も取り消す（answerCats は step-1 個であるべき）
-  while (state.answerCats.length > state.step - 1) state.answerCats.pop();
-  render();
-}
-
-function renderQuestion(qi) {
-  const q = DATA.questions[qi];
-  screenEl.innerHTML =
-    '<div class="screen">' +
-      '<div class="q-number">Q' + (qi + 1) + '</div>' +
-      '<div class="q-text">' + esc(q.text) + '</div>' +
-      optionButtons(q.options) +
-      (qi > 0 ? '<button class="btn-back">ひとつ前に戻る</button>' : '') +
-    '</div>';
-  bindOptions(i => {
-    state.answerCats.push(q.options[i].cat);
-    state.step += 1;
-    render();
-  });
-}
-
-function renderQ7() {
-  screenEl.innerHTML =
-    '<div class="screen">' +
-      '<div class="q-number">Q7</div>' +
-      '<div class="q-text">' + esc(DATA.q7.text) + '</div>' +
-      optionButtons(DATA.q7.options) +
-      '<button class="btn-back">ひとつ前に戻る</button>' +
-    '</div>';
-  bindOptions(i => {
-    state.q7Key = DATA.q7.options[i].key;
-    state.step = 8;
-    render();
-  });
+  if (back) back.onclick = onBack;
 }
 
 function renderChecklist() {
@@ -558,36 +605,115 @@ function renderChecklist() {
   ).join("");
   screenEl.innerHTML =
     '<div class="screen">' +
-      '<div class="q-number">最後のステップ</div>' +
-      '<div class="q-text">今週やった仕事、ぜんぶチェックしてください</div>' +
-      '<p class="check-intro">あなたの時間がどこに使われているか、その場で計算します。当てはまるものが無ければ、そのまま結果へどうぞ。</p>' +
+      '<div class="q-number">棚卸し 1</div>' +
+      '<div class="q-text">先週やった仕事、当てはまるもの全部にチェック</div>' +
+      '<p class="check-intro">時間の合計は次の画面で出します。当てはまるものが無ければ、そのまま次へ。</p>' +
       items +
-      '<div id="live-total"><span class="lt-label">いまのチェックだと</span><span class="lt-value" id="lt-value">週 0時間</span></div>' +
-      '<button class="btn" id="to-result">結果を見る</button>' +
-      '<button class="btn-back">ひとつ前に戻る</button>' +
+      '<div id="live-total"><span class="lt-label">いまのチェック</span><span class="lt-value" id="lt-value">0 個</span></div>' +
+      '<button class="btn" id="to-next">次へ</button>' +
     '</div>';
 
   function refreshTotal() {
-    let t = 0;
-    state.checked.forEach(i => { t += DATA.checklist[i].hours; });
-    document.getElementById("lt-value").textContent = "週 " + (Math.round(t * 10) / 10) + "時間";
+    document.getElementById("lt-value").textContent = state.checked.size + " 個";
   }
   refreshTotal();
-
   screenEl.querySelectorAll(".check-item").forEach(el => {
     el.onclick = () => {
       const i = Number(el.dataset.i);
-      if (state.checked.has(i)) { state.checked.delete(i); el.classList.remove("checked"); }
+      if (state.checked.has(i)) { state.checked.delete(i); delete state.hours[i]; el.classList.remove("checked"); }
       else { state.checked.add(i); el.classList.add("checked"); }
       refreshTotal();
     };
   });
-  document.getElementById("to-result").onclick = () => { state.step = 9; render(); };
-  screenEl.querySelector(".btn-back").onclick = () => { state.step = 7; render(); };
+  document.getElementById("to-next").onclick = () => {
+    state.step = state.checked.size > 0 ? 2 : 3;
+    render();
+  };
 }
 
+function renderHours() {
+  const idx = [...state.checked].sort((a, b) => a - b);
+  const rows = idx.map(i =>
+    '<div class="hours-row" data-i="' + i + '">' +
+      '<div class="hours-label">' + esc(DATA.checklist[i].label) + '</div>' +
+      '<div class="seg">' + DATA.hoursOptions.map((o, k) =>
+        '<button data-k="' + k + '"' + (state.hours[i] === o.h ? ' class="on"' : '') + '>' + esc(o.label) + '</button>'
+      ).join("") + '</div>' +
+    '</div>'
+  ).join("");
+  screenEl.innerHTML =
+    '<div class="screen">' +
+      '<div class="q-number">棚卸し 2</div>' +
+      '<div class="q-text">先週、それぞれどのくらいでしたか</div>' +
+      '<p class="check-intro">ざっくりで大丈夫です。合計はこの場で出します。</p>' +
+      rows +
+      '<div id="live-total"><span class="lt-label" id="lt-label">あと 0 つ</span><span class="lt-value" id="lt-value">週 0時間</span></div>' +
+      '<button class="btn" id="to-next" disabled>次へ</button>' +
+      '<button class="btn-back">ひとつ前に戻る</button>' +
+    '</div>';
 
-/* ===== 結果画面v2: キャラクター・レーダーチャート ===== */
+  function refresh() {
+    let t = 0, left = 0;
+    idx.forEach(i => { if (state.hours[i]) t += state.hours[i]; else left += 1; });
+    document.getElementById("lt-value").textContent = "週 " + (Math.round(t * 10) / 10) + "時間";
+    document.getElementById("lt-label").textContent = left > 0 ? "あと " + left + " つ" : "全部えらべました";
+    document.getElementById("to-next").disabled = left > 0;
+  }
+  refresh();
+  screenEl.querySelectorAll(".hours-row").forEach(row => {
+    const i = Number(row.dataset.i);
+    row.querySelectorAll("button").forEach(b => {
+      b.onclick = () => {
+        state.hours[i] = DATA.hoursOptions[Number(b.dataset.k)].h;
+        row.querySelectorAll("button").forEach(x => x.classList.remove("on"));
+        b.classList.add("on");
+        refresh();
+      };
+    });
+  });
+  document.getElementById("to-next").onclick = () => { state.step = 3; render(); };
+  screenEl.querySelector(".btn-back").onclick = () => { state.step = 1; render(); };
+}
+
+function renderRelease() {
+  const item = topItemLabel();
+  const text = item ? DATA.release.text.replace("{item}", item) : DATA.release.textNoItem;
+  screenEl.innerHTML =
+    '<div class="screen">' +
+      '<div class="q-number">Q1</div>' +
+      '<div class="q-text">' + esc(text) + '</div>' +
+      optionButtons(DATA.release.options) +
+      '<button class="btn-back">ひとつ前に戻る</button>' +
+    '</div>';
+  bindOptions(i => { state.releaseKey = DATA.release.options[i].key; state.step = 4; render(); },
+    () => { state.step = state.checked.size > 0 ? 2 : 1; render(); });
+}
+
+function renderQ7() {
+  screenEl.innerHTML =
+    '<div class="screen">' +
+      '<div class="q-number">Q2</div>' +
+      '<div class="q-text">' + esc(DATA.q7.text) + '</div>' +
+      optionButtons(DATA.q7.options) +
+      '<button class="btn-back">ひとつ前に戻る</button>' +
+    '</div>';
+  bindOptions(i => { state.q7Key = DATA.q7.options[i].key; state.step = 5; render(); },
+    () => { state.step = 3; render(); });
+}
+
+function renderAiExp() {
+  screenEl.innerHTML =
+    '<div class="screen">' +
+      '<div class="q-number">Q3</div>' +
+      '<div class="q-text">' + esc(DATA.aiExp.text) + '</div>' +
+      optionButtons(DATA.aiExp.options) +
+      '<button class="btn-back">ひとつ前に戻る</button>' +
+    '</div>';
+  bindOptions(i => { state.aiKey = DATA.aiExp.options[i].key; state.step = 6; render(); },
+    () => { state.step = 4; render(); });
+}
+
+/* ===== 結果画面: キャラクター・レーダーチャート ===== */
 const NICKS = { research: "あつめリスさん", content: "よふかしフクロウさん", admin: "はたらきバチさん" };
 const CHARS = {
 research: '<svg class="char" viewBox="0 0 120 120">'
@@ -633,20 +759,6 @@ admin: '<svg class="char" viewBox="0 0 120 120">'
  +'<path d="M52 71.6 L54 73.6 L57.5 69.6" stroke="#4E9E7E" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="rotate(-6 56 78)"/>'
  +'</svg>'
 };
-/* 6軸レーダー: 質問スコア+チェックリスト時間から算出(見える化用) */
-function computeAxes(scores, checkedIdx) {
-  const h = i => (checkedIdx.includes(i) ? DATA.checklist[i].hours : 0);
-  const raw = [
-    h(0) + h(1) + scores.research * 1.1,        /* ネタ探し */
-    h(4) + h(5) + h(7) + scores.content * 1.1,  /* 文章 */
-    h(6) * 1.4 + scores.content * .5,           /* 画像・動画 */
-    h(8) * 1.6 + scores.admin * .7,             /* 返信・対応 */
-    h(9) + h(10) + h(11) + scores.admin * .8,   /* 事務・お金 */
-    h(2) + h(3) + scores.research * .7          /* 学び・情報 */
-  ];
-  const mx = Math.max(...raw, 1);
-  return raw.map(v => Math.max(14, Math.round(v / (mx * 1.12) * 100)));
-}
 function radarSVG(vals) {
   const cx = 165, cy = 128, r = 86, n = 6;
   const LBL = ["ネタ探し", "文章", "画像・動画", "返信・対応", "事務・お金", "学び・情報"];
@@ -683,21 +795,42 @@ function radarSVG(vals) {
 }
 
 function renderResult() {
-  const r = computeResult(state.answerCats, state.q7Key, [...state.checked]);
+  const hours = checkedHours();
+  const r = computeResult(hours, state.releaseKey, state.q7Key, state.aiKey);
   const t = DATA.types[r.type];
-  const axes = computeAxes(r.scores, [...state.checked]);
+  const axes = computeAxes(hours);
+  const formUrl = buildFormUrl(r);
 
   const numBlock = r.weekly > 0
     ? '<div class="num-row2">' +
         '<div class="num-box2"><div class="num-big2">' + r.weekly + '</div><div class="num-unit2">時間 / 週</div></div>' +
         '<div class="num-box2"><div class="num-big2">約' + r.yearly + '</div><div class="num-unit2">時間 / 年</div></div>' +
       '</div>' +
-      '<p class="num-note2">いちばん重い「<b>' + esc(r.topItem) + '</b>」は、AIに下書きと準備を任せて、仕上げだけ自分でやる形にできます。</p>'
-    : '<p class="num-note2">今週は落ち着いた週だったのかも。忙しい週を思い出して、もう一度チェックしてみるのもおすすめです。</p>';
+      '<ul class="top3">' + r.top3.map(x => '<li><span>' + esc(x.label) + '</span><span>' + x.hours + 'h</span></li>').join("") + '</ul>' +
+      '<p class="ease-note">' + esc(DATA.easeLead) + '<span class="ease-big">' + esc(easeLabel(r)) + '</span>くらい' + esc(DATA.easeTail) + '</p>'
+    : '<p class="num-note2">' + esc(DATA.quietWeek) + '</p>';
+
+  const cands = r.candidates.map((key, n) => {
+    const s = DATA.staff[key];
+    return '<div class="cand">' +
+      '<div class="cand-no">候補 ' + (n + 1) + '</div>' +
+      '<div class="cand-name">' + esc(s.name) + '</div>' +
+      '<p class="cand-change">' + esc(s.change) + '</p>' +
+      (n === 0
+        ? '<div class="prompt-box" id="prompt-text">' + esc(s.prompt) + '</div>' +
+          '<button class="prompt-copy" id="copy-btn">この文をコピーする</button>'
+        : '') +
+    '</div>';
+  }).join("");
 
   screenEl.innerHTML =
     '<div class="screen result-pad">' +
       '<p class="result-eyebrow">YOUR RESULT — あなたの診断結果</p>' +
+      '<div class="stat-card">' +
+        '<div class="nc-title">あなたの時間の使いかたマップ</div>' +
+        '<div class="radar-wrap">' + radarSVG(axes) + '</div>' +
+        numBlock +
+      '</div>' +
       '<div class="type-card">' +
         CHARS[r.type] +
         '<div class="nick">' + esc(NICKS[r.type]) + '</div>' +
@@ -705,47 +838,41 @@ function renderResult() {
         '<p class="type-desc">' + esc(t.desc) + '</p>' +
         '<button class="share-btn" id="share-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="M16 6l-4-4-4 4"/><line x1="12" y1="2" x2="12" y2="15"/></svg>この結果をシェアする</button>' +
       '</div>' +
-      '<div class="stat-card">' +
-        '<div class="nc-title">あなたの時間の使いかたマップ</div>' +
-        '<div class="radar-wrap">' + radarSVG(axes) + '</div>' +
-        numBlock +
-      '</div>' +
+      '<div class="yohaku">' + esc(r.idealLine) + '</div>' +
       '<div class="section-card">' +
-        '<div class="sc-label">あなたの最初のAI社員</div>' +
-        '<div class="sc-title">' + esc(t.aiName) + '</div>' +
-        '<p class="sc-body">' + esc(t.aiDesc) + '</p>' +
-        '<div class="prompt-box" id="prompt-text">' + esc(t.prompt) + '</div>' +
-        '<button class="prompt-copy" id="copy-btn">この文をコピーする</button>' +
+        '<div class="sc-label">最初に手放す候補</div>' +
+        cands +
+        '<p class="cand-close">' + esc(DATA.candClose) + '</p>' +
       '</div>' +
-      '<div class="yohaku">' + esc(DATA.q7lines[r.q7Key]) + '</div>' +
       '<div class="cta-card">' +
-        '<div class="cta-title">' + esc(NICKS[r.type]) + 'のあなた専用、<br>プロンプト集をプレゼント</div>' +
-        '<p class="cta-body">コピペで使える「' + esc(t.aiName) + '」のお願い文をまとめた1枚を、LINEでお渡ししています。</p>' +
-        '<div class="steps3">' +
-          '<div class="step3"><div class="sn2">1</div><p><b>LINEを追加</b>下のボタンから</p></div>' +
-          '<div class="step3"><div class="sn2">2</div><p><b>「' + esc(DATA.lineKeyword) + '」と送る</b>ひとことでOK</p></div>' +
-          '<div class="step3"><div class="sn2">3</div><p><b>受け取る</b>プロンプト集が届く</p></div>' +
-        '</div>' +
-        '<a class="btn btn-line" href="' + DATA.lineUrl + '" target="_blank" rel="noopener">LINEでプロンプト集を受け取る</a>' +
-        '<p class="cta-note">結果画面はスクショで保存できます</p>' +
+        '<div class="cta-title">' + esc(DATA.cta.title) + '</div>' +
+        '<p class="cta-body">' + esc(DATA.cta.body) + '</p>' +
+        '<div class="promise-title">' + esc(DATA.cta.promiseTitle) + '</div>' +
+        '<ul class="promise">' + DATA.cta.promise.map((p, n) => '<li data-n="' + (n + 1) + '">' + esc(p) + '</li>').join("") + '</ul>' +
+        '<p class="cta-line">' + esc(DATA.cta.line) + '</p>' +
+        '<a class="btn btn-cta" id="cta-btn" href="' + esc(formUrl) + '" target="_blank" rel="noopener">' + esc(DATA.cta.button) + '</a>' +
+        '<p class="cta-note">' + esc(DATA.cta.note) + '</p>' +
       '</div>' +
       '<div class="retry"><button id="retry-btn">もう一度診断する</button></div>' +
-      '<p class="privacy">この診断は、回答をどこにも送信していません。結果はこの画面の中だけで計算しています。</p>' +
-      '<a class="sticky-cta" href="' + DATA.lineUrl + '" target="_blank" rel="noopener">LINEでプロンプト集を受け取る</a>' +
+      '<p class="privacy">' + esc(DATA.privacy) + '</p>' +
+      '<a class="sticky-cta" id="sticky-btn" href="' + esc(formUrl) + '" target="_blank" rel="noopener">' + esc(DATA.cta.sticky) + '</a>' +
     '</div>';
 
   document.getElementById("share-btn").onclick = function () {
-    const text = '私のAI社員タイプ診断は「' + t.name + '」（' + NICKS[r.type] + '）でした！\nあなたが最初にAIに任せる仕事がわかる、3分の無料診断はこちら';
+    const text = '私のAI社員タイプ診断は「' + t.name + '」（' + NICKS[r.type] + '）でした。' +
+      (r.weekly > 0 ? '先週は週' + r.weekly + '時間が、発信と裏方の仕事に使われていました。' : '') +
+      '\n自分の時間がどこに消えているか3分でわかる無料診断はこちら';
     const url = location.href;
     if (navigator.share) {
       navigator.share({ title: "AI社員タイプ診断", text: text, url: url }).catch(() => {});
     } else {
-      const done = () => { this.textContent = "コピーしました！SNSに貼ってシェアできます"; };
+      const done = () => { this.textContent = "コピーしました。SNSに貼ってシェアできます"; };
       if (navigator.clipboard) navigator.clipboard.writeText(text + "\n" + url).then(done.bind(this));
     }
   };
-  document.getElementById("copy-btn").onclick = function () {
-    const txt = t.prompt;
+  const copyBtn = document.getElementById("copy-btn");
+  if (copyBtn) copyBtn.onclick = function () {
+    const txt = DATA.staff[r.candidates[0]].prompt;
     const done = () => { this.textContent = "コピーしました"; setTimeout(() => { this.textContent = "この文をコピーする"; }, 1600); };
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(txt).then(done.bind(this));
@@ -757,7 +884,7 @@ function renderResult() {
     }
   };
   document.getElementById("retry-btn").onclick = () => {
-    state.step = 0; state.answerCats = []; state.q7Key = null; state.checked = new Set();
+    state.step = 0; state.checked = new Set(); state.hours = {}; state.releaseKey = null; state.q7Key = null; state.aiKey = null;
     render();
   };
 }
@@ -765,7 +892,7 @@ function renderResult() {
 render();
 
 /* node からのロジックテスト用 */
-if (typeof module !== "undefined") { module.exports = { computeResult, DATA }; }
+if (typeof module !== "undefined") { module.exports = { computeResult, computeAxes, buildFormUrl, easeLabel, DATA }; }
 </script>
 </body>
 </html>
