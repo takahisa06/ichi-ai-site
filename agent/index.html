@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AIエージェントはじめの一歩</title>
+<meta name="description" content="Claude Code・Codex・Museで、発信の手を空ける。チャットのAIとの違いから、発信者の使い方、コピーしてすぐ試せるお願い文まで。">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff; --bg2:#f4f6fa; --ink:#0e1525; --ink2:#46506a; --ink3:#7a8399;
+  --hair:rgba(14,21,37,.10); --acc:#2648f0; --acc-soft:rgba(38,72,240,.08);
+  --term:#0d1220; --term-ink:#d7def0; --ok:#1f9d6b;
+  --r:12px; --shadow:0 1px 2px rgba(14,21,37,.04),0 8px 24px rgba(14,21,37,.06);
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0b0f1a; --bg2:#121829; --ink:#e8ecf6; --ink2:#a9b2c8; --ink3:#7d869c;
+    --hair:rgba(232,236,246,.10); --acc:#6f8bff; --acc-soft:rgba(111,139,255,.12);
+    --term:#05080f; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0b0f1a; --bg2:#121829; --ink:#e8ecf6; --ink2:#a9b2c8; --ink3:#7d869c;
+  --hair:rgba(232,236,246,.10); --acc:#6f8bff; --acc-soft:rgba(111,139,255,.12);
+  --term:#05080f; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans JP","Hiragino Sans",system-ui,sans-serif;font-size:16px;line-height:1.85;letter-spacing:.01em}
+a{color:var(--acc)}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+
+/* top bar */
+.bar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--hair)}
+.bar .wrap{display:flex;align-items:center;gap:12px;height:52px}
+.brand{font-weight:700;font-size:14px;white-space:nowrap}
+.prog{flex:1;height:4px;background:var(--hair);border-radius:4px;overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:var(--acc);transition:width .4s var(--ease)}
+.progtxt{font-size:12px;color:var(--ink3);white-space:nowrap}
+
+/* hero */
+.hero{padding:40px 0 24px}
+.kicker{font-size:13px;color:var(--acc);font-weight:600}
+h1{font-size:clamp(26px,6.4vw,38px);line-height:1.35;margin:10px 0 14px;letter-spacing:0;font-weight:700}
+.lead{color:var(--ink2);margin:0 0 20px}
+.toc{display:grid;gap:0;border-top:1px solid var(--hair);margin:24px 0 0;padding:0;list-style:none}
+.toc a{display:flex;gap:12px;align-items:baseline;padding:12px 2px;border-bottom:1px solid var(--hair);color:var(--ink);text-decoration:none}
+.toc a span{color:var(--ink3);font-size:13px;min-width:26px}
+.toc a:active{background:var(--bg2)}
+
+/* terminal demo */
+.term{background:var(--term);color:var(--term-ink);border-radius:var(--r);padding:14px 16px 16px;font-family:"IBM Plex Mono",monospace;font-size:13px;line-height:1.7;box-shadow:var(--shadow);overflow:hidden}
+.term .dots{display:flex;gap:6px;margin-bottom:10px}
+.term .dots i{width:9px;height:9px;border-radius:50%;background:#2b3247}
+.term .u{color:#8fb0ff}
+.term .ok{color:#66d19e}
+.term .dim{color:#6f7891}
+.term .line{white-space:pre-wrap;word-break:break-word;opacity:0;transform:translateY(4px);transition:opacity .35s var(--ease),transform .35s var(--ease)}
+.term .line.on{opacity:1;transform:none}
+.cap{font-size:12px;color:var(--ink3);margin:8px 2px 0}
+
+/* sections */
+section{padding:44px 0 8px;scroll-margin-top:60px}
+.num{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--acc)}
+h2{font-size:clamp(21px,5vw,26px);line-height:1.45;margin:6px 0 14px}
+h3{font-size:17px;line-height:1.5;margin:0 0 6px}
+p{margin:0 0 14px}
+.note{font-size:13px;color:var(--ink3)}
+
+/* compare toggle */
+.seg{display:inline-flex;background:var(--bg2);border:1px solid var(--hair);border-radius:10px;padding:3px;margin:4px 0 14px}
+.seg button{appearance:none;border:0;background:transparent;color:var(--ink2);font:inherit;font-size:14px;font-weight:600;padding:8px 14px;border-radius:8px;cursor:pointer}
+.seg button[aria-selected="true"]{background:var(--bg);color:var(--ink);box-shadow:0 1px 3px rgba(14,21,37,.12)}
+.panel{background:var(--bg2);border-radius:var(--r);padding:18px}
+.flow{list-style:none;margin:0;padding:0;counter-reset:f}
+.flow li{position:relative;padding:0 0 14px 34px}
+.flow li:last-child{padding-bottom:0}
+.flow li::before{counter-increment:f;content:counter(f);position:absolute;left:0;top:2px;width:22px;height:22px;border-radius:50%;background:var(--bg);border:1px solid var(--hair);font-size:12px;display:grid;place-items:center;color:var(--ink2);font-family:"IBM Plex Mono",monospace}
+.flow li.you::before{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.flow li.ai::before{background:var(--acc);color:#fff;border-color:var(--acc)}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:1px 7px;border-radius:5px;margin-right:6px;vertical-align:1px}
+.tag.you{background:var(--ink);color:var(--bg)}
+.tag.ai{background:var(--acc);color:#fff}
+.verdict{margin-top:14px;padding-top:12px;border-top:1px solid var(--hair);font-weight:600}
+
+/* tool tabs */
+.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:0 -16px 12px;padding:0 16px}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:0 0 auto;appearance:none;border:1px solid var(--hair);background:var(--bg);color:var(--ink2);font:inherit;font-size:14px;font-weight:600;padding:8px 14px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tool{display:none}
+.tool.on{display:block;animation:fade .3s var(--ease)}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.facts{display:grid;grid-template-columns:110px 1fr;border-top:1px solid var(--hair);margin:12px 0 0}
+.facts dt,.facts dd{margin:0;padding:10px 0;border-bottom:1px solid var(--hair);font-size:14px}
+.facts dt{color:var(--ink3)}
+.src{font-size:12px;color:var(--ink3);margin-top:8px}
+.src a{color:var(--ink3)}
+
+/* cases */
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+.filters button{appearance:none;border:1px solid var(--hair);background:var(--bg);color:var(--ink2);font:inherit;font-size:13px;padding:6px 12px;border-radius:999px;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--acc-soft);color:var(--acc);border-color:transparent;font-weight:600}
+.case{border-bottom:1px solid var(--hair)}
+.case:first-of-type{border-top:1px solid var(--hair)}
+.case summary{list-style:none;cursor:pointer;padding:14px 30px 14px 0;position:relative}
+.case summary::-webkit-details-marker{display:none}
+.case summary::after{content:"";position:absolute;right:6px;top:22px;width:8px;height:8px;border-right:2px solid var(--ink3);border-bottom:2px solid var(--ink3);transform:rotate(45deg);transition:transform .25s var(--ease)}
+.case[open] summary::after{transform:rotate(-135deg);top:26px}
+.case .t{font-weight:600;display:block}
+.case .s{font-size:13px;color:var(--ink3)}
+.case .body{padding:0 0 16px}
+.chip{display:inline-block;font-size:11px;color:var(--ink2);border:1px solid var(--hair);border-radius:5px;padding:0 6px;margin-right:4px}
+.chip.ex{color:var(--ink3);border-style:dashed}
+
+/* prompt card */
+.prompt{position:relative;background:var(--bg2);border:1px solid var(--hair);border-radius:var(--r);padding:14px 14px 12px;margin:10px 0}
+.prompt .ph{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+.prompt .pt{font-size:13px;font-weight:600;color:var(--ink2)}
+.prompt pre{margin:0;font-family:"IBM Plex Mono","IBM Plex Sans JP",monospace;font-size:13.5px;line-height:1.75;white-space:pre-wrap;word-break:break-word;color:var(--ink)}
+.copy{appearance:none;border:0;background:var(--acc);color:#fff;font:inherit;font-size:13px;font-weight:600;padding:7px 14px;border-radius:8px;cursor:pointer;white-space:nowrap;transition:transform .12s var(--ease),background .2s}
+.copy:active{transform:scale(.96)}
+.copy.done{background:var(--ok)}
+
+/* muse flow */
+.pipe{display:grid;gap:10px}
+.pipe .st{background:var(--bg);border:1px solid var(--hair);border-radius:var(--r);padding:14px}
+.pipe .st b{display:block;font-size:13px;color:var(--acc);margin-bottom:2px}
+.pipe .arrow{justify-self:center;width:2px;height:16px;background:var(--hair);position:relative}
+.pipe .arrow::after{content:"";position:absolute;left:-4px;bottom:-2px;border:5px solid transparent;border-top-color:var(--ink3)}
+
+/* steps checklist */
+.steps{list-style:none;margin:0;padding:0}
+.steps li{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--hair)}
+.steps li:first-child{border-top:1px solid var(--hair)}
+.cb{flex:0 0 26px;height:26px;border-radius:8px;border:2px solid var(--hair);background:var(--bg);cursor:pointer;display:grid;place-items:center;transition:background .2s,border-color .2s}
+.cb svg{opacity:0;transition:opacity .2s}
+.steps li.done .cb{background:var(--ok);border-color:var(--ok)}
+.steps li.done .cb svg{opacity:1}
+.steps li.done h3{color:var(--ink3);text-decoration:line-through}
+
+/* end */
+.end{margin:40px 0 0;padding:28px 18px;background:var(--ink);color:var(--bg);border-radius:var(--r)}
+.end p{color:color-mix(in srgb,var(--bg) 80%,transparent)}
+.end h2{color:var(--bg)}
+footer{padding:28px 0 60px;font-size:12px;color:var(--ink3)}
+
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:var(--ink);color:var(--bg);font-size:14px;padding:10px 16px;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .25s var(--ease),transform .25s var(--ease);z-index:50}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+.reveal{opacity:0;transform:translateY(10px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.reveal.on{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.reveal,.term .line{opacity:1;transform:none}}
+@media (min-width:760px){.facts{grid-template-columns:140px 1fr}.pipe{grid-template-columns:1fr auto 1fr auto 1fr;align-items:center}.pipe .arrow{width:16px;height:2px}.pipe .arrow::after{left:auto;right:-2px;bottom:-4px;border-top-color:transparent;border-left-color:var(--ink3)}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <div class="brand">いち <span class="mono" style="color:var(--ink3);font-weight:400">@ichi_ai_lab</span></div>
+    <div class="prog" aria-hidden="true"><i id="prog"></i></div>
+    <div class="progtxt" id="progtxt">5分で読めます</div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<div class="hero">
+  <div class="kicker">LINE登録のお礼</div>
+  <h1>AIに「答えてもらう」から、<br>「まかせる」へ。</h1>
+  <p class="lead">Claude Code・Codex・Museで、発信の手を空ける話をまとめました。チャットのAIとどこが違うのか、発信者が実際に何をまかせているのか、コピーしてすぐ試せるお願い文まで。</p>
+
+  <div class="term" id="term" aria-label="エージェントが作業する様子の例">
+    <div class="dots"><i></i><i></i><i></i></div>
+    <div class="line"><span class="u">いち ›</span> postsフォルダの過去投稿を読んで、私の口調で来週のリール台本を3本書いて</div>
+    <div class="line dim">● postsフォルダを開いています（投稿 48件）</div>
+    <div class="line dim">● 言い回しのクセを10個に整理</div>
+    <div class="line dim">● 台本を3本書いて、drafts/ に保存</div>
+    <div class="line ok">✓ drafts/2026-11_台本A〜C.md を作りました。直したいところを教えてください</div>
+  </div>
+  <p class="cap">エージェントに頼むと、こんな動き方をします（画面は説明用の例）</p>
+
+  <ol class="toc">
+    <li><a href="#diff"><span class="mono">01</span>チャットのAIと、何が違う？</a></li>
+    <li><a href="#tools"><span class="mono">02</span>Claude Code・Codex・Muse</a></li>
+    <li><a href="#cases"><span class="mono">03</span>発信者が、AIにまかせていること</a></li>
+    <li><a href="#muse"><span class="mono">04</span>Muse × Claude Code の組み合わせ</a></li>
+    <li><a href="#start"><span class="mono">05</span>今日やる3つ</a></li>
+  </ol>
+</div>
+
+<section id="diff" class="reveal">
+  <div class="num">01</div>
+  <h2>チャットのAIと、何が違う？</h2>
+  <p>同じお願いをしたときの動き方を比べると、違いがいちばんわかりやすいです。お願いは「過去の投稿をもとに、来週のリール台本を3本」。</p>
+
+  <div class="seg" role="tablist">
+    <button role="tab" aria-selected="true" data-cmp="chat">チャットのAI</button>
+    <button role="tab" aria-selected="false" data-cmp="agent">エージェント</button>
+  </div>
+
+  <div class="panel" id="cmp-chat">
+    <ol class="flow">
+      <li class="you"><span class="tag you">自分</span>過去の投稿を探して、コピーして貼る</li>
+      <li class="you"><span class="tag you">自分</span>「この口調で」と毎回説明する</li>
+      <li class="ai"><span class="tag ai">AI</span>台本を3本、画面に書く</li>
+      <li class="you"><span class="tag you">自分</span>コピーしてメモに保存。直す</li>
+      <li class="you"><span class="tag you">自分</span>次の週も、また貼って説明するところから</li>
+    </ol>
+    <div class="verdict">手を動かすのは、ほとんど自分。</div>
+  </div>
+  <div class="panel" id="cmp-agent" hidden>
+    <ol class="flow">
+      <li class="you"><span class="tag you">自分</span>「postsフォルダを見て、私の口調で3本」と頼む</li>
+      <li class="ai"><span class="tag ai">AI</span>フォルダを自分で開いて、過去の投稿を読む</li>
+      <li class="ai"><span class="tag ai">AI</span>口調のクセを整理して、台本を3本書く</li>
+      <li class="ai"><span class="tag ai">AI</span>ファイルに保存して「できました」と返す</li>
+      <li class="you"><span class="tag you">自分</span>読んで、直したいところを伝える</li>
+    </ol>
+    <div class="verdict">自分の仕事は、頼むことと仕上げること。</div>
+  </div>
+
+  <p style="margin-top:18px">チャットのAIは「答える係」。エージェントは、ゴールを渡すと自分で手順を考えて、ファイルや道具を動かしながら最後までやる係です。Claudeを作っているAnthropicも、エージェントを「進め方と道具の使い方を、AIが自分で決めて動くもの」と説明しています。</p>
+  <p class="src">出典：<a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener">Anthropic「Building effective agents」</a>（2024-12-19）</p>
+</section>
+
+<section id="tools" class="reveal">
+  <div class="num">02</div>
+  <h2>Claude Code・Codex・Muse</h2>
+  <p>名前はよく聞くけど、何がどう違うのか。いち自身が毎日使っている3つを並べました。</p>
+
+  <div class="tabs" role="tablist">
+    <button role="tab" aria-selected="true" data-tool="cc">Claude Code</button>
+    <button role="tab" aria-selected="false" data-tool="codex">Codex</button>
+    <button role="tab" aria-selected="false" data-tool="muse">Muse</button>
+  </div>
+
+  <div class="tool on" id="tool-cc">
+    <h3>パソコンの中で動く、いちばんの働き手</h3>
+    <p>Anthropicのエージェント。パソコンのファイルを読んで書き換え、コマンドを動かし、ほかのサービスともつながります。いちの台本・編集の下ごしらえ・経理・このLINEの準備まで、ほぼ全部ここから。</p>
+    <dl class="facts">
+      <dt>使う場所</dt><dd>デスクトップアプリ（Mac／Windows）・ターミナル・VS Codeなど・Web・スマホアプリ</dd>
+      <dt>覚えさせ方</dt><dd>CLAUDE.md（毎回読む指示書）／スキル（作業の手順書）／メモリ</dd>
+      <dt>つながる先</dt><dd>MCPでGmail・Googleカレンダー・スプレッドシートなど</dd>
+      <dt>決まった時間に</dt><dd>定期タスクで「毎朝7時にこれ」もできる</dd>
+      <dt>プラン</dt><dd>有料のPro（月20ドル）から。Freeには入っていない</dd>
+    </dl>
+    <p class="src">出典：<a href="https://code.claude.com/docs/en/overview" target="_blank" rel="noopener">Claude Code 公式ドキュメント</a>・<a href="https://claude.com/pricing" target="_blank" rel="noopener">料金ページ</a>（2026-10-28時点・米ドル）</p>
+  </div>
+
+  <div class="tool" id="tool-codex">
+    <h3>ChatGPTの会社が作った、もう1人の働き手</h3>
+    <p>OpenAIのエージェント。Claude Codeと同じように、ファイルを調べて書き換え、コマンドを動かします。いちはClaude Codeと同じフォルダで交互に使っていて、片方が混んでいるときも手が止まりません。</p>
+    <dl class="facts">
+      <dt>使う場所</dt><dd>ChatGPTのアプリ（PC・スマホ・Web）・Codex CLI・VS Codeなど・クラウド</dd>
+      <dt>覚えさせ方</dt><dd>AGENTS.md（作業ルールの指示書）／スキル</dd>
+      <dt>つながる先</dt><dd>MCPに対応</dd>
+      <dt>プラン</dt><dd>無料プランから使える。Free・Goはデスクトップアプリのみ、Plus（月20ドル）からCLIなども</dd>
+    </dl>
+    <p class="src">出典：<a href="https://learn.chatgpt.com/docs" target="_blank" rel="noopener">Codex 公式ドキュメント</a>・<a href="https://learn.chatgpt.com/docs/pricing" target="_blank" rel="noopener">料金</a>（2026-10-28時点・米ドル）</p>
+  </div>
+
+  <div class="tool" id="tool-muse">
+    <h3>スマホで聞ける、インスタ担当</h3>
+    <p>Metaのエージェント。2026年10月23日に日本でも使えるようになりました。インスタ・Facebook・Threadsと同じアカウントでつながるので、自分のインスタのことを話しかけて聞けます。いちは「インスタの数字とリサーチの担当」として使っています。</p>
+    <dl class="facts">
+      <dt>使う場所</dt><dd>スマホアプリ（iOS・Android）・Web</dd>
+      <dt>つながる先</dt><dd>Instagram・Gmail・Googleカレンダーなど</dd>
+      <dt>安全面</dt><dd>メール送信などの大事な操作の前は、本人に確認してから動く</dd>
+      <dt>料金</dt><dd>基本の機能の多くは無料。有料プランもあり</dd>
+    </dl>
+    <p class="note">日本のスマホ版・Web版は、パソコンの中のファイルは扱いません。ファイルの作業はClaude CodeやCodexの出番です。</p>
+    <p class="src">出典：<a href="https://about.fb.com/ja/news/2026/10/muse-personal-ai-agent-launches-in-japan/" target="_blank" rel="noopener">Meta ニュースルーム</a>（2026-10-23）</p>
+  </div>
+</section>
+
+<section id="cases" class="reveal">
+  <div class="num">03</div>
+  <h2>発信者が、AIにまかせていること</h2>
+  <p>気になるものをタップすると、中身とお願い文が出てきます。お願い文は、右上のボタンでそのままコピーできます。</p>
+
+  <div class="filters" id="filters">
+    <button aria-pressed="true" data-f="all">すべて</button>
+    <button aria-pressed="false" data-f="write">企画・台本</button>
+    <button aria-pressed="false" data-f="check">チェック</button>
+    <button aria-pressed="false" data-f="data">数字・ネタ</button>
+    <button aria-pressed="false" data-f="edit">編集</button>
+    <button aria-pressed="false" data-f="system">仕組み</button>
+  </div>
+
+  <div id="caselist">
+    <details class="case" data-c="write">
+      <summary><span class="t">過去の投稿から、自分の口調で台本の下書き</span><span class="s"><span class="chip">Claude Code</span><span class="chip">Codex</span></span></summary>
+      <div class="body">
+        <p>いちばん最初に試してほしいもの。過去のキャプションや台本をテキストで1つのフォルダにまとめておくと、AIが自分で読みにいきます。毎回「この口調で」と説明しなくて済みます。</p>
+        <div class="prompt"><div class="ph"><span class="pt">お願い文</span><button class="copy">コピー</button></div><pre>postsフォルダの過去投稿を全部読んで、私の口調の特徴を10個にまとめて。そのあと、そのルールで「〇〇」の60秒台本を3案書いて、draftsフォルダに保存して。</pre></div>
+      </div>
+    </details>
+
+    <details class="case" data-c="write">
+      <summary><span class="t">冒頭の1行を20案出して、強い順に並べる</span><span class="s"><span class="chip">Claude Code</span><span class="chip">Codex</span></span></summary>
+      <div class="body">
+        <p>伸びるかどうかは最初の1行で決まりがち。自分で3つ考えるより、20案から選ぶ方が早いです。理由つきで並べさせると、自分の判断の練習にもなります。</p>
+        <div class="prompt"><div class="ph"><span class="pt">お願い文</span><button class="copy">コピー</button></div><pre>この台本の冒頭1行目の案を20個出して。弱い順に並べて、上位3つを残す理由も書いて。</pre></div>
+      </div>
+    </details>
+
+    <details class="case" data-c="check">
+      <summary><span class="t">口調のルールを「スキル」にして、毎回チェック</span><span class="s"><span class="chip">Claude Code</span></span></summary>
+      <div class="body">
+        <p>スキルは、AIに渡す作業の手順書。一度作れば、次からは名前を呼べば同じ基準で見てくれます。Anthropicのマーケ担当も、ブランドの口調をスキルにして確認に使っています。</p>
+        <div class="prompt"><div class="ph"><span class="pt">お願い文</span><button class="copy">コピー</button></div><pre>私の口調ルールをスキルにして。次から台本を書いたら、このスキルで言い回しをチェックして直して。</pre></div>
+        <p class="src">出典：<a href="https://claude.com/blog/how-anthropic-uses-claude-marketing" target="_blank" rel="noopener">How Anthropic uses Claude in Marketing</a></p>
+      </div>
+    </details>
+
+    <details class="case" data-c="check">
+      <summary><span class="t">言い過ぎ・根拠のない数字にしるしをつける係</span><span class="s"><span class="chip">Claude Code</span><span class="chip">Codex</span></span></summary>
+      <div class="body">
+        <p>投稿前の最後の見直し。「誰でも」「必ず」みたいな言い過ぎや、出どころのない数字を拾ってもらいます。直すかどうかは自分で決めます。</p>
+        <div class="prompt"><div class="ph"><span class="pt">お願い文</span><button class="copy">コピー</button></div><pre>この投稿文を読んで、言い過ぎ・根拠のない数字・誤解されそうな表現にしるしをつけて、言い換え案を出して。</pre></div>
+      </div>
+    </details>
+
+    <details class="case" data-c="data">
+      <summary><span class="t">メモの山から、来週のネタ候補を5つ</span><span class="s"><span class="chip">Claude Code</span><span class="chip">Codex</span></span></summary>
+      <div class="body">
+        <p>スマホのメモやObsidianにたまったものを、AIに読ませて整理。元のメモへのリンクつきで出させると、あとで探し直さなくて済みます。</p>
+        <div class="prompt"><div class="ph"><span class="pt">お願い文</span><button class="copy">コピー</button></div><pre>メモフォルダを見て、似たメモをまとめて、来週のネタ候補を5つ、元のメモのリンクつきで一覧にして。</pre></div>
+      </div>
+    </details>
+
+    <details class="case" data-c="data">
+      <summary><span class="t">毎朝7時に、AIニュースとネタ案が届く</span><span class="s"><span class="chip">Claude Code</span></span></summary>
+      <div class="body">
+        <p>定期タスクにしておくと、自分が寝ている間に調べてくれます。出典のURLもつけさせると、そのまま裏取りに使えます。いちも毎朝これで1日が始まります。</p>
+        <div class="prompt"><div class="ph"><span class="pt">お願い文</span><button class="copy">コピー</button></div><pre>毎朝7時に、AIの新しいニュースを3つ調べて、発信のネタ案と出典URLつきで news.md に追記する定期タスクを作って。</pre></div>
+      </div>
+    </details>
+
+    <details class="case" data-c="edit">
+      <summary><span class="t">台本から字幕ファイル（SRT）を作る</span><span class="s"><span class="chip">Claude Code</span><span class="chip">Codex</span></span></summary>
+      <div class="body">
+        <p>CapCut・Premiere・DaVinci Resolveに読み込める字幕ファイルを、台本から作ります。テロップを1行ずつ打つ時間がなくなります。編集アプリには、正式な「読み込み」で入れるのが安心です。</p>
+        <div class="prompt"><div class="ph"><span class="pt">お願い文</span><button class="copy">コピー</button></div><pre>この台本を、1行が短めの字幕ファイル（SRT）にして。読み上げの速さは1秒7文字くらいで時間を割り振って。</pre></div>
+      </div>
+    </details>
+
+    <details class="case" data-c="system">
+      <summary><span class="t">Claude CodeとCodexを、同じフォルダで交互に</span><span class="s"><span class="chip">Claude Code</span><span class="chip">Codex</span></span></summary>
+      <div class="body">
+        <p>どちらも AGENTS.md という指示書を読めるので、ルールを1枚に書いておけば、どちらに頼んでも同じ前提で続きから動きます。片方の上限に当たっても止まりません。</p>
+        <div class="prompt"><div class="ph"><span class="pt">お願い文</span><button class="copy">コピー</button></div><pre>このフォルダの作業ルールを AGENTS.md にまとめて。目的・置き場所・やってはいけないこと・終わったら書く引き継ぎメモの書き方を入れて。</pre></div>
+      </div>
+    </details>
+
+    <details class="case" data-c="system">
+      <summary><span class="t">外出先から、スマホで続きを頼む</span><span class="s"><span class="chip">Claude Code</span></span></summary>
+      <div class="body">
+        <p>家のパソコンで動いているClaude Codeに、スマホから話しかけて続きを頼めます（Remote Control）。移動中に台本を進めてもらって、帰ったら確認して仕上げ。</p>
+        <p class="src">出典：<a href="https://code.claude.com/docs/en/overview" target="_blank" rel="noopener">Claude Code 公式ドキュメント</a></p>
+      </div>
+    </details>
+  </div>
+  <p class="note" style="margin-top:12px">パスワードやAPIキーは、AIとのチャットに貼らないのが基本です。設定ファイルに自分で書いて、AIには「書いた」と伝えます。</p>
+</section>
+
+<section id="muse" class="reveal">
+  <div class="num">04</div>
+  <h2>Muse × Claude Code の組み合わせ</h2>
+  <p>Museはインスタのことを聞ける係、Claude Codeはパソコンの中で書いて残す係。役割を分けると、それぞれの得意なところを活かせます。</p>
+
+  <div class="pipe">
+    <div class="st"><b>① Museに聞く</b>直近30日で反応がよかった投稿と、その共通点</div>
+    <div class="arrow" aria-hidden="true"></div>
+    <div class="st"><b>② 答えを貼る</b>Museの答えをコピーして、Claude Codeに渡す</div>
+    <div class="arrow" aria-hidden="true"></div>
+    <div class="st"><b>③ Claude Codeが書く</b>次の3本の企画と台本を、フォルダに保存</div>
+  </div>
+
+  <div class="prompt" style="margin-top:16px"><div class="ph"><span class="pt">① Museへ</span><button class="copy">コピー</button></div><pre>私のインスタの直近30日で反応がよかった投稿を3つ挙げて、共通点を教えて。</pre></div>
+  <div class="prompt"><div class="ph"><span class="pt">③ Claude Codeへ（Museの答えの下に）</span><button class="copy">コピー</button></div><pre>この分析をもとに、次の3本の企画と台本の下書きを作って、ideasフォルダに保存して。</pre></div>
+  <p class="note">公式の連携機能ではなく、コピーで受け渡す使い方です。Museでインスタの数字を聞くには、プロアカウント（ビジネス・クリエイター）が前提になります。</p>
+</section>
+
+<section id="start" class="reveal">
+  <div class="num">05</div>
+  <h2>今日やる3つ</h2>
+  <p>終わったらチェック。このスマホに残るので、続きからできます。</p>
+  <ul class="steps" id="steps">
+    <li data-k="s1"><button class="cb" aria-label="1つ目を完了にする"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M2.5 7.5l3 3 6-7" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div><h3>まかせたい作業を1つ決める</h3><p class="note" style="margin:0">毎週やっていて、手順がだいたい同じもの。台本の下書き・キャプション・ネタ出しあたりが始めやすいです。</p></div></li>
+    <li data-k="s2"><button class="cb" aria-label="2つ目を完了にする"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M2.5 7.5l3 3 6-7" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div><h3>材料を1つのフォルダにまとめる</h3><p class="note" style="margin:0">過去の投稿・台本・メモをテキストで。AIが読みにいける場所を作るのが、エージェントの第一歩です。</p></div></li>
+    <li data-k="s3"><button class="cb" aria-label="3つ目を完了にする"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M2.5 7.5l3 3 6-7" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div><h3>03のお願い文を1つ、そのまま投げる</h3><p class="note" style="margin:0">Claude CodeかCodexに。うまくいかなくても大丈夫。どこで止まったかが、次の材料になります。</p></div></li>
+  </ul>
+
+  <div class="end">
+    <h2>どれを試したか、LINEで一言</h2>
+    <p>「1つ目の台本やった」くらいで大丈夫です。どこまで進んだかを見て、次の使い方をいちが返します。</p>
+    <a class="copy" style="display:inline-block;text-decoration:none;padding:11px 18px;font-size:15px" href="https://line.me/R/ti/p/@944nuhzz">LINEに戻る</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="wrap">
+  <p>料金や機能は 2026-10-28 時点で各社の公式ページを確認したものです。変わることがあるので、申し込む前に公式ページで最新を見ておくと安心です。</p>
+  <p>© いち（@ichi_ai_lab）</p>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite">コピーしました</div>
+
+<script>
+(function(){
+  // 01 compare
+  document.querySelectorAll('[data-cmp]').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('[data-cmp]').forEach(function(x){x.setAttribute('aria-selected',x===b)});
+      document.getElementById('cmp-chat').hidden = b.dataset.cmp!=='chat';
+      document.getElementById('cmp-agent').hidden = b.dataset.cmp!=='agent';
+    });
+  });
+  // 02 tool tabs
+  document.querySelectorAll('[data-tool]').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('[data-tool]').forEach(function(x){x.setAttribute('aria-selected',x===b)});
+      document.querySelectorAll('.tool').forEach(function(t){t.classList.toggle('on',t.id==='tool-'+b.dataset.tool)});
+    });
+  });
+  // 03 filters
+  document.querySelectorAll('[data-f]').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('[data-f]').forEach(function(x){x.setAttribute('aria-pressed',x===b)});
+      document.querySelectorAll('.case').forEach(function(c){
+        c.hidden = !(b.dataset.f==='all' || c.dataset.c===b.dataset.f);
+      });
+    });
+  });
+  // copy
+  var toast=document.getElementById('toast'),tt;
+  function showToast(msg){toast.textContent=msg;toast.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){toast.classList.remove('on')},1600)}
+  function fallbackCopy(text){
+    var ta=document.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.top='-1000px';
+    document.body.appendChild(ta);ta.select();ta.setSelectionRange(0,text.length);
+    var ok=false;try{ok=document.execCommand('copy')}catch(e){}
+    document.body.removeChild(ta);return ok;
+  }
+  document.querySelectorAll('.prompt .copy').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var text=btn.closest('.prompt').querySelector('pre').textContent;
+      var done=function(){btn.textContent='コピー済み';btn.classList.add('done');showToast('コピーしました。AIに貼りつけて使えます');setTimeout(function(){btn.textContent='コピー';btn.classList.remove('done')},2000)};
+      if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(text).then(done,function(){fallbackCopy(text)?done():showToast('長押しで選ぶとコピーできます')})}
+      else{fallbackCopy(text)?done():showToast('長押しで選ぶとコピーできます')}
+    });
+  });
+  // steps
+  var KEY='agent-guide-steps';var saved={};
+  try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
+  document.querySelectorAll('#steps li').forEach(function(li){
+    if(saved[li.dataset.k])li.classList.add('done');
+    li.querySelector('.cb').addEventListener('click',function(){
+      li.classList.toggle('done');saved[li.dataset.k]=li.classList.contains('done');
+      try{localStorage.setItem(KEY,JSON.stringify(saved))}catch(e){}
+      var n=document.querySelectorAll('#steps li.done').length;
+      if(li.classList.contains('done'))showToast(n===3?'3つ全部できました':'あと'+(3-n)+'つ');
+    });
+  });
+  // reading progress
+  var bar=document.getElementById('prog'),ptxt=document.getElementById('progtxt');
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-innerHeight;var p=h>0?Math.min(1,scrollY/h):0;
+    bar.style.width=(p*100)+'%';
+    ptxt.textContent=p<0.02?'5分で読めます':(p>0.98?'読み終わり':Math.round(p*100)+'%');
+  }
+  addEventListener('scroll',onScroll,{passive:true});onScroll();
+  // reveal + terminal
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var io='IntersectionObserver' in window?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}})},{threshold:.12}):null;
+  document.querySelectorAll('.reveal').forEach(function(el){io?io.observe(el):el.classList.add('on')});
+  var lines=document.querySelectorAll('#term .line');
+  if(reduce){lines.forEach(function(l){l.classList.add('on')})}
+  else{lines.forEach(function(l,i){setTimeout(function(){l.classList.add('on')},300+i*650)})}
+})();
+</script>
+
+</body>
+</html>
