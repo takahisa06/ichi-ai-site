@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>AIエージェントはじめの一歩</title>
-<meta name="description" content="Claude Code・Codex・Museで、発信の手を空ける。チャットのAIとの違いから、発信者の使い方、コピーしてすぐ試せるお願い文まで。">
+<meta name="description" content="Claude Code・Codex・Museで、発信の手を空ける。チャットのAIとの違いから、発信者の使い方、コピーしてすぐ試せるプロンプトまで。">
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -173,8 +173,8 @@ footer{padding:28px 0 60px;font-size:12px;color:var(--ink3)}
 
 <div class="hero">
   <div class="kicker">LINE登録のお礼</div>
-  <h1>AIに「答えてもらう」から、<br>「まかせる」へ。</h1>
-  <p class="lead">Claude Code・Codex・Museで、発信の手を空ける話をまとめました。チャットのAIとどこが違うのか、発信者が実際に何をまかせているのか、コピーしてすぐ試せるお願い文まで。</p>
+  <h1>AIに聞くんじゃなくて、<br>仕事をまかせる。</h1>
+  <p class="lead">Claude Code・Codex・Museを、発信にどう使ってるかまとめました。チャットのAIとの違い、実際にまかせてること、コピーしてそのまま試せるプロンプトまで載せてます。</p>
 
   <div class="term" id="term" aria-label="エージェントが作業する様子の例">
     <div class="dots"><i></i><i></i><i></i></div>
@@ -187,18 +187,18 @@ footer{padding:28px 0 60px;font-size:12px;color:var(--ink3)}
   <p class="cap">エージェントに頼むと、こんな動き方をします（画面は説明用の例）</p>
 
   <ol class="toc">
-    <li><a href="#diff"><span class="mono">01</span>チャットのAIと、何が違う？</a></li>
+    <li><a href="#diff"><span class="mono">01</span>チャットのAIと何が違う？</a></li>
     <li><a href="#tools"><span class="mono">02</span>Claude Code・Codex・Muse</a></li>
-    <li><a href="#cases"><span class="mono">03</span>発信者が、AIにまかせていること</a></li>
-    <li><a href="#muse"><span class="mono">04</span>Muse × Claude Code の組み合わせ</a></li>
-    <li><a href="#start"><span class="mono">05</span>今日やる3つ</a></li>
+    <li><a href="#cases"><span class="mono">03</span>発信者がAIにまかせてること</a></li>
+    <li><a href="#muse"><span class="mono">04</span>MuseとClaude Codeを組み合わせる</a></li>
+    <li><a href="#start"><span class="mono">05</span>最初にやること</a></li>
   </ol>
 </div>
 
 <section id="diff" class="reveal">
   <div class="num">01</div>
-  <h2>チャットのAIと、何が違う？</h2>
-  <p>同じお願いをしたときの動き方を比べると、違いがいちばんわかりやすいです。お願いは「過去の投稿をもとに、来週のリール台本を3本」。</p>
+  <h2>チャットのAIと何が違う？</h2>
+  <p>同じことを頼んで、動き方を比べてみます。頼むのは「過去の投稿をもとに、来週のリール台本を3本」。</p>
 
   <div class="seg" role="tablist">
     <button role="tab" aria-selected="true" data-cmp="chat">チャットのAI</button>
@@ -213,7 +213,7 @@ footer{padding:28px 0 60px;font-size:12px;color:var(--ink3)}
       <li class="you"><span class="tag you">自分</span>コピーしてメモに保存。直す</li>
       <li class="you"><span class="tag you">自分</span>次の週も、また貼って説明するところから</li>
     </ol>
-    <div class="verdict">手を動かすのは、ほとんど自分。</div>
+    <div class="verdict">手を動かすのはほとんど自分。</div>
   </div>
   <div class="panel" id="cmp-agent" hidden>
     <ol class="flow">
@@ -223,17 +223,17 @@ footer{padding:28px 0 60px;font-size:12px;color:var(--ink3)}
       <li class="ai"><span class="tag ai">AI</span>ファイルに保存して「できました」と返す</li>
       <li class="you"><span class="tag you">自分</span>読んで、直したいところを伝える</li>
     </ol>
-    <div class="verdict">自分の仕事は、頼むことと仕上げること。</div>
+    <div class="verdict">自分がやるのは、頼むのと最後に直すところ。</div>
   </div>
 
-  <p style="margin-top:18px">チャットのAIは「答える係」。エージェントは、ゴールを渡すと自分で手順を考えて、ファイルや道具を動かしながら最後までやる係です。Claudeを作っているAnthropicも、エージェントを「進め方と道具の使い方を、AIが自分で決めて動くもの」と説明しています。</p>
+  <p style="margin-top:18px">チャットのAIは、聞かれたことに答えるところまで。エージェントはゴールを渡すと手順を自分で考えて、ファイルを開いたり保存したりしながら最後までやってくれます。Claudeを作ってるAnthropicも、エージェントは「進め方と道具の使い方を、AIが自分で決めて動くもの」って説明してます。</p>
   <p class="src">出典：<a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener">Anthropic「Building effective agents」</a>（2024-12-19）</p>
 </section>
 
 <section id="tools" class="reveal">
   <div class="num">02</div>
   <h2>Claude Code・Codex・Muse</h2>
-  <p>名前はよく聞くけど、何がどう違うのか。いチ自身が毎日使っている3つを並べました。</p>
+  <p>名前はよく聞くけど、違いがわかりにくい3つ。どれもいチが毎日使ってます。</p>
 
   <div class="tabs" role="tablist">
     <button role="tab" aria-selected="true" data-tool="cc">Claude Code</button>
@@ -242,8 +242,8 @@ footer{padding:28px 0 60px;font-size:12px;color:var(--ink3)}
   </div>
 
   <div class="tool on" id="tool-cc">
-    <h3>パソコンの中で動く、いちばんの働き手</h3>
-    <p>Anthropicのエージェント。パソコンのファイルを読んで書き換え、コマンドを動かし、ほかのサービスともつながります。いチの台本・編集の下ごしらえ・経理・このLINEの準備まで、ほぼ全部ここから。</p>
+    <h3>いチがいちばん使ってるもの</h3>
+    <p>Anthropicのエージェント。パソコンのファイルを読んで書き換え、コマンドを動かし、ほかのサービスともつながります。いチは台本、編集の下ごしらえ、経理、このLINEの準備まで、ほぼ全部これでやってます。</p>
     <dl class="facts">
       <dt>使う場所</dt><dd>デスクトップアプリ（Mac／Windows）・ターミナル・VS Codeなど・Web・スマホアプリ</dd>
       <dt>覚えさせ方</dt><dd>CLAUDE.md（毎回読む指示書）／スキル（作業の手順書）／メモリ</dd>
@@ -255,8 +255,8 @@ footer{padding:28px 0 60px;font-size:12px;color:var(--ink3)}
   </div>
 
   <div class="tool" id="tool-codex">
-    <h3>ChatGPTの会社が作った、もう1人の働き手</h3>
-    <p>OpenAIのエージェント。Claude Codeと同じように、ファイルを調べて書き換え、コマンドを動かします。いチはClaude Codeと同じフォルダで交互に使っていて、片方が混んでいるときも手が止まりません。</p>
+    <h3>ChatGPTのOpenAIが作ってるエージェント</h3>
+    <p>OpenAIのエージェント。Claude Codeと同じように、ファイルを調べて書き換え、コマンドを動かします。いチはClaude Codeと同じフォルダで交互に使ってて、片方が上限に当たっても作業が止まらないようにしてます。</p>
     <dl class="facts">
       <dt>使う場所</dt><dd>ChatGPTのアプリ（PC・スマホ・Web）・Codex CLI・VS Codeなど・クラウド</dd>
       <dt>覚えさせ方</dt><dd>AGENTS.md（作業ルールの指示書）／スキル</dd>
@@ -267,23 +267,23 @@ footer{padding:28px 0 60px;font-size:12px;color:var(--ink3)}
   </div>
 
   <div class="tool" id="tool-muse">
-    <h3>スマホで聞ける、インスタ担当</h3>
-    <p>Metaのエージェント。2026年10月23日に日本でも使えるようになりました。インスタ・Facebook・Threadsと同じアカウントでつながるので、自分のインスタのことを話しかけて聞けます。いチは「インスタの数字とリサーチの担当」として使っています。</p>
+    <h3>スマホからインスタのことを聞ける</h3>
+    <p>Metaのエージェント。2026年10月23日に日本でも使えるようになりました。インスタ・Facebook・Threadsと同じアカウントでつながるので、自分のインスタのことをそのまま聞けます。いチはインスタの数字とリサーチを聞く係にしてます。</p>
     <dl class="facts">
       <dt>使う場所</dt><dd>スマホアプリ（iOS・Android）・Web</dd>
       <dt>つながる先</dt><dd>Instagram・Gmail・Googleカレンダーなど</dd>
       <dt>安全面</dt><dd>メール送信などの大事な操作の前は、本人に確認してから動く</dd>
       <dt>料金</dt><dd>基本の機能の多くは無料。有料プランもあり</dd>
     </dl>
-    <p class="note">日本のスマホ版・Web版は、パソコンの中のファイルは扱いません。ファイルの作業はClaude CodeやCodexの出番です。</p>
+    <p class="note">日本のスマホ版・Web版は、パソコンの中のファイルは扱いません。ファイルを触る作業はClaude CodeかCodexでやります。</p>
     <p class="src">出典：<a href="https://about.fb.com/ja/news/2026/10/muse-personal-ai-agent-launches-in-japan/" target="_blank" rel="noopener">Meta ニュースルーム</a>（2026-10-23）</p>
   </div>
 </section>
 
 <section id="cases" class="reveal">
   <div class="num">03</div>
-  <h2>発信者が、AIにまかせていること</h2>
-  <p>気になるものをタップすると、中身とお願い文が出てきます。お願い文は、右上のボタンでそのままコピーできます。</p>
+  <h2>発信者がAIにまかせてること</h2>
+  <p>気になるものをタップすると、中身とプロンプトが開きます。プロンプトは右上のボタンでそのままコピーできます。</p>
 
   <div class="filters" id="filters">
     <button aria-pressed="true" data-f="all">すべて</button>
@@ -298,24 +298,24 @@ footer{padding:28px 0 60px;font-size:12px;color:var(--ink3)}
     <details class="case" data-c="write">
       <summary><span class="t">過去の投稿から、自分の口調で台本の下書き</span><span class="s"><span class="chip">Claude Code</span><span class="chip">Codex</span></span></summary>
       <div class="body">
-        <p>いちばん最初に試してほしいもの。過去のキャプションや台本をテキストで1つのフォルダにまとめておくと、AIが自分で読みにいきます。毎回「この口調で」と説明しなくて済みます。</p>
-        <div class="prompt"><div class="ph"><span class="pt">お願い文</span><button class="copy">コピー</button></div><pre>postsフォルダの過去投稿を全部読んで、私の口調の特徴を10個にまとめて。そのあと、そのルールで「〇〇」の60秒台本を3案書いて、draftsフォルダに保存して。</pre></div>
+        <p>最初に試すならこれ。過去のキャプションや台本をテキストにして1つのフォルダに入れておくと、AIが自分で読みにいきます。毎回「この口調で」って説明しなくて大丈夫。</p>
+        <div class="prompt"><div class="ph"><span class="pt">プロンプト</span><button class="copy">コピー</button></div><pre>postsフォルダの過去投稿を全部読んで、私の口調の特徴を10個にまとめて。そのあと、そのルールで「〇〇」の60秒台本を3案書いて、draftsフォルダに保存して。</pre></div>
       </div>
     </details>
 
     <details class="case" data-c="write">
       <summary><span class="t">冒頭の1行を20案出して、強い順に並べる</span><span class="s"><span class="chip">Claude Code</span><span class="chip">Codex</span></span></summary>
       <div class="body">
-        <p>伸びるかどうかは最初の1行で決まりがち。自分で3つ考えるより、20案から選ぶ方が早いです。理由つきで並べさせると、自分の判断の練習にもなります。</p>
-        <div class="prompt"><div class="ph"><span class="pt">お願い文</span><button class="copy">コピー</button></div><pre>この台本の冒頭1行目の案を20個出して。弱い順に並べて、上位3つを残す理由も書いて。</pre></div>
+        <p>最初の1行は、いちばん悩むところ。自分で3つ考えるより、20案から選ぶ方が早いです。理由もつけてもらうと、どれを選ぶか自分で決める練習にもなる。</p>
+        <div class="prompt"><div class="ph"><span class="pt">プロンプト</span><button class="copy">コピー</button></div><pre>この台本の冒頭1行目の案を20個出して。弱い順に並べて、上位3つを残す理由も書いて。</pre></div>
       </div>
     </details>
 
     <details class="case" data-c="check">
       <summary><span class="t">口調のルールを「スキル」にして、毎回チェック</span><span class="s"><span class="chip">Claude Code</span></span></summary>
       <div class="body">
-        <p>スキルは、AIに渡す作業の手順書。一度作れば、次からは名前を呼べば同じ基準で見てくれます。Anthropicのマーケ担当も、ブランドの口調をスキルにして確認に使っています。</p>
-        <div class="prompt"><div class="ph"><span class="pt">お願い文</span><button class="copy">コピー</button></div><pre>私の口調ルールをスキルにして。次から台本を書いたら、このスキルで言い回しをチェックして直して。</pre></div>
+        <p>スキルはAIに渡す作業の手順書。一度作っておくと、次からは名前を呼ぶと同じ基準で見てくれます。Anthropicのマーケのチームも、ブランドの口調をスキルにして確認に使ってるそうです。</p>
+        <div class="prompt"><div class="ph"><span class="pt">プロンプト</span><button class="copy">コピー</button></div><pre>私の口調ルールをスキルにして。次から台本を書いたら、このスキルで言い回しをチェックして直して。</pre></div>
         <p class="src">出典：<a href="https://claude.com/blog/how-anthropic-uses-claude-marketing" target="_blank" rel="noopener">How Anthropic uses Claude in Marketing</a></p>
       </div>
     </details>
@@ -324,30 +324,30 @@ footer{padding:28px 0 60px;font-size:12px;color:var(--ink3)}
       <summary><span class="t">言い過ぎ・根拠のない数字にしるしをつける係</span><span class="s"><span class="chip">Claude Code</span><span class="chip">Codex</span></span></summary>
       <div class="body">
         <p>投稿前の最後の見直し。「誰でも」「必ず」みたいな言い過ぎや、出どころのない数字を拾ってもらいます。直すかどうかは自分で決めます。</p>
-        <div class="prompt"><div class="ph"><span class="pt">お願い文</span><button class="copy">コピー</button></div><pre>この投稿文を読んで、言い過ぎ・根拠のない数字・誤解されそうな表現にしるしをつけて、言い換え案を出して。</pre></div>
+        <div class="prompt"><div class="ph"><span class="pt">プロンプト</span><button class="copy">コピー</button></div><pre>この投稿文を読んで、言い過ぎ・根拠のない数字・誤解されそうな表現にしるしをつけて、言い換え案を出して。</pre></div>
       </div>
     </details>
 
     <details class="case" data-c="data">
       <summary><span class="t">メモの山から、来週のネタ候補を5つ</span><span class="s"><span class="chip">Claude Code</span><span class="chip">Codex</span></span></summary>
       <div class="body">
-        <p>スマホのメモやObsidianにたまったものを、AIに読ませて整理。元のメモへのリンクつきで出させると、あとで探し直さなくて済みます。</p>
-        <div class="prompt"><div class="ph"><span class="pt">お願い文</span><button class="copy">コピー</button></div><pre>メモフォルダを見て、似たメモをまとめて、来週のネタ候補を5つ、元のメモのリンクつきで一覧にして。</pre></div>
+        <p>スマホのメモやObsidianにたまったものを、AIに読ませて整理します。元のメモへのリンクもつけてもらうと、あとで探し直さなくていい。</p>
+        <div class="prompt"><div class="ph"><span class="pt">プロンプト</span><button class="copy">コピー</button></div><pre>メモフォルダを見て、似たメモをまとめて、来週のネタ候補を5つ、元のメモのリンクつきで一覧にして。</pre></div>
       </div>
     </details>
 
     <details class="case" data-c="data">
       <summary><span class="t">毎朝7時に、AIニュースとネタ案が届く</span><span class="s"><span class="chip">Claude Code</span></span></summary>
       <div class="body">
-        <p>定期タスクにしておくと、自分が寝ている間に調べてくれます。出典のURLもつけさせると、そのまま裏取りに使えます。いチも毎朝これで1日が始まります。</p>
-        <div class="prompt"><div class="ph"><span class="pt">お願い文</span><button class="copy">コピー</button></div><pre>毎朝7時に、AIの新しいニュースを3つ調べて、発信のネタ案と出典URLつきで news.md に追記する定期タスクを作って。</pre></div>
+        <p>定期タスクにしておくと、寝てる間に調べてくれます。出典のURLもつけてもらうと、そのまま裏取りに使えます。いチも毎朝これを読むところから始めてます。</p>
+        <div class="prompt"><div class="ph"><span class="pt">プロンプト</span><button class="copy">コピー</button></div><pre>毎朝7時に、AIの新しいニュースを3つ調べて、発信のネタ案と出典URLつきで news.md に追記する定期タスクを作って。</pre></div>
       </div>
     </details>
 
     <details class="case" data-c="edit">
       <summary><span class="t">カット編集：文字起こしから「切る所の一覧」を作る</span><span class="s"><span class="chip">Claude Code</span><span class="chip">Codex</span></span></summary>
       <div class="body">
-        <p>編集の最初の一歩はここから。言い間違い・言い直し・長い間・同じ話のくり返しを、AIに時間つきで一覧にしてもらいます。切るのは、いつもの編集アプリで自分の手で。どこを残すかの感覚は、自分に残ります。</p>
+        <p>編集はまずここから。言い間違い・言い直し・長い間・同じ話のくり返しを、AIに時間つきで一覧にしてもらいます。切るのはいつもの編集アプリで、自分の手で。どこを残すかは自分で決めます。</p>
         <p>文字起こしの渡し方は2通りあります。</p>
         <div class="prompt"><div class="ph"><span class="pt">A. 動画ごとAIに渡す</span><button class="copy">コピー</button></div><pre>videosフォルダの動画を文字起こしして、時間つきで書き出して。そのあと、言い間違い・言い直し・長い間・同じ話のくり返しを探して、切る所の一覧を「開始〜終了・何を切るか・理由」の表にして。迷う所は切らずに「迷い」と印をつけて。</pre></div>
         <div class="prompt"><div class="ph"><span class="pt">B. 編集アプリの自動字幕を渡す</span><button class="copy">コピー</button></div><pre>この字幕ファイル（自動字幕を書き出したもの）を読んで、言い間違い・言い直し・長い間・同じ話のくり返しを探して、切る所の一覧を「開始〜終了・何を切るか・理由」の表にして。迷う所は切らずに「迷い」と印をつけて。</pre></div>
@@ -358,34 +358,34 @@ footer{padding:28px 0 60px;font-size:12px;color:var(--ink3)}
     <details class="case" data-c="edit">
       <summary><span class="t">テロップ入れ：台本から字幕ファイル（SRT）を作る</span><span class="s"><span class="chip">Claude Code</span><span class="chip">Codex</span></span></summary>
       <div class="body">
-        <p>カットが終わったら次はテロップ。CapCut・Premiere・DaVinci Resolveに読み込める字幕ファイルを、台本から作ります。テロップを1行ずつ打つ時間がなくなります。編集アプリには、正式な「読み込み」で入れるのが安心です。</p>
-        <div class="prompt"><div class="ph"><span class="pt">お願い文</span><button class="copy">コピー</button></div><pre>この台本を、1行が短めの字幕ファイル（SRT）にして。読み上げの速さは1秒7文字くらいで時間を割り振って。</pre></div>
+        <p>カットが終わったら次はテロップ。CapCut・Premiere・DaVinci Resolveに読み込める字幕ファイルを、台本から作ります。テロップを1行ずつ打たなくてよくなる。編集アプリには、アプリの「読み込み」から入れます。</p>
+        <div class="prompt"><div class="ph"><span class="pt">プロンプト</span><button class="copy">コピー</button></div><pre>この台本を、1行が短めの字幕ファイル（SRT）にして。読み上げの速さは1秒7文字くらいで時間を割り振って。</pre></div>
       </div>
     </details>
 
     <details class="case" data-c="system">
       <summary><span class="t">Claude CodeとCodexを、同じフォルダで交互に</span><span class="s"><span class="chip">Claude Code</span><span class="chip">Codex</span></span></summary>
       <div class="body">
-        <p>どちらも AGENTS.md という指示書を読めるので、ルールを1枚に書いておけば、どちらに頼んでも同じ前提で続きから動きます。片方の上限に当たっても止まりません。</p>
-        <div class="prompt"><div class="ph"><span class="pt">お願い文</span><button class="copy">コピー</button></div><pre>このフォルダの作業ルールを AGENTS.md にまとめて。目的・置き場所・やってはいけないこと・終わったら書く引き継ぎメモの書き方を入れて。</pre></div>
+        <p>どちらも AGENTS.md って指示書を読めるので、ルールを1枚にまとめておくと、どっちに頼んでも同じ前提で続きからやってくれます。片方が上限に当たっても止まらない。</p>
+        <div class="prompt"><div class="ph"><span class="pt">プロンプト</span><button class="copy">コピー</button></div><pre>このフォルダの作業ルールを AGENTS.md にまとめて。目的・置き場所・やってはいけないこと・終わったら書く引き継ぎメモの書き方を入れて。</pre></div>
       </div>
     </details>
 
     <details class="case" data-c="system">
       <summary><span class="t">外出先から、スマホで続きを頼む</span><span class="s"><span class="chip">Claude Code</span></span></summary>
       <div class="body">
-        <p>家のパソコンで動いているClaude Codeに、スマホから話しかけて続きを頼めます（Remote Control）。移動中に台本を進めてもらって、帰ったら確認して仕上げ。</p>
+        <p>家のパソコンで動いているClaude Codeに、スマホから話しかけて続きを頼めます（Remote Control）。移動中に台本を進めてもらって、帰ってから確認して仕上げます。</p>
         <p class="src">出典：<a href="https://code.claude.com/docs/en/overview" target="_blank" rel="noopener">Claude Code 公式ドキュメント</a></p>
       </div>
     </details>
   </div>
-  <p class="note" style="margin-top:12px">パスワードやAPIキーは、AIとのチャットに貼らないのが基本です。設定ファイルに自分で書いて、AIには「書いた」と伝えます。</p>
+  <p class="note" style="margin-top:12px">パスワードやAPIキーは、AIとのチャットに貼らない。設定ファイルに自分で書いて、AIには「書いたよ」って伝えれば動きます。</p>
 </section>
 
 <section id="muse" class="reveal">
   <div class="num">04</div>
-  <h2>Muse × Claude Code の組み合わせ</h2>
-  <p>Museはインスタのことを聞ける係、Claude Codeはパソコンの中で書いて残す係。役割を分けると、それぞれの得意なところを活かせます。</p>
+  <h2>MuseとClaude Codeを組み合わせる</h2>
+  <p>Museはインスタのことを聞く係、Claude Codeはパソコンの中で書いて保存する係。Museに聞いた答えをClaude Codeに渡して、台本にしてもらいます。</p>
 
   <div class="pipe">
     <div class="st"><b>① Museに聞く</b>直近30日で反応がよかった投稿と、その共通点</div>
@@ -402,18 +402,18 @@ footer{padding:28px 0 60px;font-size:12px;color:var(--ink3)}
 
 <section id="start" class="reveal">
   <div class="num">05</div>
-  <h2>今日やる3つ</h2>
-  <p>終わったらチェック。このスマホに残るので、続きからできます。</p>
+  <h2>最初にやること</h2>
+  <p>終わったらチェックを入れておくと、このスマホに残ります。</p>
   <ul class="steps" id="steps">
     <li data-k="s1"><button class="cb" aria-label="1つ目を完了にする"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M2.5 7.5l3 3 6-7" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div><h3>まかせたい作業を1つ決める</h3><p class="note" style="margin:0">毎週やっていて、手順がだいたい同じもの。台本の下書き・キャプション・ネタ出しあたりが始めやすいです。</p></div></li>
-    <li data-k="s2"><button class="cb" aria-label="2つ目を完了にする"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M2.5 7.5l3 3 6-7" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div><h3>材料を1つのフォルダにまとめる</h3><p class="note" style="margin:0">過去の投稿・台本・メモをテキストで。AIが読みにいける場所を作るのが、エージェントの第一歩です。</p></div></li>
-    <li data-k="s3"><button class="cb" aria-label="3つ目を完了にする"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M2.5 7.5l3 3 6-7" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div><h3>03のお願い文を1つ、そのまま投げる</h3><p class="note" style="margin:0">Claude CodeかCodexに。うまくいかなくても大丈夫。どこで止まったかが、次の材料になります。</p></div></li>
+    <li data-k="s2"><button class="cb" aria-label="2つ目を完了にする"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M2.5 7.5l3 3 6-7" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div><h3>材料を1つのフォルダにまとめる</h3><p class="note" style="margin:0">過去の投稿・台本・メモをテキストで。ここがないと、AIは何も読みにいけません。</p></div></li>
+    <li data-k="s3"><button class="cb" aria-label="3つ目を完了にする"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M2.5 7.5l3 3 6-7" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div><h3>03のプロンプトを1つ、そのまま投げる</h3><p class="note" style="margin:0">Claude CodeかCodexに。最初からうまくいかなくても大丈夫です。止まったところは、下のLINEで聞いてもらえたら返します。</p></div></li>
   </ul>
 
   <div class="end">
-    <h2>どれを試したか、LINEで一言</h2>
-    <p>「1つ目の台本やった」くらいで大丈夫です。どこまで進んだかを見て、次の使い方をいチが返します。</p>
-    <a class="copy" style="display:inline-block;text-decoration:none;padding:11px 18px;font-size:15px" href="https://line.me/R/ti/p/@944nuhzz">LINEに戻る</a>
+    <h2>止まったら、LINEで続きを返します</h2>
+    <p>最初の1回は、フォルダの場所やプロンプトの頼み方でつまずきがちです。どれを試して、どこで止まったかを送ってもらえたら、その続きのやり方をいチが返します。「台本のやつ、フォルダが見つからないで止まった」くらいで大丈夫。<br>もらった内容は、次にLINEで送るものを決めるのに使います。</p>
+    <a class="copy" style="display:inline-block;text-decoration:none;padding:11px 18px;font-size:15px" href="https://line.me/R/ti/p/@944nuhzz">LINEで送る</a>
   </div>
 </section>
 
