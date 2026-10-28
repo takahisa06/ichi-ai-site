@@ -345,9 +345,20 @@ footer{padding:28px 0 60px;font-size:12px;color:var(--ink3)}
     </details>
 
     <details class="case" data-c="edit">
-      <summary><span class="t">台本から字幕ファイル（SRT）を作る</span><span class="s"><span class="chip">Claude Code</span><span class="chip">Codex</span></span></summary>
+      <summary><span class="t">カット編集：文字起こしから「切る所の一覧」を作る</span><span class="s"><span class="chip">Claude Code</span><span class="chip">Codex</span></span></summary>
       <div class="body">
-        <p>CapCut・Premiere・DaVinci Resolveに読み込める字幕ファイルを、台本から作ります。テロップを1行ずつ打つ時間がなくなります。編集アプリには、正式な「読み込み」で入れるのが安心です。</p>
+        <p>編集の最初の一歩はここから。言い間違い・言い直し・長い間・同じ話のくり返しを、AIに時間つきで一覧にしてもらいます。切るのは、いつもの編集アプリで自分の手で。どこを残すかの感覚は、自分に残ります。</p>
+        <p>文字起こしの渡し方は2通りあります。</p>
+        <div class="prompt"><div class="ph"><span class="pt">A. 動画ごとAIに渡す</span><button class="copy">コピー</button></div><pre>videosフォルダの動画を文字起こしして、時間つきで書き出して。そのあと、言い間違い・言い直し・長い間・同じ話のくり返しを探して、切る所の一覧を「開始〜終了・何を切るか・理由」の表にして。迷う所は切らずに「迷い」と印をつけて。</pre></div>
+        <div class="prompt"><div class="ph"><span class="pt">B. 編集アプリの自動字幕を渡す</span><button class="copy">コピー</button></div><pre>この字幕ファイル（自動字幕を書き出したもの）を読んで、言い間違い・言い直し・長い間・同じ話のくり返しを探して、切る所の一覧を「開始〜終了・何を切るか・理由」の表にして。迷う所は切らずに「迷い」と印をつけて。</pre></div>
+        <p class="note">Aは、文字起こしの準備からAIが進めます。Bは、CapCutのパソコン版などで自動字幕を字幕ファイルとして書き出してから渡します。書き出せるかどうかは、アプリや版によって違います。</p>
+      </div>
+    </details>
+
+    <details class="case" data-c="edit">
+      <summary><span class="t">テロップ入れ：台本から字幕ファイル（SRT）を作る</span><span class="s"><span class="chip">Claude Code</span><span class="chip">Codex</span></span></summary>
+      <div class="body">
+        <p>カットが終わったら次はテロップ。CapCut・Premiere・DaVinci Resolveに読み込める字幕ファイルを、台本から作ります。テロップを1行ずつ打つ時間がなくなります。編集アプリには、正式な「読み込み」で入れるのが安心です。</p>
         <div class="prompt"><div class="ph"><span class="pt">お願い文</span><button class="copy">コピー</button></div><pre>この台本を、1行が短めの字幕ファイル（SRT）にして。読み上げの速さは1秒7文字くらいで時間を割り振って。</pre></div>
       </div>
     </details>
