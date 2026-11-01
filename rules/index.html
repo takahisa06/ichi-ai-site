@@ -132,6 +132,14 @@ p{margin:0 0 14px}
 .keep small{display:block;font-weight:600;font-size:12px;color:var(--acc)}
 .cta{display:block;text-align:center;text-decoration:none;margin-top:14px;border-radius:12px;padding:15px;background:#06c755;color:#fff;font-weight:700;font-size:16px;transition:transform .12s var(--ease)}
 .cta:active{transform:scale(.98)}
+.cta.sub{background:var(--bg);color:#06a648;border:1.5px solid #06c755;font-size:15px;padding:12px}
+.pickline{display:grid;gap:10px;margin:6px 0 10px}
+.lbtn{display:flex;align-items:center;justify-content:space-between;gap:12px;text-decoration:none;background:#06c755;color:#fff;border-radius:12px;padding:14px 16px;box-shadow:0 6px 16px rgba(6,199,85,.22);transition:transform .12s var(--ease)}
+.lbtn:active{transform:scale(.98)}
+.lbtn b{font-size:18px}
+.lbtn b{min-width:5.2em}
+.lbtn span{flex:1;font-size:13px;opacity:.92}
+.lbtn::after{content:"→";font-weight:700;margin-left:4px}
 
 footer{padding:32px 0 60px;font-size:12px;color:var(--ink3)}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:var(--ink);color:#fff;font-size:14px;padding:10px 16px;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .25s var(--ease),transform .25s var(--ease);z-index:50}
@@ -154,7 +162,7 @@ footer{padding:32px 0 60px;font-size:12px;color:var(--ink3)}
     <li><a href="#services"><span>03</span>サービスごとの禁止リスト</a></li>
     <li><a href="#build"><span>04</span>自分用の禁止リストを作ってコピー</a></li>
     <li><a href="#edit"><span>05</span>規約に沿った動画編集の流れ</a></li>
-    <li><a href="#study"><span>06</span>自分のアプリだと、どこまで任せていい？</a></li>
+    <li><a href="#study"><span>06</span>いちばん気になるのは、どれ？</a></li>
   </ul>
 </header>
 
@@ -218,8 +226,17 @@ footer{padding:32px 0 60px;font-size:12px;color:var(--ink3)}
 
 <section id="study">
   <div class="num">06</div>
-  <h2>自分のアプリだと、どこまで任せていい？</h2>
-  <p>ここまで読めば、「AIにやらせないこと」と全体の形は押さえられる。でも実際に手を動かすと、だいたい次の所で止まります。</p>
+  <h2>いちばん気になるのは、どれ？</h2>
+  <p>ここまで読めば、「AIにやらせないこと」は押さえられています。残っているのは、自分の場合はどうするか。押すとLINEが開いて、言葉が入った状態になります。そのまま送ると、そのサービスに合わせた続きが届きます。</p>
+  <div class="pickline">
+    <a class="lbtn" href="https://line.me/R/oaMessage/%40944nuhzz/?CapCut"><b>CapCut</b><span>編集をAIで楽にしたい</span></a>
+    <a class="lbtn" href="https://line.me/R/oaMessage/%40944nuhzz/?%E6%A5%BD%E5%A4%A9"><b>楽天</b><span>ROOM・アフィリエイト</span></a>
+    <a class="lbtn" href="https://line.me/R/oaMessage/%40944nuhzz/?%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF"><b>インスタ</b><span>数字の見方・投稿</span></a>
+  </div>
+  <p class="note">押してもらった内容で、次に送るものを決めています。スマホのLINEで開きます（パソコン版のLINEでは開きません）。</p>
+
+  <h3 style="margin-top:36px">もう相談したい人は</h3>
+  <p>CapCutのことは、だいたい次の所で止まります。</p>
   <ul class="stuck">
     <li>CapCutで作ってきたけど、アプリを替えたほうがいいの？</li>
     <li>字幕のファイルって、どのアプリにどう読み込むの？</li>
@@ -236,9 +253,9 @@ footer{padding:32px 0 60px;font-size:12px;color:var(--ink3)}
     </ol>
     <div class="keep"><small>終わったとき、手元に残るもの</small>自分の環境に合った編集ソフトと、AIとのつなげ方の手順。帰ってすぐ、次の1本から試せます。</div>
     <p class="note">教えるのは、映像制作会社の代表として現場の編集を見てきて、いまはAIを仕事の真ん中に置いているいチです。</p>
-    <p>このページを開いた時点で、やらせないことはもう押さえられています。残っているのは、自分の場合のつなぎ方。そこを45分で一緒に決めます。</p>
+    <p>自分の場合のつなぎ方を、45分で一緒に決めます。</p>
     <p>予約の画面で、今の編集アプリとパソコンを聞きます。それに合わせて準備してから始めるので、45分をまるごと中身に使えます。</p>
-    <a class="cta" href="https://liff.line.me/2010719511-jONsMSBm?calendar_salon_id=33659">空いている日時を見る</a>
+    <a class="cta sub" href="https://liff.line.me/2010719511-jONsMSBm?calendar_salon_id=33659">空いている日時を見る</a>
     <p class="note" style="margin-top:8px">LINEの予約画面が開きます。</p>
   </div>
 </section>
