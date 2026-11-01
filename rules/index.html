@@ -2,215 +2,244 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
 <title>AIに渡している禁止リスト</title>
 <meta name="description" content="AIに任せてアカウントが止まらないように、いチがAIに毎回読ませている禁止リスト。インスタ・TikTok・CapCut・楽天の規約の原文つき">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#eef0f3;--grid:#dde0e5;--ink:#121316;--sub:#6b7079;--card:#101217;--card2:#1c1f26;--line:#2b2f37;--acc:#ffd43b;--blue:#1877f2;--ok:#2fb36b;--warn:#f0a020;--w:#fff}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0b0c10;--grid:#16181e;--ink:#f2f3f5;--sub:#9aa0aa}}
-:root[data-theme="dark"]{--bg:#0b0c10;--grid:#16181e;--ink:#f2f3f5;--sub:#9aa0aa}
+:root{
+  --bg:#ffffff; --bg2:#f4f6fa; --ink:#0e1525; --ink2:#46506a; --ink3:#7a8399;
+  --hair:rgba(14,21,37,.10); --acc:#2648f0; --acc-soft:rgba(38,72,240,.08);
+  --ng:#d93a3f; --ng-soft:rgba(217,58,63,.08); --ok:#1f9d6b; --ok-soft:rgba(31,157,107,.09);
+  --gray:#c07a0c; --gray-soft:rgba(192,122,12,.10);
+  --r:12px; --shadow:0 1px 2px rgba(14,21,37,.04),0 8px 24px rgba(14,21,37,.06);
+  --ease:cubic-bezier(.22,1,.36,1);
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px;color:var(--ink);font-family:"Noto Sans JP",system-ui,sans-serif;line-height:1.75;-webkit-font-smoothing:antialiased}
-.wrap{max-width:680px;margin:0 auto;padding:28px 16px 80px}
-header{padding:28px 0 8px}
-.kicker{display:inline-flex;gap:8px;align-items:center;background:var(--ink);color:var(--bg);border-radius:999px;padding:6px 14px;font:600 12px Montserrat,sans-serif;letter-spacing:.06em}
-.kicker b{background:var(--acc);color:#111;border-radius:999px;padding:1px 8px}
-h1{font-size:clamp(28px,7vw,40px);line-height:1.3;margin:18px 0 10px;font-weight:900;letter-spacing:.01em}
-h1 em{font-style:normal;background:linear-gradient(transparent 58%,var(--acc) 58%)}
-.lead{color:var(--sub);font-size:15px;margin:0}
-.legend{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 6px;font-size:12px}
-.tag{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:3px 10px;font-weight:700;font-size:11px;white-space:nowrap}
-.tag::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
-.t-ok{color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,transparent)}
-.t-me{color:var(--blue);background:color-mix(in srgb,var(--blue) 14%,transparent)}
-.t-chk{color:var(--warn);background:color-mix(in srgb,var(--warn) 16%,transparent)}
-nav{position:sticky;top:0;z-index:5;margin:18px -16px 0;padding:10px 16px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);display:flex;gap:8px;overflow-x:auto}
-nav button{flex:none;border:1px solid var(--line);background:var(--card);color:#fff;border-radius:999px;padding:8px 14px;font:700 13px "Noto Sans JP";cursor:pointer}
-nav button[aria-pressed="true"]{background:var(--acc);color:#111;border-color:var(--acc)}
-section{margin-top:34px}
-h2{font-size:20px;margin:0 0 4px;display:flex;align-items:center;gap:10px}
-h2 .n{font:800 13px Montserrat;background:var(--ink);color:var(--bg);border-radius:8px;padding:2px 8px}
-.sec-lead{color:var(--sub);font-size:14px;margin:0 0 14px}
-.card{background:var(--card);color:#fff;border:1px solid var(--line);border-radius:22px;padding:18px 18px 16px;margin:12px 0;box-shadow:0 14px 34px rgba(10,14,25,.18)}
-.card h3{font-size:17px;margin:0;line-height:1.5}
-.row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-.gain{color:#c9cdd4;font-size:14px;margin:8px 0 12px}
-.ask{position:relative;background:var(--card2);border-radius:14px;padding:12px 14px 12px;font-size:14px;color:#eef0f3}
-.ask small{display:block;font:600 11px Montserrat;color:#8a909a;letter-spacing:.08em;margin-bottom:4px}
-.copy{margin-top:10px;width:100%;border:0;border-radius:12px;padding:10px;background:var(--acc);color:#111;font:700 14px "Noto Sans JP";cursor:pointer;transition:transform .12s cubic-bezier(.16,1,.3,1)}
-.copy:active{transform:scale(.97)}
-.copy.done{background:var(--ok);color:#fff}
-.note{font-size:12px;color:#9aa0aa;margin:10px 0 0}
-.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:6px;margin:14px 0 4px;text-align:center;font-size:12px}
-.node{background:var(--card2);border-radius:14px;padding:10px 4px;font-weight:700}
-.node b{display:block;font:800 15px Montserrat;color:var(--acc)}
-.arr{color:#8a909a;font-weight:700}
-.dont{background:transparent;color:var(--ink);border:1px dashed var(--sub)}
-.dont ul{margin:6px 0 0;padding-left:1.2em;font-size:14px;color:var(--sub)}
-footer{margin-top:40px;font-size:12px;color:var(--sub)}
-footer a{color:inherit}
-.hide{display:none}
-@media print{*{-webkit-print-color-adjust:exact;print-color-adjust:exact}nav,.copy{display:none!important}.card{break-inside:avoid}body{background-size:28px 28px}.wrap{padding-top:8px}@page{size:A4;margin:12mm}}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans JP","Hiragino Sans",system-ui,sans-serif;font-size:16px;line-height:1.85;letter-spacing:.01em}
+a{color:var(--acc)}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+button{font:inherit}
 
-.ng,.okk{display:flex;gap:10px;align-items:flex-start;font-size:14px;margin:8px 0}
-.ng i,.okk i{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font:800 12px Montserrat;font-style:normal;margin-top:1px}
-.ng i{background:#e5484d;color:#fff}.okk i{background:var(--ok);color:#fff}
-.src{font-size:12px;color:#9aa0aa;margin:10px 0 0;border-top:1px solid var(--line);padding-top:8px}
-.src a{color:#c9cdd4}
-.t-ng{color:#e5484d;background:color-mix(in srgb,#e5484d 14%,transparent)}
-.rule3{counter-reset:r;list-style:none;padding:0;margin:0}
-.rule3 li{counter-increment:r;background:var(--card2);border-radius:14px;padding:12px 14px 12px 52px;margin:8px 0;position:relative;font-size:15px;color:#eef0f3}
-.rule3 li::before{content:counter(r);position:absolute;left:14px;top:12px;width:26px;height:26px;border-radius:8px;background:var(--acc);color:#111;font:800 14px Montserrat;display:grid;place-items:center}
-.rule3 li span{display:block;color:#9aa0aa;font-size:13px;margin-top:2px}
-.ask .q{white-space:pre-wrap}
-.stuck{margin:0;padding-left:1.2em;font-size:15px;color:var(--ink);line-height:1.8}
-.keep{background:color-mix(in srgb,var(--acc) 14%,var(--card2));border:1px solid color-mix(in srgb,var(--acc) 45%,transparent);border-radius:14px;padding:12px 14px;margin:12px 0 4px;font-size:14px;color:#eef0f3}
-.who{font-size:13px;color:#c9cdd4;margin:12px 0 0;padding-left:10px;border-left:3px solid var(--acc)}
-.keep small{display:block;font-weight:700;font-size:12px;color:var(--acc);margin-bottom:4px}
-.cta{display:block;text-align:center;text-decoration:none;margin-top:12px;border-radius:14px;padding:14px;background:#06c755;color:#fff;font:700 16px "Noto Sans JP"}
+.bar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--hair)}
+.bar .wrap{display:flex;align-items:center;gap:12px;height:52px}
+.brand{font-weight:700;font-size:14px;white-space:nowrap}
+.prog{flex:1;height:4px;background:var(--hair);border-radius:4px;overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:var(--acc);transition:width .3s var(--ease)}
 
+.hero{padding:40px 0 20px}
+.kicker{font-size:13px;color:var(--acc);font-weight:600}
+h1{font-size:clamp(26px,6.4vw,38px);line-height:1.35;margin:10px 0 14px;font-weight:700}
+.lead{color:var(--ink2);margin:0 0 18px}
+.toc{border-top:1px solid var(--hair);margin:20px 0 0;padding:0;list-style:none}
+.toc a{display:flex;gap:12px;align-items:baseline;padding:12px 2px;border-bottom:1px solid var(--hair);color:var(--ink);text-decoration:none}
+.toc a span{color:var(--ink3);font-size:13px;min-width:26px;font-family:"IBM Plex Mono",monospace}
+
+section{padding:44px 0 8px;scroll-margin-top:60px}
+.num{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--acc)}
+h2{font-size:clamp(21px,5vw,26px);line-height:1.45;margin:6px 0 12px}
+h3{font-size:17px;line-height:1.5;margin:0 0 6px}
+p{margin:0 0 14px}
+.note{font-size:13px;color:var(--ink3)}
+
+/* quiz */
+.quiz{display:grid;gap:12px;margin-top:6px}
+.q{background:var(--bg);border:1px solid var(--hair);border-radius:var(--r);padding:16px;box-shadow:var(--shadow)}
+.q .qn{font-size:12px;color:var(--ink3);font-family:"IBM Plex Mono",monospace}
+.q .qt{font-weight:600;margin:2px 0 12px}
+.q .btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.q .btns button{appearance:none;border:1px solid var(--hair);background:var(--bg2);color:var(--ink);font-weight:600;font-size:15px;padding:11px 8px;border-radius:10px;cursor:pointer;transition:transform .12s var(--ease),background .2s,border-color .2s}
+.q .btns button:active{transform:scale(.97)}
+.q.answered .btns button{pointer-events:none;opacity:.45}
+.q.answered .btns button.pick{opacity:1;border-color:var(--ink)}
+.q .ans{display:none;margin-top:12px;padding:12px 14px;border-radius:10px;font-size:14px;line-height:1.75}
+.q.answered .ans{display:block;animation:fade .3s var(--ease)}
+.q .ans b{display:block;font-size:15px;margin-bottom:2px}
+.q .ans.ng{background:var(--ng-soft)} .q .ans.ng b{color:var(--ng)}
+.q .ans.ok{background:var(--ok-soft)} .q .ans.ok b{color:var(--ok)}
+.q .mark{font-weight:700;margin-right:6px}
+.score{display:none;margin-top:14px;padding:16px;border-radius:var(--r);background:var(--ink);color:#fff}
+.score.on{display:block;animation:fade .3s var(--ease)}
+.score b{font-size:22px}
+.score p{margin:6px 0 0;color:rgba(255,255,255,.82);font-size:14px}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* 3 rules */
+.rules{list-style:none;margin:0;padding:0;counter-reset:r}
+.rules li{position:relative;padding:14px 0 14px 44px;border-bottom:1px solid var(--hair)}
+.rules li:first-child{border-top:1px solid var(--hair)}
+.rules li::before{counter-increment:r;content:counter(r);position:absolute;left:0;top:15px;width:28px;height:28px;border-radius:8px;background:var(--acc);color:#fff;font:600 14px "IBM Plex Mono",monospace;display:grid;place-items:center}
+.rules li b{display:block}
+.rules li span{display:block;color:var(--ink2);font-size:14px}
+
+/* service tabs */
+.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:0 -16px 12px;padding:2px 16px}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:0 0 auto;appearance:none;border:1px solid var(--hair);background:var(--bg);color:var(--ink2);font-size:14px;font-weight:600;padding:8px 14px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.tabs button[aria-selected="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.svc{display:none;background:var(--bg2);border-radius:var(--r);padding:18px}
+.svc.on{display:block;animation:fade .3s var(--ease)}
+.svc .head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+.badge{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.badge.ng{color:var(--ng);background:var(--ng-soft)}
+.badge.gray{color:var(--gray);background:var(--gray-soft)}
+.li{display:flex;gap:10px;align-items:flex-start;font-size:15px;margin:8px 0}
+.li i{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:700;font-size:12px;color:#fff;margin-top:3px}
+.li.x i{background:var(--ng)} .li.o i{background:var(--ok)}
+.src{font-size:12.5px;color:var(--ink3);margin:12px 0 0;padding-top:10px;border-top:1px solid var(--hair);line-height:1.7}
+.src a{color:var(--ink2)}
+
+/* builder */
+.picks{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 14px}
+.picks label{position:relative;cursor:pointer}
+.picks input{position:absolute;opacity:0;pointer-events:none}
+.picks span{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--hair);background:var(--bg);color:var(--ink2);border-radius:999px;padding:7px 14px;font-size:14px;font-weight:600;transition:background .2s,color .2s,border-color .2s}
+.picks span::before{content:"";width:14px;height:14px;border-radius:4px;border:1.5px solid var(--ink3);background:var(--bg);transition:background .2s,border-color .2s}
+.picks input:checked + span{background:var(--acc-soft);color:var(--acc);border-color:transparent}
+.picks input:checked + span::before{background:var(--acc);border-color:var(--acc);box-shadow:inset 0 0 0 2px var(--bg)}
+.picks input:focus-visible + span{outline:2px solid var(--acc);outline-offset:2px}
+.prompt{background:var(--bg2);border:1px solid var(--hair);border-radius:var(--r);padding:14px}
+.prompt .ph{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+.prompt .pt{font-size:13px;font-weight:600;color:var(--ink2)}
+.prompt pre{margin:0;font-family:"IBM Plex Sans JP",monospace;font-size:14px;line-height:1.8;white-space:pre-wrap;word-break:break-word;color:var(--ink)}
+.copy{appearance:none;border:0;background:var(--acc);color:#fff;font-size:14px;font-weight:600;padding:8px 16px;border-radius:8px;cursor:pointer;white-space:nowrap;transition:transform .12s var(--ease),background .2s}
+.copy:active{transform:scale(.96)}
+.copy.done{background:var(--ok)}
+.where{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:14px;margin:14px 0 0}
+.where dt{font-weight:600}
+.where dd{margin:0;color:var(--ink2)}
+
+/* edit flow */
+.pipe{display:grid;gap:10px}
+.pipe .st{background:var(--bg);border:1px solid var(--hair);border-radius:var(--r);padding:14px}
+.pipe .st b{display:block;font-size:13px;color:var(--acc);margin-bottom:2px}
+.pipe .st.me b{color:var(--ink)}
+.pipe .arrow{justify-self:center;width:2px;height:16px;background:var(--hair);position:relative}
+.pipe .arrow::after{content:"";position:absolute;left:-4px;bottom:-2px;border:5px solid transparent;border-top-color:var(--ink3)}
+.stop{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--ng-soft);font-size:14px}
+.stop b{color:var(--ng)}
+
+/* study */
+.stuck{list-style:none;margin:0 0 16px;padding:0}
+.stuck li{padding:12px 14px;margin:8px 0;background:var(--bg2);border-radius:10px;font-weight:600}
+.study{border:1px solid var(--hair);border-radius:var(--r);padding:20px 18px;box-shadow:var(--shadow)}
+.pill{display:inline-block;font-size:12px;font-weight:600;color:var(--ok);background:var(--ok-soft);border-radius:999px;padding:2px 10px}
+.keep{background:var(--acc-soft);border-radius:10px;padding:12px 14px;margin:14px 0;font-size:15px}
+.keep small{display:block;font-weight:600;font-size:12px;color:var(--acc)}
+.cta{display:block;text-align:center;text-decoration:none;margin-top:14px;border-radius:12px;padding:15px;background:#06c755;color:#fff;font-weight:700;font-size:16px;transition:transform .12s var(--ease)}
+.cta:active{transform:scale(.98)}
+
+footer{padding:32px 0 60px;font-size:12px;color:var(--ink3)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:var(--ink);color:#fff;font-size:14px;padding:10px 16px;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .25s var(--ease),transform .25s var(--ease);z-index:50}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media (min-width:760px){.pipe{grid-template-columns:1fr auto 1fr auto 1fr;align-items:center}.pipe .arrow{width:16px;height:2px}.pipe .arrow::after{left:auto;right:-2px;bottom:-4px;border-top-color:transparent;border-left-color:var(--ink3)}}
 </style>
 </head>
 <body>
+<div class="bar"><div class="wrap"><span class="brand">AIの禁止リスト</span><div class="prog"><i id="prog"></i></div></div></div>
+
 <div class="wrap">
-<header>
-  <span class="kicker"><b>AI</b> 任せる前に読むページ</span>
-  <h1>AIに渡している<em>禁止リスト</em></h1>
+<header class="hero">
+  <div class="kicker">AIに任せる前に読むページ</div>
+  <h1>AIに渡している<br>禁止リスト</h1>
   <p class="lead">AIは頭が良くなるほど、頼まれたゴールに向かってなんとかしようとします。明らかにアウトならやめるけど、グレーな方法だとそのまま進んじゃう。やらせている側も気づかない。なので、止めるルールは人間が先に決めて、AIに毎回読ませています。</p>
-  <div class="legend">
-    <span class="tag t-ng">規約で禁止</span>
-    <span class="tag t-chk">はっきり書かれていない（グレー）</span>
-  </div>
+  <ul class="toc">
+    <li><a href="#quiz"><span>01</span>これ、AIに任せて大丈夫？（7問）</a></li>
+    <li><a href="#rules"><span>02</span>止め方の考え方は3つだけ</a></li>
+    <li><a href="#services"><span>03</span>サービスごとの禁止リスト</a></li>
+    <li><a href="#build"><span>04</span>自分用の禁止リストを作ってコピー</a></li>
+    <li><a href="#edit"><span>05</span>規約に沿った動画編集の流れ</a></li>
+    <li><a href="#study"><span>06</span>自分のアプリだと、どこまで任せていい？</a></li>
+  </ul>
 </header>
 
-<nav aria-label="絞り込み">
-  <button aria-pressed="true" data-f="all">すべて</button>
-  <button aria-pressed="false" data-f="rule">考え方</button>
-  <button aria-pressed="false" data-f="list">禁止リスト</button>
-  <button aria-pressed="false" data-f="edit">動画編集</button>
-</nav>
+<section id="quiz">
+  <div class="num">01</div>
+  <h2>これ、AIに任せて大丈夫？</h2>
+  <p>直感で押してみてください。押すと、規約ではどうなっているかが出ます。</p>
+  <div class="quiz" id="quizList"></div>
+  <div class="score" id="score"></div>
+</section>
 
-<section data-cat="rule">
-  <h2><span class="n">00</span>止め方の考え方は3つだけ</h2>
-  <p class="sec-lead">細かいルールより先に、この3つを決めておくと迷わないです。</p>
-  <ol class="rule3">
-    <li>使っていい入口を、先に人間が決める<span>公式の API・公式の機能・アプリの正式な読み込み。ここ以外は通らせない</span></li>
-    <li>最後のボタンは、自分で押す<span>投稿・送信・購入・申込。AIは下書きと準備まで</span></li>
-    <li>禁止リストを、AIに毎回先に読ませる<span>下のリストをそのままコピーして使えます</span></li>
+<section id="rules">
+  <div class="num">02</div>
+  <h2>止め方の考え方は3つだけ</h2>
+  <p>細かいルールより先に、この3つを決めておくと迷わないです。</p>
+  <ol class="rules">
+    <li><b>使っていい入口を、先に人間が決める</b><span>公式の API・公式の機能・アプリの正式な読み込み。ここ以外は通らせない</span></li>
+    <li><b>最後のボタンは、自分で押す</b><span>投稿・送信・購入・申込。AIは下書きと準備まで</span></li>
+    <li><b>禁止リストを、AIに毎回先に読ませる</b><span>04で、自分の使うサービスに合わせたリストを作れます</span></li>
   </ol>
 </section>
 
-<section data-cat="list">
-  <h2><span class="n">01</span>サービスごとの禁止リスト</h2>
-  <p class="sec-lead">どれも規約の原文を確認しています（2026年10月31日時点）。✕がAIにやらせないこと、○が代わりのやり方です。</p>
-<div class="card">
-<div class="row"><h3>インスタ・Threads</h3><span class="tag t-ng">規約で禁止</span></div>
-<p class="ng"><i>✕</i><span>ログインしたままのブラウザを、AIに開かせて数字を集める</span></p>
-<p class="ng"><i>✕</i><span>AIにブラウザでいいね・フォロー・投稿をさせる</span></p>
-<p class="okk"><i>○</i><span>数字は公式の入口（Meta の API）か、Meta 自身の AI の Muse で</span></p>
-<p class="okk"><i>○</i><span>投稿の最後のボタンは自分で押す</span></p>
-<p class="src">根拠: Meta 自動データ収集規約「書面の許可なく、自動の方法でデータを集めない」（ボット・スクレイパー等）＋インスタ利用規約／2024-10-07 施行 <a href="https://www.facebook.com/legal/automated_data_collection_terms">原文</a></p>
-</div>
-<div class="card">
-<div class="row"><h3>TikTok</h3><span class="tag t-ng">規約で禁止</span></div>
-<p class="ng"><i>✕</i><span>AIにブラウザで TikTok を開かせて、数字を集める・操作する</span></p>
-<p class="okk"><i>○</i><span>数字は TikTok の公式 API か、自分の目で</span></p>
-<p class="src">根拠: 利用規約 第5条「自動のスクリプトで情報を集める、または本サービスとやりとりする」行為を禁止／2025-12-01 更新 <a href="https://www.tiktok.com/legal/page/row/terms-of-service/en">原文</a></p>
-</div>
-<div class="card">
-<div class="row"><h3>CapCut</h3><span class="tag t-ng">規約で禁止</span></div>
-<p class="ng"><i>✕</i><span>AIに CapCut を操作させる</span></p>
-<p class="ng"><i>✕</i><span>CapCut のプロジェクトファイルを AI に解析させて、中身を書き換える</span></p>
-<p class="okk"><i>○</i><span>AIが作るのは、読み込めるふつうのファイル（カット済みの動画・字幕 SRT）まで</span></p>
-<p class="okk"><i>○</i><span>パソコン版の CapCut で、自分で読み込む</span></p>
-<p class="src">根拠: 利用規約 第6条 9号（自動のスクリプト等で情報を集める・やりとりする）／2号（解読・改変・リバースエンジニアリング・派生物の作成）／2026-04-15 更新 <a href="https://www.capcut.com/clause/terms-of-service">原文</a></p>
-</div>
-<div class="card">
-<div class="row"><h3>楽天ROOM</h3><span class="tag t-ng">規約で禁止</span></div>
-<p class="ng"><i>✕</i><span>AIやプログラムに「コレ!」投稿・コメント・いいね・フォローをさせる</span></p>
-<p class="okk"><i>○</i><span>AIは商品さがし（楽天の公式 API）と紹介文の下書きまで</span></p>
-<p class="okk"><i>○</i><span>投稿は自分の指で</span></p>
-<p class="src">根拠: ROOM 利用規約 第11条1項4号「スクリプトその他のプログラムを実行する等の方法により、機械的に投稿、コメント等をする行為」。第12条で、予告なく投稿の削除・利用停止・成果報酬の取消・<b>楽天会員資格の停止</b>まで／2026-08-18 改定 <a href="https://room.rakuten.co.jp/info/agreement.html">原文</a></p>
-</div>
-<div class="card">
-<div class="row"><h3>楽天アフィリエイト</h3><span class="tag t-ng">規約で禁止</span></div>
-<p class="ng"><i>✕</i><span>自動ツールでの投稿・自分の投稿のリポストのくり返し</span></p>
-<p class="ng"><i>✕</i><span>DM・LINE・メールでアフィリンクを送る（自動でも手でも）</span></p>
-<p class="ng"><i>✕</i><span>ブラウザの拡張機能で楽天のページに情報を出す</span></p>
-<p class="okk"><i>○</i><span>リンクは誰でも見られる場所に、自分で貼る</span></p>
-<p class="src">根拠: 楽天アフィリエイト事務局「SNS利用の際の注意喚起」（2026-02-25）＝自動ツール等による投稿はスパムとして利用停止 <a href="https://affiliate.rakuten.co.jp/info/">お知らせ</a>／ガイドライン（2025-06-26 更新）＝予告なく利用停止・報酬の返金請求 <a href="https://affiliate.rakuten.co.jp/guideline/rule/">原文</a></p>
-</div>
-<div class="card">
-<div class="row"><h3>楽天市場（買い物・閲覧）</h3><span class="tag t-chk">グレー</span></div>
-<p class="ng"><i>✕</i><span>AIにログインしたブラウザで楽天市場を回らせる（はっきり禁止とは書かれていないけど、避けておく）</span></p>
-<p class="okk"><i>○</i><span>商品や価格は楽天の公式 API（商品検索）で</span></p>
-<p class="src">根拠: 楽天会員規約 第8条1項9号「通常意図しない効果を及ぼす外部ツールの利用」、10号「サーバーに過度の負担をかける行為」。「自動」という言葉は無い＝グレー。第9条で会員資格の取消まである／2025-12-19 改定 <a href="https://corp.rakuten.co.jp/terms/">原文</a></p>
-</div>
-
+<section id="services">
+  <div class="num">03</div>
+  <h2>サービスごとの禁止リスト</h2>
+  <p>どれも規約の原文を確認しています（2026年10月31日時点）。✕がAIにやらせないこと、○が代わりのやり方です。</p>
+  <div class="tabs" role="tablist" id="svcTabs"></div>
+  <div id="svcPanels"></div>
 </section>
 
-<section data-cat="list">
-  <h2><span class="n">02</span>AIにそのまま渡せる禁止リスト</h2>
-  <p class="sec-lead">Claude Code なら CLAUDE.md、ChatGPT ならカスタム指示、Muse なら最初の会話に貼っておきます。</p>
-  <div class="card">
-    <div class="ask"><small>コピーして貼る</small><span class="q">【やってはいけないこと（毎回最初に読む）】
-- インスタ・Threads・TikTok・楽天を、ログインしたブラウザで自動で動かさない（開く・読む・押す・投稿する、全部）
-- 数字や商品は、公式の API か公式の機能からだけ取る
-- CapCut など編集アプリの中身（プロジェクトファイル）は書き換えない。作るのは読み込めるファイル（動画・字幕・XML）まで
-- 楽天ROOMの投稿・コメント・いいね・フォローはしない（下書きまで）
-- アフィリンクを DM・LINE・メールで送らない
-- 投稿・送信・購入・申込の最後のボタンは押さない。人に渡す
-- 規約がはっきりしない操作は、始める前に止まって聞く</span></div>
-    <button class="copy">リストをコピー</button>
+<section id="build">
+  <div class="num">04</div>
+  <h2>自分用の禁止リストを作ってコピー</h2>
+  <p>使っているサービスを選ぶと、AIに渡すリストができあがります。</p>
+  <div class="picks" id="picks"></div>
+  <div class="prompt">
+    <div class="ph"><span class="pt">AIに渡すリスト</span><button class="copy" id="copyBtn">コピー</button></div>
+    <pre id="out"></pre>
   </div>
+  <dl class="where">
+    <dt>Claude Code</dt><dd>CLAUDE.md に貼る</dd>
+    <dt>ChatGPT</dt><dd>カスタム指示に貼る</dd>
+    <dt>Muse</dt><dd>最初の会話に貼る</dd>
+  </dl>
 </section>
 
-<section data-cat="edit">
-  <h2><span class="n">03</span>規約に沿った動画編集の流れ</h2>
-  <p class="sec-lead">AIで編集を楽にしたいときも、アプリの中をAIに触らせなければ規約の範囲で進められます。全体の形はこうです。</p>
-  <div class="card">
-    <div class="flow">
-      <div class="node"><b>AI</b>カット・字幕を考える</div><div class="arr">→</div>
-      <div class="node"><b>ファイル</b>動画・字幕・XML</div><div class="arr">→</div>
-      <div class="node"><b>アプリ</b>正式に読み込む</div>
-    </div>
-    <p class="gain">AIが作るのは「アプリが正式に読み込めるふつうのファイル」まで。読み込んだあとの仕上げと書き出しは、自分でアプリを触ります。Premiere・After Effects・DaVinci Resolve のように、メーカーが外からつなぐ入口を公開しているアプリなら、その入口を使います。</p>
+<section id="edit">
+  <div class="num">05</div>
+  <h2>規約に沿った動画編集の流れ</h2>
+  <p>AIで編集を楽にしたいときも、アプリの中をAIに触らせなければ規約の範囲で進められます。全体の形はこうです。</p>
+  <div class="pipe">
+    <div class="st"><b>AI</b>カット・字幕を考える</div>
+    <div class="arrow"></div>
+    <div class="st"><b>ファイル</b>動画・字幕・XML</div>
+    <div class="arrow"></div>
+    <div class="st me"><b>自分</b>アプリで正式に読み込む</div>
   </div>
+  <p style="margin-top:14px">AIが作るのは「アプリが正式に読み込めるふつうのファイル」まで。読み込んだあとの仕上げと書き出しは、自分でアプリを触ります。Premiere・After Effects・DaVinci Resolve のように、メーカーが外からつなぐ入口を公開しているアプリなら、その入口を使います。</p>
+  <div class="stop"><b>✕ やらないこと</b>　AIにCapCutを操作させる／CapCutのプロジェクトファイルを書き換えさせる</div>
 </section>
 
-<section data-cat="edit">
-  <h2><span class="n">04</span>自分のアプリだと、どこまで任せていい？</h2>
-  <p class="sec-lead">ここまで読めば、「AIにやらせないこと」と全体の形は押さえられる。でも実際に手を動かすと、だいたい次の所で止まります。</p>
-  <div class="card dont">
-    <ul class="stuck">
-      <li>CapCutで作ってきたけど、アプリを替えたほうがいいの？</li>
-      <li>字幕のファイルって、どのアプリにどう読み込むの？</li>
-      <li>そもそも、自分のパソコンで動くの？</li>
-    </ul>
-  </div>
-  <p class="sec-lead">答えは、使っているアプリ、パソコンかスマホか、週に何本作るかで変わります。同じ答えを全員に配れないので、ひとりずつ聞いて決める形にしました。</p>
-
-  <div class="card">
-    <span class="tag t-ok">無料・Zoom・45分</span>
+<section id="study">
+  <div class="num">06</div>
+  <h2>自分のアプリだと、どこまで任せていい？</h2>
+  <p>ここまで読めば、「AIにやらせないこと」と全体の形は押さえられる。でも実際に手を動かすと、だいたい次の所で止まります。</p>
+  <ul class="stuck">
+    <li>CapCutで作ってきたけど、アプリを替えたほうがいいの？</li>
+    <li>字幕のファイルって、どのアプリにどう読み込むの？</li>
+    <li>そもそも、自分のパソコンで動くの？</li>
+  </ul>
+  <p>答えは、使っているアプリ、パソコンかスマホか、週に何本作るかで変わります。同じ答えを全員に配れないので、ひとりずつ聞いて決める形にしました。</p>
+  <div class="study">
+    <span class="pill">無料・Zoom・45分</span>
     <h3 style="margin-top:10px">AI×ショート動画編集の個別勉強会</h3>
-    <ol class="rule3">
-      <li>CapCut以外の選択肢を知る<span>プロの映像制作の現場で使われている編集ソフトの中から、規約の範囲でAIとつなげられるものを紹介します</span></li>
-      <li>AIとのつなげ方を、手順ごとに<span>メーカーが用意した正式な入口を使ったつなげ方を、ひとつずつお伝えします</span></li>
-      <li>自分の環境に合うか確かめる<span>パソコンのスペックと今の編集のやり方を見て、無理なく続けられる方法を一緒に選びます</span></li>
+    <ol class="rules">
+      <li><b>CapCut以外の選択肢を知る</b><span>プロの映像制作の現場で使われている編集ソフトの中から、規約の範囲でAIとつなげられるものを紹介します</span></li>
+      <li><b>AIとのつなげ方を、手順ごとに</b><span>メーカーが用意した正式な入口を使ったつなげ方を、ひとつずつお伝えします</span></li>
+      <li><b>自分の環境に合うか確かめる</b><span>パソコンのスペックと今の編集のやり方を見て、無理なく続けられる方法を一緒に選びます</span></li>
     </ol>
-    <div class="keep">
-      <small>終わったとき、手元に残るもの</small>
-      自分の環境に合った編集ソフトと、AIとのつなげ方の手順。帰ってすぐ、次の1本から試せます。
-    </div>
-    <p class="who">教えるのは、映像制作会社の代表として現場の編集を見てきて、いまはAIを仕事の真ん中に置いているいチです。</p>
-    <p class="gain">このページを開いた時点で、やらせないことはもう押さえられています。残っているのは、自分の場合のつなぎ方。そこを45分で一緒に決めます。</p>
-    <p class="gain">予約の画面で、今の編集アプリとパソコンを聞きます。それに合わせて準備してから始めるので、45分をまるごと中身に使えます。</p>
-      <p class="gain">空いている日時から、このまま予約できます。</p>
+    <div class="keep"><small>終わったとき、手元に残るもの</small>自分の環境に合った編集ソフトと、AIとのつなげ方の手順。帰ってすぐ、次の1本から試せます。</div>
+    <p class="note">教えるのは、映像制作会社の代表として現場の編集を見てきて、いまはAIを仕事の真ん中に置いているいチです。</p>
+    <p>このページを開いた時点で、やらせないことはもう押さえられています。残っているのは、自分の場合のつなぎ方。そこを45分で一緒に決めます。</p>
+    <p>予約の画面で、今の編集アプリとパソコンを聞きます。それに合わせて準備してから始めるので、45分をまるごと中身に使えます。</p>
     <a class="cta" href="https://liff.line.me/2010719511-jONsMSBm?calendar_salon_id=33659">空いている日時を見る</a>
-    <p class="note">LINEの予約画面が開きます。</p>
+    <p class="note" style="margin-top:8px">LINEの予約画面が開きます。</p>
   </div>
 </section>
 
@@ -219,22 +248,96 @@ footer a{color:inherit}
   <p>ichi AI ／ いチ</p>
 </footer>
 </div>
+<div class="toast" id="toast"></div>
+
 <script>
-document.querySelectorAll('.copy').forEach(function(b){
-  b.addEventListener('click',function(){
-    var q=b.previousElementSibling.querySelector('.q').textContent;
-    var done=function(){b.textContent='コピーしました';b.classList.add('done');setTimeout(function(){b.textContent='リストをコピー';b.classList.remove('done')},1600)};
-    if(navigator.clipboard){navigator.clipboard.writeText(q).then(done,function(){fallback(q);done()})}else{fallback(q);done()}
-  });
+var QUIZ=[
+ {t:"ログインしたままのブラウザで、AIにインスタの再生数を集めさせる",a:"ng",w:"Metaの自動データ収集規約で、書面の許可なく自動の方法でデータを集めることは禁止。数字は公式の入口（Meta の API）か、Muse で。"},
+ {t:"公式の入口（Meta の API）から取った自分の投稿の数字を、AIに読ませて分析する",a:"ok",w:"公式の入口から取った数字なら、規約の範囲です。分析や改善案づくりはAIの得意なところ。"},
+ {t:"AIに楽天ROOMへ「コレ!」をまとめて投稿させる",a:"ng",w:"ROOMの利用規約 第11条で、プログラムでの機械的な投稿は禁止。第12条で楽天会員資格の停止まであります。"},
+ {t:"AIに商品さがしと紹介文の下書きをさせて、投稿は自分の指でする",a:"ok",w:"商品さがしは楽天の公式 API で。AIは下書きまで、最後のボタンは自分で押す形なら大丈夫です。"},
+ {t:"Claude Code に CapCut を動かさせて、自動で編集する",a:"ng",w:"CapCutの利用規約 第6条で、自動のスクリプトでのやりとりや、ファイルの解読・改変は禁止です。"},
+ {t:"AIが作った字幕ファイル（SRT）を、CapCutで自分で読み込む",a:"ok",w:"AIが作るのは読み込めるふつうのファイルまで。読み込むのは自分なので、規約の範囲です。"},
+ {t:"アフィリンクを、LINEで友だちに手で送る",a:"ng",w:"楽天アフィリエイトでは、DM・LINE・メールでリンクを送るのはNG。自動でも、手で送っても同じです。"}
+];
+var SVC=[
+ {id:"ig",n:"インスタ・Threads",b:"ng",x:["ログインしたままのブラウザを、AIに開かせて数字を集める","AIにブラウザでいいね・フォロー・投稿をさせる"],o:["数字は公式の入口（Meta の API）か、Meta 自身の AI の Muse で","投稿の最後のボタンは自分で押す"],s:'根拠: Meta 自動データ収集規約「書面の許可なく、自動の方法でデータを集めない」（ボット・スクレイパー等）＋インスタ利用規約／2024-10-07 施行 <a href="https://www.facebook.com/legal/automated_data_collection_terms">原文</a>'},
+ {id:"tt",n:"TikTok",b:"ng",x:["AIにブラウザで TikTok を開かせて、数字を集める・操作する"],o:["数字は TikTok の公式 API か、自分の目で"],s:'根拠: 利用規約 第5条「自動のスクリプトで情報を集める、または本サービスとやりとりする」行為を禁止／2025-12-01 更新 <a href="https://www.tiktok.com/legal/page/row/terms-of-service/en">原文</a>'},
+ {id:"cc",n:"CapCut",b:"ng",x:["AIに CapCut を操作させる","CapCut のプロジェクトファイルを AI に解析させて、中身を書き換える"],o:["AIが作るのは、読み込めるふつうのファイル（カット済みの動画・字幕 SRT）まで","パソコン版の CapCut で、自分で読み込む"],s:'根拠: 利用規約 第6条 9号（自動のスクリプト等で情報を集める・やりとりする）／2号（解読・改変・リバースエンジニアリング・派生物の作成）／2026-04-15 更新 <a href="https://www.capcut.com/clause/terms-of-service">原文</a>'},
+ {id:"room",n:"楽天ROOM",b:"ng",x:["AIやプログラムに「コレ!」投稿・コメント・いいね・フォローをさせる"],o:["AIは商品さがし（楽天の公式 API）と紹介文の下書きまで","投稿は自分の指で"],s:'根拠: ROOM 利用規約 第11条1項4号「スクリプトその他のプログラムを実行する等の方法により、機械的に投稿、コメント等をする行為」。第12条で、予告なく投稿の削除・利用停止・成果報酬の取消・<b>楽天会員資格の停止</b>まで／2026-08-18 改定 <a href="https://room.rakuten.co.jp/info/agreement.html">原文</a>'},
+ {id:"aff",n:"楽天アフィリエイト",b:"ng",x:["自動ツールでの投稿・自分の投稿のリポストのくり返し","DM・LINE・メールでアフィリンクを送る（自動でも手でも）","ブラウザの拡張機能で楽天のページに情報を出す"],o:["リンクは誰でも見られる場所に、自分で貼る"],s:'根拠: 楽天アフィリエイト事務局「SNS利用の際の注意喚起」（2026-02-25）＝自動ツール等による投稿はスパムとして利用停止 <a href="https://affiliate.rakuten.co.jp/info/">お知らせ</a>／ガイドライン（2025-06-26 更新）＝予告なく利用停止・報酬の返金請求 <a href="https://affiliate.rakuten.co.jp/guideline/rule/">原文</a>'},
+ {id:"ichiba",n:"楽天市場",b:"gray",x:["AIにログインしたブラウザで楽天市場を回らせる（はっきり禁止とは書かれていないけど、避けておく）"],o:["商品や価格は楽天の公式 API（商品検索）で"],s:'根拠: 楽天会員規約 第8条1項9号「通常意図しない効果を及ぼす外部ツールの利用」、10号「サーバーに過度の負担をかける行為」。「自動」という言葉は無い＝グレー。第9条で会員資格の取消まである／2025-12-19 改定 <a href="https://corp.rakuten.co.jp/terms/">原文</a>'}
+];
+var LINES={
+ ig:"- インスタ・Threadsを、ログインしたブラウザで自動で動かさない（開く・読む・押す・投稿する、全部）",
+ tt:"- TikTokを、ログインしたブラウザで自動で動かさない（開く・読む・押す・投稿する、全部）",
+ cc:"- CapCut など編集アプリの中身（プロジェクトファイル）は書き換えない。アプリも操作しない。作るのは読み込めるファイル（動画・字幕・XML）まで",
+ room:"- 楽天ROOMの投稿・コメント・いいね・フォローはしない（下書きまで）",
+ aff:"- アフィリンクを DM・LINE・メールで送らない。自動ツールで投稿しない",
+ ichiba:"- 楽天市場を、ログインしたブラウザで回らない。商品や価格は楽天の公式 API で"
+};
+var HEAD="【やってはいけないこと（毎回最初に読む）】";
+var COMMON=["- 数字や商品は、公式の API か公式の機能からだけ取る","- 投稿・送信・購入・申込の最後のボタンは押さない。人に渡す","- 規約がはっきりしない操作は、始める前に止まって聞く"];
+
+function el(h){var d=document.createElement('div');d.innerHTML=h;return d.firstElementChild}
+function toast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(function(){t.classList.remove('on')},1600)}
+
+// quiz
+var answered=0,right=0,ql=document.getElementById('quizList');
+QUIZ.forEach(function(q,i){
+  var c=el('<div class="q"><div class="qn">Q'+(i+1)+' / '+QUIZ.length+'</div><div class="qt">'+q.t+'</div><div class="btns"><button data-v="ok">大丈夫</button><button data-v="ng">アウト</button></div><div class="ans '+q.a+'"><b>'+(q.a==='ng'?'✕ アウト':'○ 大丈夫')+'</b>'+q.w+'</div></div>');
+  c.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){
+    if(c.classList.contains('answered'))return;
+    b.classList.add('pick');c.classList.add('answered');answered++;
+    var hit=b.dataset.v===q.a;if(hit)right++;
+    c.querySelector('.ans b').insertAdjacentHTML('afterbegin','<span class="mark">'+(hit?'正解':'ざんねん')+'</span>');
+    if(answered===QUIZ.length){var s=document.getElementById('score');
+      s.innerHTML='<b>'+QUIZ.length+'問中 '+right+'問 正解</b><p>'+(right===QUIZ.length?'ぜんぶ見分けられています。あとは自分用のリストをAIに渡しておけば安心です。':'アウトの所は、やっている人が多い所です。下のリストをAIに先に読ませておけば、AIのほうが止まってくれます。')+'</p>';
+      s.classList.add('on');}
+  })});
+  ql.appendChild(c);
 });
-function fallback(t){var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy')}catch(e){}a.remove()}
-document.querySelectorAll('nav button').forEach(function(b){
+
+// services
+var tabs=document.getElementById('svcTabs'),panels=document.getElementById('svcPanels');
+SVC.forEach(function(s,i){
+  var b=el('<button role="tab" aria-selected="'+(i===0)+'">'+s.n+'</button>');
+  var p=el('<div class="svc'+(i===0?' on':'')+'" role="tabpanel"><div class="head"><h3>'+s.n+'</h3><span class="badge '+s.b+'">'+(s.b==='ng'?'規約で禁止':'グレー')+'</span></div>'+
+    s.x.map(function(t){return '<div class="li x"><i>✕</i><span>'+t+'</span></div>'}).join('')+
+    s.o.map(function(t){return '<div class="li o"><i>○</i><span>'+t+'</span></div>'}).join('')+
+    '<p class="src">'+s.s+'</p></div>');
   b.addEventListener('click',function(){
-    var f=b.dataset.f;
-    document.querySelectorAll('nav button').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
-    document.querySelectorAll('section').forEach(function(s){var c=s.dataset.cat;s.classList.toggle('hide',!(f==='all'||c===f))});
+    tabs.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-selected','false')});
+    panels.querySelectorAll('.svc').forEach(function(x){x.classList.remove('on')});
+    b.setAttribute('aria-selected','true');p.classList.add('on');
+    b.scrollIntoView({inline:'nearest',block:'nearest',behavior:'smooth'});
   });
+  tabs.appendChild(b);panels.appendChild(p);
 });
+
+// builder
+var picks=document.getElementById('picks'),out=document.getElementById('out');
+SVC.forEach(function(s){
+  var l=el('<label><input type="checkbox" value="'+s.id+'" checked><span>'+s.n+'</span></label>');
+  l.querySelector('input').addEventListener('change',render);
+  picks.appendChild(l);
+});
+function render(){
+  var sel=[].slice.call(picks.querySelectorAll('input:checked')).map(function(x){return LINES[x.value]});
+  out.textContent=[HEAD].concat(sel,COMMON).join('\n');
+}
+render();
+document.getElementById('copyBtn').addEventListener('click',function(){
+  var b=this,t=out.textContent;
+  var done=function(){b.textContent='コピーしました';b.classList.add('done');toast('AIに貼って使ってください');setTimeout(function(){b.textContent='コピー';b.classList.remove('done')},1600)};
+  if(navigator.clipboard){navigator.clipboard.writeText(t).then(done,function(){fb(t);done()})}else{fb(t);done()}
+});
+function fb(t){var a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();try{document.execCommand('copy')}catch(e){}a.remove()}
+
+// progress
+var pg=document.getElementById('prog');
+function onScroll(){var h=document.documentElement;var m=h.scrollHeight-h.clientHeight;pg.style.width=(m>0?Math.min(100,h.scrollTop/m*100):0)+'%'}
+addEventListener('scroll',onScroll,{passive:true});onScroll();
 </script>
 </body>
 </html>
