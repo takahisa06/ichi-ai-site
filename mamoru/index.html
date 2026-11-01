@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>インスタ「共有と再利用」確認の手順メモ</title>
+<meta name="description" content="子どもの写真を載せる人へ。インスタの「共有と再利用」の確認手順3つと、知っておくこと">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff; --bg2:#f4f6fa; --ink:#0e1525; --ink2:#46506a; --ink3:#7a8399;
+  --hair:rgba(14,21,37,.10); --acc:#2648f0; --acc-soft:rgba(38,72,240,.08);
+  --ng:#d93a3f; --ng-soft:rgba(217,58,63,.08); --ok:#1f9d6b; --ok-soft:rgba(31,157,107,.09);
+  --gray:#c07a0c; --gray-soft:rgba(192,122,12,.10);
+  --r:12px; --shadow:0 1px 2px rgba(14,21,37,.04),0 8px 24px rgba(14,21,37,.06);
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans JP","Hiragino Sans",system-ui,sans-serif;font-size:16px;line-height:1.85;letter-spacing:.01em}
+a{color:var(--acc)}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+button{font:inherit}
+
+.bar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--hair)}
+.bar .wrap{display:flex;align-items:center;gap:12px;height:52px}
+.brand{font-weight:700;font-size:14px;white-space:nowrap}
+.prog{flex:1;height:4px;background:var(--hair);border-radius:4px;overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:var(--acc);transition:width .3s var(--ease)}
+
+.hero{padding:40px 0 20px}
+.kicker{font-size:13px;color:var(--acc);font-weight:600}
+h1{font-size:clamp(26px,6.4vw,38px);line-height:1.35;margin:10px 0 14px;font-weight:700}
+.lead{color:var(--ink2);margin:0 0 18px}
+.toc{border-top:1px solid var(--hair);margin:20px 0 0;padding:0;list-style:none}
+.toc a{display:flex;gap:12px;align-items:baseline;padding:12px 2px;border-bottom:1px solid var(--hair);color:var(--ink);text-decoration:none}
+.toc a span{color:var(--ink3);font-size:13px;min-width:26px;font-family:"IBM Plex Mono",monospace}
+
+section{padding:44px 0 8px;scroll-margin-top:60px}
+.num{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--acc)}
+h2{font-size:clamp(21px,5vw,26px);line-height:1.45;margin:6px 0 12px}
+h3{font-size:17px;line-height:1.5;margin:0 0 6px}
+p{margin:0 0 14px}
+.note{font-size:13px;color:var(--ink3)}
+
+/* quiz */
+.quiz{display:grid;gap:12px;margin-top:6px}
+.q{background:var(--bg);border:1px solid var(--hair);border-radius:var(--r);padding:16px;box-shadow:var(--shadow)}
+.q .qn{font-size:12px;color:var(--ink3);font-family:"IBM Plex Mono",monospace}
+.q .qt{font-weight:600;margin:2px 0 12px}
+.q .btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.q .btns button{appearance:none;border:1px solid var(--hair);background:var(--bg2);color:var(--ink);font-weight:600;font-size:15px;padding:11px 8px;border-radius:10px;cursor:pointer;transition:transform .12s var(--ease),background .2s,border-color .2s}
+.q .btns button:active{transform:scale(.97)}
+.q.answered .btns button{pointer-events:none;opacity:.45}
+.q.answered .btns button.pick{opacity:1;border-color:var(--ink)}
+.q .ans{display:none;margin-top:12px;padding:12px 14px;border-radius:10px;font-size:14px;line-height:1.75}
+.q.answered .ans{display:block;animation:fade .3s var(--ease)}
+.q .ans b{display:block;font-size:15px;margin-bottom:2px}
+.q .ans.ng{background:var(--ng-soft)} .q .ans.ng b{color:var(--ng)}
+.q .ans.ok{background:var(--ok-soft)} .q .ans.ok b{color:var(--ok)}
+.q .mark{font-weight:700;margin-right:6px}
+.score{display:none;margin-top:14px;padding:16px;border-radius:var(--r);background:var(--ink);color:#fff}
+.score.on{display:block;animation:fade .3s var(--ease)}
+.score b{font-size:22px}
+.score p{margin:6px 0 0;color:rgba(255,255,255,.82);font-size:14px}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* 3 rules */
+.rules{list-style:none;margin:0;padding:0;counter-reset:r}
+.rules li{position:relative;padding:14px 0 14px 44px;border-bottom:1px solid var(--hair)}
+.rules li:first-child{border-top:1px solid var(--hair)}
+.rules li::before{counter-increment:r;content:counter(r);position:absolute;left:0;top:15px;width:28px;height:28px;border-radius:8px;background:var(--acc);color:#fff;font:600 14px "IBM Plex Mono",monospace;display:grid;place-items:center}
+.rules li b{display:block}
+.rules li span{display:block;color:var(--ink2);font-size:14px}
+
+/* service tabs */
+.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:0 -16px 12px;padding:2px 16px}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:0 0 auto;appearance:none;border:1px solid var(--hair);background:var(--bg);color:var(--ink2);font-size:14px;font-weight:600;padding:8px 14px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.tabs button[aria-selected="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.svc{display:none;background:var(--bg2);border-radius:var(--r);padding:18px}
+.svc.on{display:block;animation:fade .3s var(--ease)}
+.svc .head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+.badge{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.badge.ng{color:var(--ng);background:var(--ng-soft)}
+.badge.gray{color:var(--gray);background:var(--gray-soft)}
+.li{display:flex;gap:10px;align-items:flex-start;font-size:15px;margin:8px 0}
+.li i{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:700;font-size:12px;color:#fff;margin-top:3px}
+.li.x i{background:var(--ng)} .li.o i{background:var(--ok)}
+.src{font-size:12.5px;color:var(--ink3);margin:12px 0 0;padding-top:10px;border-top:1px solid var(--hair);line-height:1.7}
+.src a{color:var(--ink2)}
+
+/* builder */
+.picks{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 14px}
+.picks label{position:relative;cursor:pointer}
+.picks input{position:absolute;opacity:0;pointer-events:none}
+.picks span{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--hair);background:var(--bg);color:var(--ink2);border-radius:999px;padding:7px 14px;font-size:14px;font-weight:600;transition:background .2s,color .2s,border-color .2s}
+.picks span::before{content:"";width:14px;height:14px;border-radius:4px;border:1.5px solid var(--ink3);background:var(--bg);transition:background .2s,border-color .2s}
+.picks input:checked + span{background:var(--acc-soft);color:var(--acc);border-color:transparent}
+.picks input:checked + span::before{background:var(--acc);border-color:var(--acc);box-shadow:inset 0 0 0 2px var(--bg)}
+.picks input:focus-visible + span{outline:2px solid var(--acc);outline-offset:2px}
+.prompt{background:var(--bg2);border:1px solid var(--hair);border-radius:var(--r);padding:14px}
+.prompt .ph{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+.prompt .pt{font-size:13px;font-weight:600;color:var(--ink2)}
+.prompt pre{margin:0;font-family:"IBM Plex Sans JP",monospace;font-size:14px;line-height:1.8;white-space:pre-wrap;word-break:break-word;color:var(--ink)}
+.copy{appearance:none;border:0;background:var(--acc);color:#fff;font-size:14px;font-weight:600;padding:8px 16px;border-radius:8px;cursor:pointer;white-space:nowrap;transition:transform .12s var(--ease),background .2s}
+.copy:active{transform:scale(.96)}
+.copy.done{background:var(--ok)}
+.where{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:14px;margin:14px 0 0}
+.where dt{font-weight:600}
+.where dd{margin:0;color:var(--ink2)}
+
+/* edit flow */
+.pipe{display:grid;gap:10px}
+.pipe .st{background:var(--bg);border:1px solid var(--hair);border-radius:var(--r);padding:14px}
+.pipe .st b{display:block;font-size:13px;color:var(--acc);margin-bottom:2px}
+.pipe .st.me b{color:var(--ink)}
+.pipe .arrow{justify-self:center;width:2px;height:16px;background:var(--hair);position:relative}
+.pipe .arrow::after{content:"";position:absolute;left:-4px;bottom:-2px;border:5px solid transparent;border-top-color:var(--ink3)}
+.stop{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--ng-soft);font-size:14px}
+.stop b{color:var(--ng)}
+
+/* study */
+.stuck{list-style:none;margin:0 0 16px;padding:0}
+.stuck li{padding:12px 14px;margin:8px 0;background:var(--bg2);border-radius:10px;font-weight:600}
+.study{border:1px solid var(--hair);border-radius:var(--r);padding:20px 18px;box-shadow:var(--shadow)}
+.pill{display:inline-block;font-size:12px;font-weight:600;color:var(--ok);background:var(--ok-soft);border-radius:999px;padding:2px 10px}
+.keep{background:var(--acc-soft);border-radius:10px;padding:12px 14px;margin:14px 0;font-size:15px}
+.keep small{display:block;font-weight:600;font-size:12px;color:var(--acc)}
+.cta{display:block;text-align:center;text-decoration:none;margin-top:14px;border-radius:12px;padding:15px;background:#06c755;color:#fff;font-weight:700;font-size:16px;transition:transform .12s var(--ease)}
+.cta:active{transform:scale(.98)}
+.cta.sub{background:var(--bg);color:#06a648;border:1.5px solid #06c755;font-size:15px;padding:12px}
+.pickline{display:grid;gap:10px;margin:6px 0 10px}
+.lbtn{display:flex;align-items:center;justify-content:space-between;gap:12px;text-decoration:none;background:#06c755;color:#fff;border-radius:12px;padding:14px 16px;box-shadow:0 6px 16px rgba(6,199,85,.22);transition:transform .12s var(--ease)}
+.lbtn:active{transform:scale(.98)}
+.lbtn b{font-size:18px}
+.lbtn b{min-width:5.2em}
+.lbtn span{flex:1;font-size:13px;opacity:.92}
+.lbtn::after{content:"→";font-weight:700;margin-left:4px}
+
+footer{padding:32px 0 60px;font-size:12px;color:var(--ink3)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:var(--ink);color:#fff;font-size:14px;padding:10px 16px;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .25s var(--ease),transform .25s var(--ease);z-index:50}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media (min-width:760px){.pipe{grid-template-columns:1fr auto 1fr auto 1fr;align-items:center}.pipe .arrow{width:16px;height:2px}.pipe .arrow::after{left:auto;right:-2px;bottom:-4px;border-top-color:transparent;border-left-color:var(--ink3)}}
+
+.ck{display:flex;gap:14px;align-items:flex-start;background:var(--bg);border:1px solid var(--hair);border-radius:var(--r);padding:16px;margin:12px 0;box-shadow:var(--shadow);cursor:pointer;transition:border-color .2s,background .2s}
+.ck .box{flex:0 0 30px;height:30px;border-radius:8px;border:2px solid var(--ink3);display:grid;place-items:center;margin-top:2px;transition:background .2s,border-color .2s}
+.ck .box svg{opacity:0;transition:opacity .2s}
+.ck.on{border-color:var(--ok);background:var(--ok-soft)}
+.ck.on .box{background:var(--ok);border-color:var(--ok)}.ck.on .box svg{opacity:1}
+.ck b{display:block;font-size:17px}.ck span{display:block;color:var(--ink2);font-size:14px;margin-top:4px}
+.meter{margin-top:14px;padding:14px 16px;border-radius:var(--r);background:var(--bg2);font-weight:600}
+.meter i{display:block;height:8px;border-radius:8px;background:var(--hair);margin-top:8px;overflow:hidden}.meter i em{display:block;height:100%;width:0;background:var(--ok);transition:width .4s var(--ease)}
+
+.apps{display:grid;gap:8px;margin:6px 0 12px}
+.app{display:flex;align-items:center;gap:12px;background:var(--bg);border:1px solid var(--hair);border-radius:var(--r);padding:12px 14px}
+.app b{flex:1;font-size:15px}
+.app small{display:block;font-weight:400;color:var(--ink3);font-size:12.5px}
+.sw{appearance:none;width:52px;height:30px;border-radius:30px;background:var(--hair);position:relative;cursor:pointer;flex:none;transition:background .2s}
+.sw::after{content:"";position:absolute;left:3px;top:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:transform .2s var(--ease)}
+.sw:checked{background:var(--acc)}.sw:checked::after{transform:translateX(22px)}
+.res{background:var(--bg2);border-radius:var(--r);padding:14px 16px;font-size:15px}
+.res b{display:block;font-size:13px;color:var(--ink3)}
+.steps{list-style:none;margin:0;padding:0}
+</style>
+</head>
+<body>
+<div class="bar"><div class="wrap"><span class="brand">共有と再利用の確認</span><div class="prog"><i id="prog"></i></div></div></div>
+<div class="wrap">
+<header class="hero">
+  <div class="kicker">子どもの写真を載せる人へ</div>
+  <h1>インスタ「共有と再利用」<br>確認の手順メモ</h1>
+  <p class="lead">自分の投稿が、AIでの作り替えや再利用に使われるかどうかは、インスタの設定で選べます。私も最初は初期設定のままでした。新しいAIを触る前に、今使っているインスタの設定から見ておきましょう。</p>
+  <ul class="toc">
+    <li><a href="#check"><span>01</span>確認の手順（3つ）</a></li>
+    <li><a href="#know"><span>02</span>知っておくこと</a></li>
+    <li><a href="#quiz"><span>03</span>これ、合ってる？（5問）</a></li>
+    <li><a href="#ask"><span>04</span>自分の場合を聞きたいとき</a></li>
+  </ul>
+</header>
+
+<section id="check">
+  <div class="num">01</div>
+  <h2>確認の手順（3つ）</h2>
+  <p>自分のインスタを開きながら、終わったものを押してください。</p>
+  <div id="cks"></div>
+  <div class="meter" id="meter">3つ中 0つ 終わりました<i><em id="bar"></em></i></div>
+  <p class="note" style="margin-top:12px">項目の名前や場所は、アプリの版や国によって変わることがあります。見つからないときは、設定の上にある検索で「再利用」と入れてみてください。</p>
+</section>
+
+<section id="know">
+  <div class="num">02</div>
+  <h2>知っておくこと</h2>
+  <ul class="rules">
+    <li><b>何の設定か</b><span>公開している自分の写真や動画を、ほかの人がAIでの作り替えや再利用に使えるかどうかの設定です。公開アカウントは、最初はオンになっていると報じられています。</span></li>
+    <li><b>オフにしても、すでに作られたものは消えません</b><span>止まるのは、これから先の作り替えや再利用です。</span></li>
+    <li><b>AIの学習そのものを止める設定ではありません</b><span>Metaが自社のAIの開発に公開の投稿を使うことは、別の話です。</span></li>
+    <li><b>非公開アカウントは対象外と報じられています</b><span>子どもの写真が多い人は、公開範囲そのものを見直すのも一つの方法です。</span></li>
+  </ul>
+  <p class="src">出典（2026-11-02 確認）: <a href="https://macrumors.com/how-to/stop-others-using-instagram-photos-ai/" rel="noopener">MacRumors</a> ／ <a href="https://www.bitdefender.com/en-gb/blog/hotforsecurity/stop-meta-ai-using-public-instagram-photos" rel="noopener">Bitdefender</a></p>
+</section>
+
+<section id="quiz">
+  <div class="num">03</div>
+  <h2>これ、合ってる？</h2>
+  <p>よくある思い込みを5つ。押すと答えが出ます。</p>
+  <div class="quiz" id="quizList"></div>
+  <div class="score" id="score"></div>
+</section>
+
+<section id="ask">
+  <div class="num">04</div>
+  <h2>自分の場合を聞きたいとき</h2>
+  <p>設定が見つからない、どこまで出していいか迷う、というときは、LINEで一言送ってください。いチが考え方を返します。</p>
+  <div class="pickline"><a class="lbtn" href="https://line.me/R/oaMessage/%40944nuhzz/?%E8%A8%AD%E5%AE%9A%E3%81%AE%E7%9B%B8%E8%AB%87%EF%BC%9A"><b>LINEで聞く</b><span>「設定の相談：」と入った状態で開きます</span></a></div>
+  <p class="note">スマホのLINEで開きます（パソコン版のLINEでは開きません）。</p>
+</section>
+<footer>
+  <p>このページは、いチが自分の設定を見直したときの手順です。設定の名前や場所は変わることがあります。最新の内容はInstagramの案内を確認してください。法律の助言ではありません。</p>
+  <p>ichi AI ／ いチ</p>
+</footer>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+var CK=[["設定を開く","プロフィールの右上の三本線から、設定の画面を開きます"],
+ ["「共有と再利用」を見る","今どうなっているか（オンかオフか）が出てきます"],
+ ["使われない側に変える","自分の投稿をAIでの作り替えや再利用に使えないようにします"]];
+var DONE='終わりました',ALL='3つとも終わりました',QB=['合ってる','ちがう'];
+var QUIZ=[{t:"何もしなければ、最初はオフになっている",a:"ng",w:"公開アカウントは、最初はオンになっていると報じられています。"},
+ {t:"オフにすると、すでに作られたものも消える",a:"ng",w:"止まるのはこれから先の分です。"},
+ {t:"非公開アカウントは対象外",a:"ok",w:"そう報じられています。"},
+ {t:"この設定で、MetaのAIの学習も止まる",a:"ng",w:"別の話です。この設定は、ほかの人の作り替え・再利用についてです。"},
+ {t:"新しいAIを触る前に、今のインスタの設定を見ておく",a:"ok",w:"いチもここから始めました。"}];
+var SCORE='迷ったら「公開しているか」「これから先の話か」で考えます。子どもの写真は、出す前に一度ここを見てください。';
+
+function el(h){var d=document.createElement('div');d.innerHTML=h;return d.firstElementChild}
+function toast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(function(){t.classList.remove('on')},1600)}
+var cks=document.getElementById('cks');
+function meter(){var n=cks.querySelectorAll('.ck.on').length;document.getElementById('meter').firstChild.nodeValue=CK.length+'つ中 '+n+'つ '+DONE;document.getElementById('bar').style.width=(n/CK.length*100)+'%';if(n===CK.length)toast(ALL);}
+CK.forEach(function(c,i){var e=el('<div class="ck" role="checkbox" aria-checked="false" tabindex="0"><div class="box"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg></div><div><b>'+(i+1)+'. '+c[0]+'</b><span>'+c[1]+'</span></div></div>');
+ function tg(){e.classList.toggle('on');e.setAttribute('aria-checked',e.classList.contains('on'));meter();}
+ e.addEventListener('click',tg);e.addEventListener('keydown',function(ev){if(ev.key===' '||ev.key==='Enter'){ev.preventDefault();tg();}});cks.appendChild(e);});
+var answered=0,right=0,ql=document.getElementById('quizList');
+QUIZ.forEach(function(q,i){var c=el('<div class="q"><div class="qn">Q'+(i+1)+' / '+QUIZ.length+'</div><div class="qt">'+q.t+'</div><div class="btns"><button data-v="ok">'+QB[0]+'</button><button data-v="ng">'+QB[1]+'</button></div><div class="ans '+q.a+'"><b>'+(q.a==='ng'?'✕ '+QB[1]:'○ '+QB[0])+'</b>'+q.w+'</div></div>');
+ c.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){if(c.classList.contains('answered'))return;b.classList.add('pick');c.classList.add('answered');answered++;var hit=b.dataset.v===q.a;if(hit)right++;c.querySelector('.ans b').insertAdjacentHTML('afterbegin','<span class="mark">'+(hit?'正解':'ざんねん')+'</span>');
+  if(answered===QUIZ.length){var s=document.getElementById('score');s.innerHTML='<b>'+QUIZ.length+'問中 '+right+'問 正解</b><p>'+SCORE+'</p>';s.classList.add('on');}})});ql.appendChild(c);});
+function fb(t){var a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();try{document.execCommand('copy')}catch(e){}a.remove()}
+function copyFrom(id,btn){var t=document.getElementById(id).textContent;var done=function(){btn.textContent='コピーしました';btn.classList.add('done');setTimeout(function(){btn.textContent='コピー';btn.classList.remove('done')},1600)};if(navigator.clipboard){navigator.clipboard.writeText(t).then(done,function(){fb(t);done()})}else{fb(t);done()}}
+var pg=document.getElementById('prog');function onScroll(){var h=document.documentElement;var m=h.scrollHeight-h.clientHeight;pg.style.width=(m>0?Math.min(100,h.scrollTop/m*100):0)+'%'}addEventListener('scroll',onScroll,{passive:true});onScroll();
+</script>
+</body>
+</html>
