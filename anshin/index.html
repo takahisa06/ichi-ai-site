@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
-<title>Museを始める前に確認した3つ</title>
-<meta name="description" content="いチがMuseを始める前に確認した3つ。連携の棚卸し・5問クイズつき">
+<title>AIにアプリをつなぐ前に決めておくこと</title>
+<meta name="description" content="AIにアプリをつなぐ＝中身を見せること。頼みたい仕事から逆算して、つなぐアプリを決める3つ。仕事からアプリを選ぶ表・5問クイズつき">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -169,32 +169,32 @@ footer{padding:32px 0 60px;font-size:12px;color:var(--ink3)}
 </style>
 </head>
 <body>
-<div class="bar"><div class="wrap"><span class="brand">始める前の確認3つ</span><div class="prog"><i id="prog"></i></div></div></div>
+<div class="bar"><div class="wrap"><span class="brand">つなぐ前に決めること</span><div class="prog"><i id="prog"></i></div></div></div>
 <div class="wrap">
 <header class="hero">
-  <div class="kicker">Museを始める前に読むページ</div>
-  <h1>Museを始める前に<br>確認した3つ</h1>
-  <p class="lead">Museは、インスタやメールとつなぐと自分で調べて動いてくれる、Metaの新しいAIです。便利だからこそ、つなぐ前に私が確認した3つをまとめました。できているものを押してみてください。</p>
+  <div class="kicker">AIにアプリをつなぐ前に読むページ</div>
+  <h1>AIにアプリをつなぐ前に<br>決めておくこと</h1>
+  <p class="lead">AIにアプリをつなぐと、そのアプリの中身をAIが読める状態になります。メールなら、子どもの学校からのお知らせまで。だから、つなぐアプリは「AIに頼みたい仕事」から逆算して決めます。Metaの新しいAI「Muse」でも、ほかのAIでも同じ考え方です。</p>
   <ul class="toc">
-    <li><a href="#check"><span>01</span>始める前の確認（3つ）</a></li>
-    <li><a href="#apps"><span>02</span>連携の棚卸し</a></li>
-    <li><a href="#quiz"><span>03</span>これ、つなぐ？（5問）</a></li>
+    <li><a href="#check"><span>01</span>決めておくこと（3つ）</a></li>
+    <li><a href="#apps"><span>02</span>仕事からアプリを選ぶ</a></li>
+    <li><a href="#quiz"><span>03</span>これ、合ってる？（5問）</a></li>
     <li><a href="#ask"><span>04</span>自分の場合を聞きたいとき</a></li>
   </ul>
 </header>
 
 <section id="check">
   <div class="num">01</div>
-  <h2>始める前に確認した3つ</h2>
-  <p>できているものを押すと、チェックが付きます。</p>
+  <h2>つなぐ前に決めておく3つ</h2>
+  <p>決められたものを押すと、チェックが付きます。</p>
   <div id="cks"></div>
   <div class="meter" id="meter">3つ中 0つ 確認できています<i><em id="bar"></em></i></div>
 </section>
 
 <section id="apps">
   <div class="num">02</div>
-  <h2>連携の棚卸し</h2>
-  <p>いまつないでいるアプリ（つなごうとしているアプリ）を、毎日使うものだけオンにしてみてください。残すものと外すものが下に出ます。実際につなげるアプリは、Museの設定画面で確認してください。</p>
+  <h2>仕事からアプリを選ぶ</h2>
+  <p>AIに頼みたい仕事だけオンにしてください。つなぐアプリと、つながなくていいアプリが下に出ます。実際につなげるアプリは、使うAIの設定画面で確認してください。</p>
   <div class="apps" id="appList"></div>
   <div class="res" id="res"></div>
   <div class="prompt" style="margin-top:12px">
@@ -205,7 +205,7 @@ footer{padding:32px 0 60px;font-size:12px;color:var(--ink3)}
 
 <section id="quiz">
   <div class="num">03</div>
-  <h2>これ、つなぐ？</h2>
+  <h2>これ、合ってる？</h2>
   <p>迷いやすい場面を5つ。押すと答えが出ます。</p>
   <div class="quiz" id="quizList"></div>
   <div class="score" id="score"></div>
@@ -219,28 +219,29 @@ footer{padding:32px 0 60px;font-size:12px;color:var(--ink3)}
   <p class="note">スマホのLINEで開きます（パソコン版のLINEでは開きません）。</p>
 </section>
 <footer>
-  <p>このページは、いチ自身の使い方です。つなげるアプリや設定の名前は、アプリの版によって変わることがあります。最新の内容は各社の案内を確認してください。</p>
+  <p>このページは、AIにアプリをつなぐときの考え方をまとめたものです。つなげるアプリや設定の名前は、アプリの版によって変わることがあります。最新の内容は各社の案内を確認してください。</p>
   <p>ichi AI ／ いチ</p>
 </footer>
 </div>
 <div class="toast" id="toast"></div>
 <script>
-var CK=[["連携は、使う分だけ","毎日の裏の仕事に使うアプリだけつなぎます。いチが残したのは、インスタ・メール・カレンダーの3つです"],
- ["パスワードは、チャットに打たない","つなぐときは公式の画面で「許可」を出すだけ。パスワードをAIに教える場面はありません"],
- ["送る前の確認の出方を、先に見ておく","送る・買うなど大事な操作の前に、どう確認が出るかを一度見てから任せます"]];
-var DONE='確認できています',ALL='3つとも確認できています',QB=['つなぐ','つながない／外す'];
-var QUIZ=[{t:"毎日、投稿の数字を見ているInstagram",a:"ok",w:"毎日の裏の仕事に使うので、つなぎます。"},
- {t:"半年さわっていないアプリ",a:"ng",w:"使わない連携は外します。あとから必要になったら、その時につなげば大丈夫です。"},
- {t:"チャットで「パスワードを教えて」と聞かれた",a:"ng",w:"打ちません。つなぐのは公式の許可画面からです。"},
- {t:"予定の確認に使っているカレンダー",a:"ok",w:"毎日使うものなので、残しています。"},
- {t:"「便利そうだから」だけで全部オン",a:"ng",w:"便利でも全部はつなぎません。つなぐのは使う分だけ。"}];
-var SCORE='迷ったら「毎日の仕事で使うか」で決めます。使わないものは外して、設定からいつでも見直せます。';
-var APPS=[["Instagram","投稿の数字・コメント",1],["メール","問い合わせ・連絡",1],["カレンダー","予定の確認",1],["Threads","投稿の下書き",0],["写真","画像の整理",0],["連絡先","人の名前と電話番号",0],["ドライブ","資料の保存",0]];
+var CK=[["頼みたい仕事を書き出す","「DMの返信」「予定の調整」など、AIに任せたい仕事を先に決めます"],
+ ["必要なアプリだけつなぐ","DMの返信ならインスタだけ。予定の調整ならカレンダーを足す。頼まない仕事のアプリはつなぎません"],
+ ["ときどき連携を見直す","つないだあとも、設定からいつでも外せます。使わなくなったものは外します"]];
+var DONE='決められています',ALL='3つとも決められています',QB=['合ってる','ちがう'];
+var QUIZ=[{t:"メールをつないでも、AIが読むのは仕事のメールだけ",a:"ng",w:"つないだメールは、仕事以外のメールも読める状態になります。"},
+ {t:"DMの返信を手伝ってほしいだけなら、インスタだけつなぐ",a:"ok",w:"頼みたい仕事に必要なアプリだけで足ります。"},
+ {t:"「便利そうだから」で全部つなぐ",a:"ng",w:"つなぐほど、見せる範囲も広がります。頼む仕事の分だけにします。"},
+ {t:"一度つないだら、あとから外せない",a:"ng",w:"設定からいつでも外せます。"},
+ {t:"チャットで「パスワードを教えて」と聞かれたら教える",a:"ng",w:"打ちません。つなぐのは公式の許可画面からです。"}];
+var SCORE='迷ったら「この仕事をAIに頼むか」で決めます。頼まない仕事のアプリはつながない。つないだあとも、設定からいつでも外せます。';
+var JOBS=[["DMの返信","問い合わせへの返事",["インスタ"],1],["予定の調整","打ち合わせの日程",["カレンダー"],1],["メールの下書き","連絡の返事",["メール"],0],["資料の整理","ファイルの片づけ",["ドライブ"],0]];
+var ALLAPPS=["インスタ","カレンダー","メール","ドライブ","写真","連絡先"];
 var al=document.getElementById('appList');
-function calc(){var on=[],off=[];al.querySelectorAll('input').forEach(function(x,i){(x.checked?on:off).push(APPS[i][0])});
- document.getElementById('res').innerHTML='<b>残す（'+on.length+'つ）</b>'+(on.join('・')||'なし')+'<br><b style="margin-top:8px">外す（'+off.length+'つ）</b>'+(off.join('・')||'なし');
- document.getElementById('memo').textContent='【私の連携の線引き】\n残す：'+(on.join('、')||'なし')+'\n外す：'+(off.join('、')||'なし')+'\n決め方：毎日の裏の仕事に使うものだけ。見直しは月に1回、設定の画面から';}
-APPS.forEach(function(a){var e=el('<label class="app"><b>'+a[0]+'<small>'+a[1]+'</small></b><input type="checkbox" class="sw" aria-label="'+a[0]+'"'+(a[2]?' checked':'')+'></label>');e.querySelector('input').addEventListener('change',calc);al.appendChild(e);});calc();
+function calc(){var on=[],jobs=[];al.querySelectorAll('input').forEach(function(x,i){if(x.checked){jobs.push(JOBS[i][0]);JOBS[i][2].forEach(function(a){if(on.indexOf(a)<0)on.push(a)})}});var off=ALLAPPS.filter(function(a){return on.indexOf(a)<0});
+ document.getElementById('res').innerHTML='<b>つなぐ（'+on.length+'つ）</b>'+(on.join('・')||'なし')+'<br><b style="margin-top:8px">つながない（'+off.length+'つ）</b>'+off.join('・');
+ document.getElementById('memo').textContent='【AIにつなぐアプリの線引き】\n頼む仕事：'+(jobs.join('、')||'なし')+'\nつなぐ：'+(on.join('、')||'なし')+'\nつながない：'+off.join('、')+'\n決め方：頼みたい仕事から逆算。つないだあとも設定からいつでも外せる';}
+JOBS.forEach(function(a){var e=el('<label class="app"><b>'+a[0]+'<small>'+a[1]+'</small></b><input type="checkbox" class="sw" aria-label="'+a[0]+'"'+(a[3]?' checked':'')+'></label>');e.querySelector('input').addEventListener('change',calc);al.appendChild(e);});calc();
 document.getElementById('memoBtn').addEventListener('click',function(){copyFrom('memo',this);toast('メモに貼って残してください')});
 
 function el(h){var d=document.createElement('div');d.innerHTML=h;return d.firstElementChild}
