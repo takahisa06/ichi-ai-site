@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>台本を頼むときの渡し方3つ</title>
+<meta name="description" content="AIに台本を頼むとき渡す3つ（見本・合格ライン・説明書）。入れるだけでコピペできる頼み方ができる">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff; --bg2:#f4f6fa; --ink:#0e1525; --ink2:#46506a; --ink3:#7a8399;
+  --hair:rgba(14,21,37,.10); --acc:#2648f0; --acc-soft:rgba(38,72,240,.08);
+  --ng:#d93a3f; --ng-soft:rgba(217,58,63,.08); --ok:#1f9d6b; --ok-soft:rgba(31,157,107,.09);
+  --gray:#c07a0c; --gray-soft:rgba(192,122,12,.10);
+  --r:12px; --shadow:0 1px 2px rgba(14,21,37,.04),0 8px 24px rgba(14,21,37,.06);
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans JP","Hiragino Sans",system-ui,sans-serif;font-size:16px;line-height:1.85;letter-spacing:.01em}
+a{color:var(--acc)}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+button{font:inherit}
+
+.bar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--hair)}
+.bar .wrap{display:flex;align-items:center;gap:12px;height:52px}
+.brand{font-weight:700;font-size:14px;white-space:nowrap}
+.prog{flex:1;height:4px;background:var(--hair);border-radius:4px;overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:var(--acc);transition:width .3s var(--ease)}
+
+.hero{padding:40px 0 20px}
+.kicker{font-size:13px;color:var(--acc);font-weight:600}
+h1{font-size:clamp(26px,6.4vw,38px);line-height:1.35;margin:10px 0 14px;font-weight:700}
+.lead{color:var(--ink2);margin:0 0 18px}
+.toc{border-top:1px solid var(--hair);margin:20px 0 0;padding:0;list-style:none}
+.toc a{display:flex;gap:12px;align-items:baseline;padding:12px 2px;border-bottom:1px solid var(--hair);color:var(--ink);text-decoration:none}
+.toc a span{color:var(--ink3);font-size:13px;min-width:26px;font-family:"IBM Plex Mono",monospace}
+
+section{padding:44px 0 8px;scroll-margin-top:60px}
+.num{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--acc)}
+h2{font-size:clamp(21px,5vw,26px);line-height:1.45;margin:6px 0 12px}
+h3{font-size:17px;line-height:1.5;margin:0 0 6px}
+p{margin:0 0 14px}
+.note{font-size:13px;color:var(--ink3)}
+
+/* quiz */
+.quiz{display:grid;gap:12px;margin-top:6px}
+.q{background:var(--bg);border:1px solid var(--hair);border-radius:var(--r);padding:16px;box-shadow:var(--shadow)}
+.q .qn{font-size:12px;color:var(--ink3);font-family:"IBM Plex Mono",monospace}
+.q .qt{font-weight:600;margin:2px 0 12px}
+.q .btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.q .btns button{appearance:none;border:1px solid var(--hair);background:var(--bg2);color:var(--ink);font-weight:600;font-size:15px;padding:11px 8px;border-radius:10px;cursor:pointer;transition:transform .12s var(--ease),background .2s,border-color .2s}
+.q .btns button:active{transform:scale(.97)}
+.q.answered .btns button{pointer-events:none;opacity:.45}
+.q.answered .btns button.pick{opacity:1;border-color:var(--ink)}
+.q .ans{display:none;margin-top:12px;padding:12px 14px;border-radius:10px;font-size:14px;line-height:1.75}
+.q.answered .ans{display:block;animation:fade .3s var(--ease)}
+.q .ans b{display:block;font-size:15px;margin-bottom:2px}
+.q .ans.ng{background:var(--ng-soft)} .q .ans.ng b{color:var(--ng)}
+.q .ans.ok{background:var(--ok-soft)} .q .ans.ok b{color:var(--ok)}
+.q .mark{font-weight:700;margin-right:6px}
+.score{display:none;margin-top:14px;padding:16px;border-radius:var(--r);background:var(--ink);color:#fff}
+.score.on{display:block;animation:fade .3s var(--ease)}
+.score b{font-size:22px}
+.score p{margin:6px 0 0;color:rgba(255,255,255,.82);font-size:14px}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* 3 rules */
+.rules{list-style:none;margin:0;padding:0;counter-reset:r}
+.rules li{position:relative;padding:14px 0 14px 44px;border-bottom:1px solid var(--hair)}
+.rules li:first-child{border-top:1px solid var(--hair)}
+.rules li::before{counter-increment:r;content:counter(r);position:absolute;left:0;top:15px;width:28px;height:28px;border-radius:8px;background:var(--acc);color:#fff;font:600 14px "IBM Plex Mono",monospace;display:grid;place-items:center}
+.rules li b{display:block}
+.rules li span{display:block;color:var(--ink2);font-size:14px}
+
+/* service tabs */
+.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:0 -16px 12px;padding:2px 16px}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:0 0 auto;appearance:none;border:1px solid var(--hair);background:var(--bg);color:var(--ink2);font-size:14px;font-weight:600;padding:8px 14px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.tabs button[aria-selected="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.svc{display:none;background:var(--bg2);border-radius:var(--r);padding:18px}
+.svc.on{display:block;animation:fade .3s var(--ease)}
+.svc .head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+.badge{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.badge.ng{color:var(--ng);background:var(--ng-soft)}
+.badge.gray{color:var(--gray);background:var(--gray-soft)}
+.li{display:flex;gap:10px;align-items:flex-start;font-size:15px;margin:8px 0}
+.li i{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:700;font-size:12px;color:#fff;margin-top:3px}
+.li.x i{background:var(--ng)} .li.o i{background:var(--ok)}
+.src{font-size:12.5px;color:var(--ink3);margin:12px 0 0;padding-top:10px;border-top:1px solid var(--hair);line-height:1.7}
+.src a{color:var(--ink2)}
+
+/* builder */
+.picks{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 14px}
+.picks label{position:relative;cursor:pointer}
+.picks input{position:absolute;opacity:0;pointer-events:none}
+.picks span{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--hair);background:var(--bg);color:var(--ink2);border-radius:999px;padding:7px 14px;font-size:14px;font-weight:600;transition:background .2s,color .2s,border-color .2s}
+.picks span::before{content:"";width:14px;height:14px;border-radius:4px;border:1.5px solid var(--ink3);background:var(--bg);transition:background .2s,border-color .2s}
+.picks input:checked + span{background:var(--acc-soft);color:var(--acc);border-color:transparent}
+.picks input:checked + span::before{background:var(--acc);border-color:var(--acc);box-shadow:inset 0 0 0 2px var(--bg)}
+.picks input:focus-visible + span{outline:2px solid var(--acc);outline-offset:2px}
+.prompt{background:var(--bg2);border:1px solid var(--hair);border-radius:var(--r);padding:14px}
+.prompt .ph{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+.prompt .pt{font-size:13px;font-weight:600;color:var(--ink2)}
+.prompt pre{margin:0;font-family:"IBM Plex Sans JP",monospace;font-size:14px;line-height:1.8;white-space:pre-wrap;word-break:break-word;color:var(--ink)}
+.copy{appearance:none;border:0;background:var(--acc);color:#fff;font-size:14px;font-weight:600;padding:8px 16px;border-radius:8px;cursor:pointer;white-space:nowrap;transition:transform .12s var(--ease),background .2s}
+.copy:active{transform:scale(.96)}
+.copy.done{background:var(--ok)}
+.where{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:14px;margin:14px 0 0}
+.where dt{font-weight:600}
+.where dd{margin:0;color:var(--ink2)}
+
+/* edit flow */
+.pipe{display:grid;gap:10px}
+.pipe .st{background:var(--bg);border:1px solid var(--hair);border-radius:var(--r);padding:14px}
+.pipe .st b{display:block;font-size:13px;color:var(--acc);margin-bottom:2px}
+.pipe .st.me b{color:var(--ink)}
+.pipe .arrow{justify-self:center;width:2px;height:16px;background:var(--hair);position:relative}
+.pipe .arrow::after{content:"";position:absolute;left:-4px;bottom:-2px;border:5px solid transparent;border-top-color:var(--ink3)}
+.stop{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--ng-soft);font-size:14px}
+.stop b{color:var(--ng)}
+
+/* study */
+.stuck{list-style:none;margin:0 0 16px;padding:0}
+.stuck li{padding:12px 14px;margin:8px 0;background:var(--bg2);border-radius:10px;font-weight:600}
+.study{border:1px solid var(--hair);border-radius:var(--r);padding:20px 18px;box-shadow:var(--shadow)}
+.pill{display:inline-block;font-size:12px;font-weight:600;color:var(--ok);background:var(--ok-soft);border-radius:999px;padding:2px 10px}
+.keep{background:var(--acc-soft);border-radius:10px;padding:12px 14px;margin:14px 0;font-size:15px}
+.keep small{display:block;font-weight:600;font-size:12px;color:var(--acc)}
+.cta{display:block;text-align:center;text-decoration:none;margin-top:14px;border-radius:12px;padding:15px;background:#06c755;color:#fff;font-weight:700;font-size:16px;transition:transform .12s var(--ease)}
+.cta:active{transform:scale(.98)}
+.cta.sub{background:var(--bg);color:#06a648;border:1.5px solid #06c755;font-size:15px;padding:12px}
+.pickline{display:grid;gap:10px;margin:6px 0 10px}
+.lbtn{display:flex;align-items:center;justify-content:space-between;gap:12px;text-decoration:none;background:#06c755;color:#fff;border-radius:12px;padding:14px 16px;box-shadow:0 6px 16px rgba(6,199,85,.22);transition:transform .12s var(--ease)}
+.lbtn:active{transform:scale(.98)}
+.lbtn b{font-size:18px}
+.lbtn b{min-width:5.2em}
+.lbtn span{flex:1;font-size:13px;opacity:.92}
+.lbtn::after{content:"→";font-weight:700;margin-left:4px}
+
+footer{padding:32px 0 60px;font-size:12px;color:var(--ink3)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:var(--ink);color:#fff;font-size:14px;padding:10px 16px;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .25s var(--ease),transform .25s var(--ease);z-index:50}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media (min-width:760px){.pipe{grid-template-columns:1fr auto 1fr auto 1fr;align-items:center}.pipe .arrow{width:16px;height:2px}.pipe .arrow::after{left:auto;right:-2px;bottom:-4px;border-top-color:transparent;border-left-color:var(--ink3)}}
+
+.field{display:flex;gap:8px;margin:6px 0 14px}
+.field input{flex:1;font:inherit;font-size:16px;padding:12px 14px;border:1.5px solid var(--hair);border-radius:12px;background:var(--bg)}
+.field input:focus{outline:none;border-color:var(--acc)}
+.step{font-size:13px;font-weight:600;color:var(--acc);margin:22px 0 2px}
+.order{list-style:none;margin:0;padding:0;counter-reset:o}
+.order li{position:relative;padding:12px 0 12px 44px;border-bottom:1px solid var(--hair)}
+.order li::before{counter-increment:o;content:counter(o);position:absolute;left:0;top:13px;width:28px;height:28px;border-radius:8px;background:var(--ink);color:#fff;font:600 14px "IBM Plex Mono",monospace;display:grid;place-items:center}
+.order li b{display:block}.order li span{display:block;color:var(--ink2);font-size:14px}
+</style><style>
+.task{display:grid;gap:10px;margin-top:6px}
+.tk{border:1px solid var(--hair);border-radius:var(--r);padding:14px 16px;box-shadow:var(--shadow);background:var(--bg)}
+.tk .tq{font-weight:600;margin:0 0 10px}
+.tk .btns{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.tk .btns button{appearance:none;border:1px solid var(--hair);background:var(--bg2);color:var(--ink);font-weight:600;font-size:14px;padding:10px 4px;border-radius:10px;cursor:pointer;transition:transform .12s var(--ease)}
+.tk .btns button:active{transform:scale(.97)}
+.tk.done .btns button{pointer-events:none;opacity:.45}.tk.done .btns button.pick{opacity:1;border-color:var(--ink)}
+.tk .ans{display:none;margin-top:10px;padding:10px 12px;border-radius:10px;font-size:14px;line-height:1.75}
+.tk.done .ans{display:block;animation:fade .3s var(--ease)}
+.tk .ans.ok{background:var(--ok-soft)}.tk .ans.ok b{color:var(--ok)}
+.tk .ans.ng{background:var(--ng-soft)}.tk .ans.ng b{color:var(--ng)}
+table.tbl{width:100%;border-collapse:collapse;font-size:14px;margin:8px 0 4px}
+.tbl th,.tbl td{border-bottom:1px solid var(--hair);padding:10px 6px;text-align:left;vertical-align:top}
+.tbl th{font-size:12px;color:var(--ink3);font-weight:600}
+.tbl td:first-child{font-weight:600;width:42%}
+.who{display:inline-block;font-size:12px;font-weight:700;border-radius:999px;padding:1px 9px;white-space:nowrap}
+.who.m{background:var(--acc-soft);color:var(--acc)}.who.c{background:var(--gray-soft);color:var(--gray)}.who.y{background:var(--ink);color:#fff}
+textarea.in{width:100%;font:inherit;font-size:15px;padding:12px 14px;border:1.5px solid var(--hair);border-radius:12px;min-height:96px;resize:vertical}
+textarea.in:focus{outline:none;border-color:var(--acc)}
+.field2{display:grid;gap:8px;margin:6px 0 14px}
+.field2 input{font:inherit;font-size:16px;padding:12px 14px;border:1.5px solid var(--hair);border-radius:12px}
+.field2 input:focus{outline:none;border-color:var(--acc)}
+</style>
+</head>
+<body>
+<div class="bar"><div class="wrap"><span class="brand">台本の渡し方3つ</span><div class="prog"><i id="prog"></i></div></div></div>
+<div class="wrap">
+<header class="hero">
+  <div class="kicker">AIの台本を、自分で直さなくていいように</div>
+  <h1>台本を頼むときの<br>渡し方3つ</h1>
+  <p class="lead">AIの台本がしっくりこないのは、指示が短いからではなく、渡しているものが足りないからです。見本・合格ライン・説明書の3つを埋めると、そのままコピペできる頼み方ができます。</p>
+  <ul class="toc">
+    <li><a href="#s1"><span>01</span>説明書（1回だけ作る）</a></li>
+    <li><a href="#s2"><span>02</span>見本と合格ライン（毎回の頼み方）</a></li>
+    <li><a href="#where"><span>03</span>説明書を入れる場所</a></li>
+    <li><a href="#nohit"><span>04</span>伸びた投稿がまだ無いとき</a></li>
+    <li><a href="#ask"><span>05</span>できた台本を送る</a></li>
+  </ul>
+</header>
+<section id="s1">
+  <div class="num">01</div>
+  <h2>説明書（1回だけ作る）</h2>
+  <p>毎回書いている自己紹介を、1回まとめます。入れた言葉が下の説明書に入ります。</p>
+  <div class="field2">
+    <input id="nm" placeholder="名前・肩書き（例：3児ママの時短料理家 さとみ）" maxlength="40">
+    <input id="pr" placeholder="商品（例：15分で作れる献立講座）" maxlength="40">
+    <input id="tg" placeholder="届けたい人（例：仕事帰りに夕飯を作るママ）" maxlength="40">
+    <input id="tn" placeholder="話し方（例：ですます・友達に話すように・専門語は使わない）" maxlength="60">
+  </div>
+  <div class="prompt"><div class="ph"><span class="pt">説明書</span><button class="copy" id="c1">コピー</button></div><pre id="p1"></pre></div>
+</section>
+<section id="s2">
+  <div class="num">02</div>
+  <h2>見本と合格ライン（毎回の頼み方）</h2>
+  <div class="step">見本：前に伸びた自分の投稿を1本貼る</div>
+  <textarea class="in" id="ex" placeholder="伸びた投稿のキャプションや台本をそのまま貼る"></textarea>
+  <div class="step">合格ライン：守ってほしいルールを選ぶ</div>
+  <div class="picks" id="rules"></div>
+  <div class="step">今回のテーマ</div>
+  <div class="field"><input id="th" type="text" placeholder="例：冷凍うどんで作る5分ランチ" maxlength="40"></div>
+  <div class="prompt"><div class="ph"><span class="pt">頼み方</span><button class="copy" id="c2">コピー</button></div><pre id="p2"></pre></div>
+</section>
+<section id="where">
+  <div class="num">03</div>
+  <h2>説明書を入れる場所</h2>
+  <p>一度入れておくと、そのプロジェクトの中の会話では毎回読まれます。もう自己紹介から書かなくて大丈夫です。</p>
+  <ol class="order">
+    <li><b>ChatGPT</b><span>プロジェクトを作る →「…」→ プロジェクト設定 → 指示に貼る</span></li>
+    <li><b>Claude</b><span>プロジェクトを作る →「プロジェクトの指示を設定」に貼る（有料プラン）</span></li>
+    <li><b>Claude Code</b><span>作業フォルダの CLAUDE.md に書く（/init で最初の1枚が作れます）</span></li>
+  </ol>
+  <p class="src">出典：<a href="https://help.openai.com/en/articles/10169521-projects-in-chatgpt">Projects in ChatGPT</a>／<a href="https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects">Claude プロジェクトの作り方</a>／<a href="https://code.claude.com/docs/en/commands">Claude Code コマンド一覧</a>（2026年11月確認）</p>
+</section>
+<section id="nohit">
+  <div class="num">04</div>
+  <h2>伸びた投稿がまだ無いとき</h2>
+  <p>好きな発信者の投稿を見本にするときは、文章ではなく<b>組み立てだけ</b>を渡します（最初の一言・話の順番・最後の呼びかけ）。文章をそのまま貼って似せると、あなたらしさが消えて、丸写しにもなります。</p>
+</section>
+<section id="ask">
+  <div class="num">05</div>
+  <h2>できた台本を送る</h2>
+  <p>この渡し方で作った台本をLINEで送ってもらえたら、いチが一言返します。</p>
+  <div class="pickline"><a class="lbtn" href="https://line.me/R/oaMessage/%40944nuhzz/?%E5%8F%B0%E6%9C%AC%E3%81%AE%E7%9B%B8%E8%AB%87%EF%BC%9A"><b>LINEで送る</b><span>「台本の相談：」と入った状態で開きます</span></a></div>
+  <p class="note">スマホのLINEで開きます（パソコン版のLINEでは開きません）。</p>
+</section>
+<footer><p>AIが書いた台本は、最後に自分の声で読んでから使ってください。</p><p>ichi AI ／ いチ</p></footer>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+var R=['最初の一言で、見る人の悩みを言う','1文は短く（20字くらいまで）','専門語は使わない','最後の呼びかけは1つだけ','「〜しましょう」で押しつけない','30秒で読める長さ'];
+var rb=document.getElementById('rules');R.forEach(function(r,i){var l=document.createElement('label');l.innerHTML='<input type="checkbox"'+(i<2?' checked':'')+'><span></span>';l.querySelector('span').textContent=r;rb.appendChild(l)});
+function v(id,d){var x=(document.getElementById(id).value||'').trim();return x||d}
+function render(){
+ document.getElementById('p1').textContent='【私について】\n'+v('nm','（名前・肩書き）')+'\n\n【商品】\n'+v('pr','（商品）')+'\n\n【届けたい人】\n'+v('tg','（届けたい人）')+'\n\n【話し方】\n'+v('tn','（話し方）')+'\n\n台本を書くときは、いつもこの内容を前提にしてください。';
+ var rs=[].slice.call(rb.querySelectorAll('input')).map(function(c,i){return c.checked?'・'+R[i]:null}).filter(Boolean);
+ document.getElementById('p2').textContent='「'+v('th','（今回のテーマ）')+'」でリールの台本を書いて。\n\n【見本】前に伸びた私の投稿です。言い方と組み立てを参考にして。\n'+v('ex','（伸びた投稿を貼る）')+'\n\n【合格ライン】このルールを守って。守れていない所があれば、書いたあとに自分で直してから出して。\n'+(rs.join('\n')||'（ルールを選ぶ）');
+}
+['nm','pr','tg','tn','ex','th'].forEach(function(id){document.getElementById(id).addEventListener('input',render)});rb.addEventListener('change',render);render();
+function toast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(function(){t.classList.remove('on')},1600)}
+function fb(t){var a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();try{document.execCommand('copy')}catch(e){}a.remove()}
+function wire(btn,getText,msg){btn.addEventListener('click',function(){var b=this,t=getText();var done=function(){b.textContent='コピーしました';b.classList.add('done');toast(msg);setTimeout(function(){b.textContent='コピー';b.classList.remove('done')},1600)};if(navigator.clipboard){navigator.clipboard.writeText(t).then(done,function(){fb(t);done()})}else{fb(t);done()}})}
+var pg=document.getElementById('prog');function onScroll(){var h=document.documentElement;var m=h.scrollHeight-h.clientHeight;pg.style.width=(m>0?Math.min(100,h.scrollTop/m*100):0)+'%'}addEventListener('scroll',onScroll,{passive:true});onScroll();
+wire(document.getElementById('c1'),function(){return document.getElementById('p1').textContent},'プロジェクトの指示に貼ってください');
+wire(document.getElementById('c2'),function(){return document.getElementById('p2').textContent},'AIに貼って送ってください');
+</script>
+</body>
+</html>
