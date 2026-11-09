@@ -507,9 +507,9 @@ const DATA = {
     line: "合わなければ「今は自分でやります」で終わって大丈夫です。Zoomで60分、無料。",
     button: "設計セッションを申し込む",
     sticky: "設計セッションを申し込む",
-    note: "この結果は申込フォームに自動で入ります。結果画面はスクショでも残せます"
+    note: "この結果は予約画面の「ご要望」欄に自動で入ります。結果画面はスクショでも残せます"
   },
-  privacy: "回答はどこにも送信していません。申込ボタンを押したときだけ、結果が申込フォームに一緒に入ります。",
+  privacy: "回答はどこにも送信していません。予約ボタンを押したときだけ、結果が予約の「ご要望」欄に一緒に入ります。",
   form: {
     base: "https://docs.google.com/forms/d/e/1FAIpQLSf2noJru-CdPxBMTLiEqhi9a481kfRY91rNlBbPVKRo-uBujw/viewform",
     entryNote: "entry.1698647381",
@@ -647,14 +647,11 @@ function buildFormUrl(r) {
   if (g) lines.push("発信ジャンル: " + g.label);
   if (pr) lines.push("商品: " + pr.label);
   lines.push("最初の候補: " + r.candidates.map(k => DATA.staff[k].name).join(" ／ ") + "（" + (r.level === "advanced" ? "道具をつなぐ段" : "チャットで始める段") + "）");
-  let url = DATA.form.base + "?usp=pp_url&" + DATA.form.entryNote + "=" + encodeURIComponent(lines.join("\n"));
-  if (r.topWork) url += "&" + DATA.form.entryWork + "=" + encodeURIComponent(r.topWork);
-  if (g) url += "&" + DATA.form.entryGenre + "=" + encodeURIComponent(g.label);
-  if (pr) {
-    url += "&" + DATA.form.entryProduct + "=" + encodeURIComponent(pr.form);
-    if (pr.form === "__other_option__") url += "&" + DATA.form.entryProduct + ".other_option_response=" + encodeURIComponent(pr.label);
-  }
-  return url;
+  if (r.topWork) lines.push("一番重い作業: " + r.topWork);
+  /* 2026-11-09: 申込先をGoogleフォームからL Harnessの設計セッション予約へ変更。
+     診断結果は予約画面の「ご要望」欄に note パラメータで自動で入る */
+  const BOOKING = "https://liff.line.me/2010719511-A0UjsyIe/?page=salon-book&menu_id=66599f2f-03c6-4912-8198-0f2d666729f0&liffId=2010719511-A0UjsyIe";
+  return BOOKING + "&note=" + encodeURIComponent(lines.join("\n").slice(0, 500));
 }
 
 /* ============================================================
